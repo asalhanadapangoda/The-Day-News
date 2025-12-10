@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authAPI } from '../../services/api';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import logo from '../../assets/thedaynews.png';
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -45,11 +46,8 @@ const AdminLogin = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-2xl">TDN</span>
-          </div>
+          <img src={logo} alt="The Day News Logo" className="h-16 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-800">Admin Login</h1>
-          <p className="text-gray-600 mt-2">THE DAY NEWS</p>
         </div>
 
         {error && <ErrorMessage message={error} />}

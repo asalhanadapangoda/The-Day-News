@@ -1,6 +1,7 @@
 import { Outlet, useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { authAPI } from '../../services/api';
+import logo from '../../assets/thedaynews.png';
 
 const AdminDashboard = () => {
   const [user, setUser] = useState(null);
@@ -49,12 +50,10 @@ const AdminDashboard = () => {
         {/* Sidebar */}
         <aside className="w-64 bg-gray-800 text-white min-h-screen">
           <div className="p-6">
-            <div className="flex items-center space-x-2 mb-8">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">TDN</span>
-              </div>
+            <Link to="/admin/dashboard" className="flex items-center space-x-2 mb-8 hover:opacity-80 transition-opacity">
+              <img src={logo} alt="The Day News Logo" className="h-10" />
               <span className="font-bold">Admin Panel</span>
-            </div>
+            </Link>
 
             <nav className="space-y-2">
               <Link

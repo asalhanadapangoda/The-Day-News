@@ -5,6 +5,8 @@ import PodcastCard from '../components/common/PodcastCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import AudioPlayer from '../components/common/AudioPlayer';
+import logo from "../assets/thedaynews.png";
+
 
 const HomePage = () => {
   const [featuredPodcasts, setFeaturedPodcasts] = useState([]);
@@ -40,12 +42,24 @@ const HomePage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero/Featured Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-36">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Welcome to THE DAY NEWS</h1>
-          <p className="text-xl mb-8 text-blue-100">
-            Stay informed with the latest news and insightful podcasts
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">Welcome to THE DAY NEWS</h2>
+              <p className="text-xl mb-8 text-blue-100">
+                සයිබර් අවකාශයේ ඔබේ මාධ්‍ය සහකරු <br /> Your Media Partner In Cyberspace
+              </p>
+            </div>
+
+            <div>
+              <img
+                src={logo}
+                alt="The Day News - Hero"
+                className="w-120 h-72 md:h-96 object-cover rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
 
           {/* Featured Podcasts */}
           {featuredPodcasts.length > 0 && (
