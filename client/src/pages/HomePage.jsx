@@ -95,23 +95,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Welcome to The Day News Section */}
-      <section className="py-16 md:py-20 lg:py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/50 to-transparent"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <div className="glass-card rounded-organic-lg p-8 md:p-10 lg:p-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-6 md:mb-8 text-premium-lg">
-                Welcome to The Day News
-              </h2>
-              <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                Your trusted source for daily news and insightful podcasts. We bring you the latest stories, 
-                in-depth analysis, and engaging conversations that matter most.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
       {/* Upcoming Podcasts Section */}
       {displayUpcoming.length > 0 && (
