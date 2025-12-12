@@ -86,7 +86,7 @@ const AdminDashboard = () => {
             <div className="mt-auto pt-8 border-t border-gray-700">
               <button
                 onClick={handleLogout}
-                className="w-full px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors text-left"
+                className="bg-red-500 w-full px-4 py-3 rounded-lg hover:bg-red hover:bg-gray-700 transition-colors text-left叉"
               >
                 Logout
               </button>

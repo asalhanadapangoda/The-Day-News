@@ -95,8 +95,7 @@ const HomePage = () => {
         </div>
       </section>
 
-     
-
+    
       {/* Upcoming Podcasts Section */}
       {displayUpcoming.length > 0 && (
         <section className="py-16 md:py-20 lg:py-24 relative overflow-hidden">
