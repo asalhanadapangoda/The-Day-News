@@ -7,19 +7,14 @@ import { errorHandler } from './middleware/errorHandler.js';
 // Import routes
 import authRoutes from './routes/authRoutes.js';
 import podcastRoutes from './routes/podcastRoutes.js';
+import sectionRoutes from './routes/sectionRoutes.js';
+import upcomingRoutes from './routes/upcomingRoutes.js';
 
 // Load env vars
 dotenv.config();
 
-// Connect to database (can be skipped in development by setting SKIP_DB=true)
-if (process.env.SKIP_DB === 'true') {
-  console.log('⚠️  SKIP_DB is true — skipping MongoDB connection for development');
-} else {
-  // connectDB now throws on errors instead of exiting; catch to keep server running
-  connectDB().catch((err) => {
-    console.error('⚠️  MongoDB connection failed (continuing without DB):', err.message);
-  });
-}
+// Connect to database
+connectDB();
 
 const app = express();
 
@@ -34,6 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/podcasts', podcastRoutes);
+app.use('/api/sections', sectionRoutes);
+app.use('/api/upcoming', upcomingRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

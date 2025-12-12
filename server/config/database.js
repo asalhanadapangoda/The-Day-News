@@ -3,9 +3,10 @@ import mongoose from 'mongoose';
 const connectDB = async () => {
   try {
     if (!process.env.MONGODB_URI) {
-      const msg = '\n❌ Error: MONGODB_URI is not defined in .env file\nPlease add MONGODB_URI to your server/.env file\nExample: MONGODB_URI=mongodb://localhost:27017/thedaynews';
-      console.error(msg);
-      throw new Error('MONGODB_URI is not defined in .env file');
+      console.error('\n❌ Error: MONGODB_URI is not defined in .env file');
+      console.error('Please add MONGODB_URI to your server/.env file');
+      console.error('Example: MONGODB_URI=mongodb://localhost:27017/thedaynews');
+      process.exit(1);
     }
 
     // Connect with better error handling
@@ -41,7 +42,7 @@ const connectDB = async () => {
     }
     
     console.error('\n📖 See MONGODB_SETUP.md for detailed setup instructions\n');
-    throw error;
+    process.exit(1);
   }
 };
 

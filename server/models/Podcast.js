@@ -67,6 +67,10 @@ const podcastSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    section: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Section',
+    },
   },
   {
     timestamps: true,

@@ -20,6 +20,7 @@ export const getPodcasts = async (req, res) => {
     }
 
     const podcasts = await Podcast.find(query)
+      .populate('section')
       .sort({ createdAt: -1 })
       .limit(limit * 1)
       .skip((page - 1) * limit);
@@ -42,7 +43,7 @@ export const getPodcasts = async (req, res) => {
 // @access  Public
 export const getPodcast = async (req, res) => {
   try {
-    const podcast = await Podcast.findById(req.params.id);
+    const podcast = await Podcast.findById(req.params.id).populate('section');
 
     if (!podcast || !podcast.published) {
       return res.status(404).json({ message: 'Podcast not found' });
@@ -60,6 +61,7 @@ export const getPodcast = async (req, res) => {
 export const getLatestPodcast = async (req, res) => {
   try {
     const podcast = await Podcast.findOne({ published: true })
+      .populate('section')
       .sort({ createdAt: -1 });
 
     if (!podcast) {
@@ -79,6 +81,7 @@ export const getFeaturedPodcasts = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 3;
     const podcasts = await Podcast.find({ published: true, featured: true })
+      .populate('section')
       .sort({ createdAt: -1 })
       .limit(limit);
 
@@ -106,6 +109,7 @@ export const getRelatedPodcasts = async (req, res) => {
         { name: { $regex: podcast.name.split(' ')[0], $options: 'i' } },
       ],
     })
+      .populate('section')
       .limit(4)
       .sort({ createdAt: -1 });
 
@@ -170,7 +174,7 @@ export const deletePodcast = async (req, res) => {
 // @access  Private/Admin
 export const getAllPodcastsAdmin = async (req, res) => {
   try {
-    const podcasts = await Podcast.find().sort({ createdAt: -1 });
+    const podcasts = await Podcast.find().populate('section').sort({ createdAt: -1 });
     res.json(podcasts);
   } catch (error) {
     res.status(500).json({ message: error.message });

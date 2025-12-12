@@ -9,6 +9,7 @@ import PublicRoute from './components/auth/PublicRoute';
 import HomePage from './pages/HomePage';
 import PodcastsPage from './pages/PodcastsPage';
 import SingleEpisodePage from './pages/SingleEpisodePage';
+import UpcomingPage from './pages/UpcomingPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 
@@ -18,6 +19,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AddPodcast from './pages/admin/AddPodcast';
 import EditPodcast from './pages/admin/EditPodcast';
 import UpdatePodcast from './pages/admin/UpdatePodcast';
+import ManageSections from './pages/admin/ManageSections';
+import ManageUpcoming from './pages/admin/ManageUpcoming';
 
 // Layout wrapper for user pages
 const UserLayout = () => {
@@ -55,9 +58,11 @@ function App() {
           }
         >
           <Route index element={<Navigate to="/admin/dashboard/edit-podcast" replace />} />
+          <Route path="sections" element={<ManageSections />} />
           <Route path="add-podcast" element={<AddPodcast />} />
           <Route path="edit-podcast" element={<EditPodcast />} />
           <Route path="edit-podcast/:id" element={<UpdatePodcast />} />
+          <Route path="upcoming" element={<ManageUpcoming />} />
         </Route>
         
         {/* Catch-all for any other admin routes - redirect to login */}
@@ -68,6 +73,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/podcasts" element={<PodcastsPage />} />
           <Route path="/podcasts/:id" element={<SingleEpisodePage />} />
+          <Route path="/upcoming" element={<UpcomingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Route>

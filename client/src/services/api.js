@@ -85,5 +85,43 @@ export const podcastAPI = {
   getAllAdmin: () => fetchAPI('/podcasts/admin/all'),
 };
 
+// Section API
+export const sectionAPI = {
+  getAll: () => fetchAPI('/sections'),
+  create: (data) =>
+    fetchAPI('/sections', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  update: (id, data) =>
+    fetchAPI(`/sections/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+  delete: (id) =>
+    fetchAPI(`/sections/${id}`, {
+      method: 'DELETE',
+    }),
+};
+
+// Upcoming API
+export const upcomingAPI = {
+  getAll: () => fetchAPI('/upcoming'),
+  create: (data) =>
+    fetchAPI('/upcoming', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  update: (id, data) =>
+    fetchAPI(`/upcoming/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+  delete: (id) =>
+    fetchAPI(`/upcoming/${id}`, {
+      method: 'DELETE',
+    }),
+};
+
 export default API_URL;
 

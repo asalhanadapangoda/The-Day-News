@@ -1,37 +1,58 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { podcastAPI } from '../../services/api';
+import { podcastAPI, sectionAPI } from '../../services/api';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 const AddPodcast = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    shortDescription: '',
-    shortVideoLink: '',
     fullVideoLink: '',
-    audioUrl: '',
-    thumbnail: '',
-    coverImage: '',
-    duration: '',
-    showNotes: '',
-    transcript: '',
-    host: '',
-    guest: '',
-    tags: '',
-    featured: false,
-    published: true,
+    section: '',
+    photo: '',
   });
+  const [photoPreview, setPhotoPreview] = useState('');
+  const [sections, setSections] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingSections, setLoadingSections] = useState(true);
+
+  useEffect(() => {
+    fetchSections();
+  }, []);
+
+  const fetchSections = async () => {
+    try {
+      const data = await sectionAPI.getAll();
+      setSections(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoadingSections(false);
+    }
+  };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
+    const { name, value, type, checked, files } = e.target;
+    if (type === 'file' && files && files[0]) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result);
+        setFormData({
+          ...formData,
+          [name]: reader.result, // Store as base64 for now
+        });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setFormData({
+        ...formData,
+        [name]: type === 'checkbox' ? checked : value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -40,13 +61,13 @@ const AddPodcast = () => {
     setLoading(true);
 
     try {
-      const tagsArray = formData.tags
-        ? formData.tags.split(',').map((tag) => tag.trim()).filter((tag) => tag)
-        : [];
-
       const podcastData = {
-        ...formData,
-        tags: tagsArray,
+        name: formData.name,
+        description: formData.description,
+        fullVideoLink: formData.fullVideoLink || undefined,
+        section: formData.section || undefined,
+        thumbnail: formData.photo || undefined,
+        published: true,
       };
 
       await podcastAPI.create(podcastData);
@@ -58,6 +79,10 @@ const AddPodcast = () => {
     }
   };
 
+  if (loadingSections) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-md p-8 max-w-4xl">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Podcast</h2>
@@ -65,6 +90,26 @@ const AddPodcast = () => {
       {error && <ErrorMessage message={error} />}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label htmlFor="section" className="block text-gray-700 font-medium mb-2">
+            Section (Optional)
+          </label>
+          <select
+            id="section"
+            name="section"
+            value={formData.section}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select a section (optional)</option>
+            {sections.map((section) => (
+              <option key={section._id} value={section._id}>
+                {section.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div>
           <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
             Podcast Name *
@@ -96,157 +141,40 @@ const AddPodcast = () => {
         </div>
 
         <div>
-          <label htmlFor="shortDescription" className="block text-gray-700 font-medium mb-2">
-            Short Description
+          <label htmlFor="photo" className="block text-gray-700 font-medium mb-2">
+            Photo
           </label>
           <input
-            type="text"
-            id="shortDescription"
-            name="shortDescription"
-            value={formData.shortDescription}
+            type="file"
+            id="photo"
+            name="photo"
+            accept="image/*"
             onChange={handleChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="shortVideoLink" className="block text-gray-700 font-medium mb-2">
-              Short Video Link
-            </label>
-            <input
-              type="url"
-              id="shortVideoLink"
-              name="shortVideoLink"
-              value={formData.shortVideoLink}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="fullVideoLink" className="block text-gray-700 font-medium mb-2">
-              Full Video Link
-            </label>
-            <input
-              type="url"
-              id="fullVideoLink"
-              name="fullVideoLink"
-              value={formData.fullVideoLink}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          {photoPreview && (
+            <div className="mt-4">
+              <img
+                src={photoPreview}
+                alt="Preview"
+                className="w-32 h-32 object-cover rounded-lg border border-gray-300"
+              />
+            </div>
+          )}
         </div>
 
         <div>
-          <label htmlFor="audioUrl" className="block text-gray-700 font-medium mb-2">
-            Audio URL
+          <label htmlFor="fullVideoLink" className="block text-gray-700 font-medium mb-2">
+            Full Video Link
           </label>
           <input
             type="url"
-            id="audioUrl"
-            name="audioUrl"
-            value={formData.audioUrl}
+            id="fullVideoLink"
+            name="fullVideoLink"
+            value={formData.fullVideoLink}
             onChange={handleChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="thumbnail" className="block text-gray-700 font-medium mb-2">
-              Thumbnail URL
-            </label>
-            <input
-              type="url"
-              id="thumbnail"
-              name="thumbnail"
-              value={formData.thumbnail}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="coverImage" className="block text-gray-700 font-medium mb-2">
-              Cover Image URL
-            </label>
-            <input
-              type="url"
-              id="coverImage"
-              name="coverImage"
-              value={formData.coverImage}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="duration" className="block text-gray-700 font-medium mb-2">
-            Duration (e.g., "45:30")
-          </label>
-          <input
-            type="text"
-            id="duration"
-            name="duration"
-            value={formData.duration}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="showNotes" className="block text-gray-700 font-medium mb-2">
-            Show Notes
-          </label>
-          <textarea
-            id="showNotes"
-            name="showNotes"
-            value={formData.showNotes}
-            onChange={handleChange}
-            rows="6"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="tags" className="block text-gray-700 font-medium mb-2">
-            Tags (comma-separated)
-          </label>
-          <input
-            type="text"
-            id="tags"
-            name="tags"
-            value={formData.tags}
-            onChange={handleChange}
-            placeholder="news, politics, technology"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              name="featured"
-              checked={formData.featured}
-              onChange={handleChange}
-              className="mr-2 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
-            <span className="text-gray-700">Featured</span>
-          </label>
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              name="published"
-              checked={formData.published}
-              onChange={handleChange}
-              className="mr-2 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
-            <span className="text-gray-700">Published</span>
-          </label>
         </div>
 
         <div className="flex space-x-4">

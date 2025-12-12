@@ -1,7 +1,6 @@
 import { Outlet, useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { authAPI } from '../../services/api';
-import logo from '../../assets/thedaynews.png';
 
 const AdminDashboard = () => {
   const [user, setUser] = useState(null);
@@ -50,12 +49,20 @@ const AdminDashboard = () => {
         {/* Sidebar */}
         <aside className="w-64 bg-gray-800 text-white min-h-screen">
           <div className="p-6">
-            <Link to="/admin/dashboard" className="flex items-center space-x-2 mb-8 hover:opacity-80 transition-opacity">
-              <img src={logo} alt="The Day News Logo" className="h-10" />
+            <div className="flex items-center space-x-2 mb-8">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold">TDN</span>
+              </div>
               <span className="font-bold">Admin Panel</span>
-            </Link>
+            </div>
 
             <nav className="space-y-2">
+              <Link
+                to="/admin/dashboard/sections"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Manage Sections
+              </Link>
               <Link
                 to="/admin/dashboard/add-podcast"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
@@ -67,6 +74,12 @@ const AdminDashboard = () => {
                 className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
               >
                 Edit Podcast
+              </Link>
+              <Link
+                to="/admin/dashboard/upcoming"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Manage Upcoming
               </Link>
             </nav>
 
