@@ -63,35 +63,6 @@ const HomePage = () => {
               Your Media Partner In Cyberspace
             </p>
           </div>
-
-          {/* Short Videos Grid */}
-          {podcastsWithShortVideos.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 max-w-7xl mx-auto">
-              {podcastsWithShortVideos.map((podcast, index) => (
-                <div 
-                  key={podcast._id} 
-                  className="glass rounded-organic-lg p-5 md:p-6 animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <h3 className="text-lg md:text-xl font-semibold mb-3 text-premium">{podcast.name}</h3>
-                  {podcast.shortVideoLink && (
-                    <div className="mb-4 rounded-organic overflow-hidden border border-white/20">
-                      <iframe
-                        src={podcast.shortVideoLink}
-                        title={podcast.name}
-                        className="w-full h-40 md:h-48"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                  )}
-                  <p className="text-gray-100 text-sm md:text-base line-clamp-2 leading-relaxed">
-                    {podcast.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
