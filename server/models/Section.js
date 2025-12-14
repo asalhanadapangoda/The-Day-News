@@ -18,6 +18,9 @@ const sectionSchema = new mongoose.Schema(
   }
 );
 
+// Index for faster queries
+sectionSchema.index({ name: 1 }); // Unique index already exists, this is for sorting
+
 const Section = mongoose.model('Section', sectionSchema);
 
 export default Section;

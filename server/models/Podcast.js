@@ -77,9 +77,12 @@ const podcastSchema = new mongoose.Schema(
   }
 );
 
-// Index for faster queries
+// Indexes for faster queries
 podcastSchema.index({ createdAt: -1 });
 podcastSchema.index({ featured: 1, createdAt: -1 });
+podcastSchema.index({ section: 1, published: 1, createdAt: -1 }); // Compound index for section queries
+podcastSchema.index({ published: 1, featured: 1 }); // For featured published podcasts
+podcastSchema.index({ name: 'text', description: 'text' }); // Text search index
 
 const Podcast = mongoose.model('Podcast', podcastSchema);
 

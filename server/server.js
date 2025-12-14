@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import connectDB from './config/database.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
+import { validateEnv } from './utils/validateEnv.js';
+import logger from './utils/logger.js';
 
 // Import routes
 import authRoutes from './routes/authRoutes.js';
@@ -16,6 +18,9 @@ import contactRoutes from './routes/contactRoutes.js';
 
 // Load env vars
 dotenv.config();
+
+// Validate required environment variables
+validateEnv();
 
 // Connect to database
 connectDB();
@@ -80,6 +85,6 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
 

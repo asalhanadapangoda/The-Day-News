@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';
+import logger from '../utils/logger.js';
 
 // @desc    Login user
 // @route   POST /api/auth/login
@@ -48,7 +49,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     // Don't expose internal error details
-    console.error('Login error:', error);
+    logger.error('Login error:', error);
     res.status(500).json({ message: 'An error occurred during login. Please try again.' });
   }
 };

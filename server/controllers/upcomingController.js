@@ -1,5 +1,7 @@
 import Upcoming from '../models/Upcoming.js';
 import { uploadToCloudinary } from '../middleware/upload.js';
+import { isValidObjectId } from '../utils/validateObjectId.js';
+import logger from '../utils/logger.js';
 
 // @desc    Get all upcoming podcasts
 // @route   GET /api/upcoming
@@ -26,8 +28,10 @@ export const createUpcoming = async (req, res) => {
         const result = await uploadToCloudinary(req.file, 'thedaynews/upcoming');
         upcomingData.photo = result.secure_url;
       } catch (uploadError) {
+        logger.error('Cloudinary upload error:', uploadError);
         return res.status(400).json({ 
-          message: 'Failed to upload photo: ' + uploadError.message 
+          message: 'Failed to upload photo: ' + uploadError.message,
+          error: 'UPLOAD_FAILED'
         });
       }
     }
@@ -35,6 +39,7 @@ export const createUpcoming = async (req, res) => {
     const upcoming = await Upcoming.create(upcomingData);
     res.status(201).json(upcoming);
   } catch (error) {
+    logger.error('Error creating upcoming podcast:', error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -44,6 +49,14 @@ export const createUpcoming = async (req, res) => {
 // @access  Private/Admin
 export const updateUpcoming = async (req, res) => {
   try {
+    // Validate ObjectId format
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ 
+        message: 'Invalid upcoming podcast ID format',
+        error: 'INVALID_ID_FORMAT'
+      });
+    }
+
     const upcomingData = { ...req.body };
 
     // Handle photo upload if file exists
@@ -52,8 +65,10 @@ export const updateUpcoming = async (req, res) => {
         const result = await uploadToCloudinary(req.file, 'thedaynews/upcoming');
         upcomingData.photo = result.secure_url;
       } catch (uploadError) {
+        logger.error('Cloudinary upload error:', uploadError);
         return res.status(400).json({ 
-          message: 'Failed to upload photo: ' + uploadError.message 
+          message: 'Failed to upload photo: ' + uploadError.message,
+          error: 'UPLOAD_FAILED'
         });
       }
     }
@@ -70,6 +85,7 @@ export const updateUpcoming = async (req, res) => {
 
     res.json(upcoming);
   } catch (error) {
+    logger.error('Error updating upcoming podcast:', error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -79,6 +95,14 @@ export const updateUpcoming = async (req, res) => {
 // @access  Private/Admin
 export const deleteUpcoming = async (req, res) => {
   try {
+    // Validate ObjectId format
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ 
+        message: 'Invalid upcoming podcast ID format',
+        error: 'INVALID_ID_FORMAT'
+      });
+    }
+
     const upcoming = await Upcoming.findByIdAndDelete(req.params.id);
 
     if (!upcoming) {
@@ -87,6 +111,7 @@ export const deleteUpcoming = async (req, res) => {
 
     res.json({ message: 'Upcoming podcast deleted successfully' });
   } catch (error) {
+    logger.error('Error deleting upcoming podcast:', error);
     res.status(500).json({ message: error.message });
   }
 };

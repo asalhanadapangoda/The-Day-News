@@ -1,5 +1,7 @@
 import Podcast from '../models/Podcast.js';
 import { uploadToCloudinary } from '../middleware/upload.js';
+import { isValidObjectId } from '../utils/validateObjectId.js';
+import logger from '../utils/logger.js';
 
 // @desc    Get all podcasts (public)
 // @route   GET /api/podcasts
@@ -44,6 +46,14 @@ export const getPodcasts = async (req, res) => {
 // @access  Public
 export const getPodcast = async (req, res) => {
   try {
+    // Validate ObjectId format
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ 
+        message: 'Invalid podcast ID format',
+        error: 'INVALID_ID_FORMAT'
+      });
+    }
+
     const podcast = await Podcast.findById(req.params.id).populate('section');
 
     if (!podcast || !podcast.published) {
@@ -52,6 +62,7 @@ export const getPodcast = async (req, res) => {
 
     res.json(podcast);
   } catch (error) {
+    logger.error('Error fetching podcast:', error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -97,6 +108,14 @@ export const getFeaturedPodcasts = async (req, res) => {
 // @access  Public
 export const getRelatedPodcasts = async (req, res) => {
   try {
+    // Validate ObjectId format
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ 
+        message: 'Invalid podcast ID format',
+        error: 'INVALID_ID_FORMAT'
+      });
+    }
+
     const podcast = await Podcast.findById(req.params.id);
     if (!podcast) {
       return res.status(404).json({ message: 'Podcast not found' });
@@ -126,15 +145,19 @@ export const getRelatedPodcasts = async (req, res) => {
 export const createPodcast = async (req, res) => {
   try {
     const podcastData = { ...req.body };
+    let uploadedThumbnail = null;
 
     // Handle thumbnail upload if file exists
     if (req.file) {
       try {
         const result = await uploadToCloudinary(req.file, 'thedaynews/podcasts');
-        podcastData.thumbnail = result.secure_url;
+        uploadedThumbnail = result.secure_url;
+        podcastData.thumbnail = uploadedThumbnail;
       } catch (uploadError) {
+        logger.error('Cloudinary upload error:', uploadError);
         return res.status(400).json({ 
-          message: 'Failed to upload thumbnail: ' + uploadError.message 
+          message: 'Failed to upload thumbnail: ' + uploadError.message,
+          error: 'UPLOAD_FAILED'
         });
       }
     }
@@ -142,6 +165,7 @@ export const createPodcast = async (req, res) => {
     const podcast = await Podcast.create(podcastData);
     res.status(201).json(podcast);
   } catch (error) {
+    logger.error('Error creating podcast:', error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -151,6 +175,14 @@ export const createPodcast = async (req, res) => {
 // @access  Private/Admin
 export const updatePodcast = async (req, res) => {
   try {
+    // Validate ObjectId format
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ 
+        message: 'Invalid podcast ID format',
+        error: 'INVALID_ID_FORMAT'
+      });
+    }
+
     const podcastData = { ...req.body };
 
     // Handle thumbnail upload if file exists
@@ -159,8 +191,10 @@ export const updatePodcast = async (req, res) => {
         const result = await uploadToCloudinary(req.file, 'thedaynews/podcasts');
         podcastData.thumbnail = result.secure_url;
       } catch (uploadError) {
+        logger.error('Cloudinary upload error:', uploadError);
         return res.status(400).json({ 
-          message: 'Failed to upload thumbnail: ' + uploadError.message 
+          message: 'Failed to upload thumbnail: ' + uploadError.message,
+          error: 'UPLOAD_FAILED'
         });
       }
     }
@@ -177,6 +211,7 @@ export const updatePodcast = async (req, res) => {
 
     res.json(podcast);
   } catch (error) {
+    logger.error('Error updating podcast:', error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -186,6 +221,14 @@ export const updatePodcast = async (req, res) => {
 // @access  Private/Admin
 export const deletePodcast = async (req, res) => {
   try {
+    // Validate ObjectId format
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ 
+        message: 'Invalid podcast ID format',
+        error: 'INVALID_ID_FORMAT'
+      });
+    }
+
     const podcast = await Podcast.findByIdAndDelete(req.params.id);
 
     if (!podcast) {
@@ -194,6 +237,7 @@ export const deletePodcast = async (req, res) => {
 
     res.json({ message: 'Podcast deleted successfully' });
   } catch (error) {
+    logger.error('Error deleting podcast:', error);
     res.status(500).json({ message: error.message });
   }
 };

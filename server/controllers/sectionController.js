@@ -1,4 +1,6 @@
 import Section from '../models/Section.js';
+import { isValidObjectId } from '../utils/validateObjectId.js';
+import logger from '../utils/logger.js';
 
 // @desc    Get all sections
 // @route   GET /api/sections
@@ -29,6 +31,14 @@ export const createSection = async (req, res) => {
 // @access  Private/Admin
 export const updateSection = async (req, res) => {
   try {
+    // Validate ObjectId format
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ 
+        message: 'Invalid section ID format',
+        error: 'INVALID_ID_FORMAT'
+      });
+    }
+
     const section = await Section.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -41,6 +51,7 @@ export const updateSection = async (req, res) => {
 
     res.json(section);
   } catch (error) {
+    logger.error('Error updating section:', error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -50,6 +61,14 @@ export const updateSection = async (req, res) => {
 // @access  Private/Admin
 export const deleteSection = async (req, res) => {
   try {
+    // Validate ObjectId format
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ 
+        message: 'Invalid section ID format',
+        error: 'INVALID_ID_FORMAT'
+      });
+    }
+
     const section = await Section.findByIdAndDelete(req.params.id);
 
     if (!section) {
@@ -58,6 +77,7 @@ export const deleteSection = async (req, res) => {
 
     res.json({ message: 'Section deleted successfully' });
   } catch (error) {
+    logger.error('Error deleting section:', error);
     res.status(500).json({ message: error.message });
   }
 };

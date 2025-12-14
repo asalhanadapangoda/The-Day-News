@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import logger from '../utils/logger.js';
 
 // @desc    Send contact form email
 // @route   POST /api/contact
@@ -25,15 +26,15 @@ export const sendContactEmail = async (req, res) => {
 
     // Check if Resend API key is configured
     if (!resendApiKey) {
-      console.error('\n❌ RESEND API KEY NOT CONFIGURED!');
-      console.error('Please add RESEND_API_KEY to your server/.env file');
-      console.error('Get your free API key from: https://resend.com/api-keys');
-      console.error('\n📧 Contact Form Submission (NOT SENT):');
-      console.log('Name:', name);
-      console.log('Email:', email);
-      console.log('Message:', message);
-      console.log('Submit Tip:', isTipSubmission);
-      console.log('==========================================\n');
+      logger.error('\n❌ RESEND API KEY NOT CONFIGURED!');
+      logger.error('Please add RESEND_API_KEY to your server/.env file');
+      logger.error('Get your free API key from: https://resend.com/api-keys');
+      logger.error('\n📧 Contact Form Submission (NOT SENT):');
+      logger.info('Name:', name);
+      logger.info('Email:', email);
+      logger.info('Message:', message);
+      logger.info('Submit Tip:', isTipSubmission);
+      logger.error('==========================================\n');
       
       return res.status(500).json({ 
         message: 'Email service is not configured. Please contact the administrator.',
@@ -68,8 +69,8 @@ export const sendContactEmail = async (req, res) => {
     `;
 
     // Send email using Resend
-    console.log('\n📧 Sending email to:', recipientEmail);
-    console.log('Subject:', subject);
+    logger.info('\n📧 Sending email to:', recipientEmail);
+    logger.info('Subject:', subject);
     
     const { data, error } = await resend.emails.send({
       from: 'THE DAY NEWS <onboarding@resend.dev>', // You can change this after verifying your domain
@@ -80,25 +81,25 @@ export const sendContactEmail = async (req, res) => {
     });
 
     if (error) {
-      console.error('❌ Resend API Error:', error);
+      logger.error('❌ Resend API Error:', error);
       throw error;
     }
     
-    console.log('✅ Email sent successfully!');
-    console.log('Email ID:', data?.id);
-    console.log('==========================================\n');
+    logger.info('✅ Email sent successfully!');
+    logger.info('Email ID:', data?.id);
+    logger.info('==========================================\n');
 
     res.json({ 
       message: 'Thank you for your message! We have received it and will get back to you soon.',
       success: true 
     });
   } catch (error) {
-    console.error('\n❌ EMAIL SENDING ERROR:');
-    console.error('Error details:', error.message);
+    logger.error('\n❌ EMAIL SENDING ERROR:');
+    logger.error('Error details:', error.message);
     if (error.response) {
-      console.error('API Response:', error.response);
+      logger.error('API Response:', error.response);
     }
-    console.error('==========================================\n');
+    logger.error('==========================================\n');
     
     // Return error to user so they know something went wrong
     res.status(500).json({ 

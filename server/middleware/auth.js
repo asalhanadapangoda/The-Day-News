@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import logger from '../utils/logger.js';
 
 // Protect routes - verify JWT token
 export const protect = async (req, res, next) => {
@@ -60,7 +61,7 @@ export const protect = async (req, res, next) => {
     }
     
     // Generic error
-    console.error('Auth middleware error:', error);
+    logger.error('Auth middleware error:', error);
     return res.status(401).json({ 
       message: 'Not authorized, token verification failed',
       code: 'TOKEN_VERIFICATION_FAILED'

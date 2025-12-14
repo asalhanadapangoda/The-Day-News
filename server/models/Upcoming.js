@@ -21,6 +21,9 @@ const upcomingSchema = new mongoose.Schema(
   }
 );
 
+// Index for faster queries
+upcomingSchema.index({ createdAt: -1 }); // For sorting by newest first
+
 const Upcoming = mongoose.model('Upcoming', upcomingSchema);
 
 export default Upcoming;
