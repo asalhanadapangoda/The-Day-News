@@ -6,16 +6,18 @@ import {
   deleteUpcoming,
 } from '../controllers/upcomingController.js';
 import { protect } from '../middleware/auth.js';
+import { validateUpcoming } from '../middleware/validation.js';
+import { adminLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
 // Public routes
 router.get('/', getUpcoming);
 
-// Admin routes
-router.post('/', protect, createUpcoming);
-router.put('/:id', protect, updateUpcoming);
-router.delete('/:id', protect, deleteUpcoming);
+// Admin routes - All protected with rate limiting and validation
+router.post('/', adminLimiter, protect, validateUpcoming, createUpcoming);
+router.put('/:id', adminLimiter, protect, validateUpcoming, updateUpcoming);
+router.delete('/:id', adminLimiter, protect, deleteUpcoming);
 
 export default router;
 

@@ -40,7 +40,17 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Admin Routes - All protected */}
+        {/* Public User Routes - No authentication required */}
+        <Route element={<UserLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/podcasts" element={<PodcastsPage />} />
+          <Route path="/podcasts/:id" element={<SingleEpisodePage />} />
+          <Route path="/upcoming" element={<UpcomingPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Route>
+
+        {/* Admin Login - Only accessible when NOT authenticated */}
         <Route
           path="/admin"
           element={
@@ -49,6 +59,8 @@ function App() {
             </PublicRoute>
           }
         />
+        
+        {/* All Admin Dashboard Routes - ALL protected */}
         <Route
           path="/admin/dashboard"
           element={
@@ -65,18 +77,15 @@ function App() {
           <Route path="upcoming" element={<ManageUpcoming />} />
         </Route>
         
-        {/* Catch-all for any other admin routes - redirect to login */}
-        <Route path="/admin/*" element={<Navigate to="/admin" replace />} />
-
-        {/* User Routes */}
-        <Route element={<UserLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/podcasts" element={<PodcastsPage />} />
-          <Route path="/podcasts/:id" element={<SingleEpisodePage />} />
-          <Route path="/upcoming" element={<UpcomingPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Route>
+        {/* Catch-all for any other admin routes - MUST redirect to login if not authenticated */}
+        <Route 
+          path="/admin/*" 
+          element={
+            <ProtectedRoute>
+              <Navigate to="/admin" replace />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
     </Router>
   );

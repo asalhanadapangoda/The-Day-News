@@ -1,6 +1,7 @@
 import { Outlet, useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { authAPI } from '../../services/api';
+import logo from '../../assets/The day News Logo.jpeg';
 
 const AdminDashboard = () => {
   const [user, setUser] = useState(null);
@@ -49,11 +50,13 @@ const AdminDashboard = () => {
         {/* Sidebar */}
         <aside className="w-64 bg-gray-800 text-white min-h-screen">
           <div className="p-6">
-            <div className="flex items-center space-x-2 mb-8">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">TDN</span>
-              </div>
-              <span className="font-bold">Admin Panel</span>
+            <div className="flex items-center space-x-3 mb-8">
+              <img 
+                src={logo} 
+                alt="THE DAY NEWS" 
+                className="h-10 md:h-12 w-auto object-contain"
+              />
+              <span className="font-bold text-sm">Admin Panel</span>
             </div>
 
             <nav className="space-y-2">
@@ -86,7 +89,7 @@ const AdminDashboard = () => {
             <div className="mt-auto pt-8 border-t border-gray-700">
               <button
                 onClick={handleLogout}
-                className="bg-red-500 w-full px-4 py-3 rounded-lg hover:bg-red hover:bg-gray-700 transition-colors text-left叉"
+                className="bg-red-500 w-full px-4 py-3 rounded-lg hover:bg-red-600 transition-colors text-left"
               >
                 Logout
               </button>

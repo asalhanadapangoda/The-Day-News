@@ -14,6 +14,7 @@ const PublicRoute = ({ children }) => {
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
     
+    // No token - allow access to login page
     if (!token) {
       setIsAuthenticated(false);
       setLoading(false);
@@ -22,14 +23,23 @@ const PublicRoute = ({ children }) => {
 
     try {
       // Verify token is valid
-      await authAPI.getMe();
-      setIsAuthenticated(true);
+      const userData = await authAPI.getMe();
+      
+      // Check if user is admin
+      if (userData && userData.role === 'admin') {
+        setIsAuthenticated(true);
+      } else {
+        // User exists but is not admin - remove token
+        localStorage.removeItem('token');
+        setIsAuthenticated(false);
+      }
     } catch (error) {
       // Token is invalid or server unavailable
       localStorage.removeItem('token');
       setIsAuthenticated(false);
+      
       // Don't log errors for missing tokens - that's expected
-      if (token) {
+      if (error.message && !error.message.includes('Cannot connect')) {
         console.warn('Auth verification failed:', error.message);
       }
     } finally {
@@ -41,11 +51,12 @@ const PublicRoute = ({ children }) => {
     return <LoadingSpinner />;
   }
 
-  // If already authenticated, redirect to dashboard
+  // If already authenticated as admin, redirect to dashboard
   if (isAuthenticated) {
     return <Navigate to="/admin/dashboard" replace />;
   }
 
+  // Not authenticated - show login page
   return children;
 };
 

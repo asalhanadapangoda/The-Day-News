@@ -1,8 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import helmet from 'helmet';
 import connectDB from './config/database.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import { apiLimiter } from './middleware/rateLimiter.js';
 
 // Import routes
 import authRoutes from './routes/authRoutes.js';
@@ -18,13 +20,38 @@ connectDB();
 
 const app = express();
 
-// Middleware
+// Security Middleware - Helmet for security headers
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow images/videos from external sources
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"], // Allow inline styles for Tailwind
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"], // Allow images from any HTTPS source
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'", "data:"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'", "https:"],
+      frameSrc: ["'self'", "https:"], // Allow iframes for video embeds
+    },
+  },
+}));
+
+// CORS Configuration
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// Body parsing middleware
+app.use(express.json({ limit: '10mb' })); // Limit JSON payload size
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Rate limiting for all API routes
+app.use('/api', apiLimiter);
 
 // Routes
 app.use('/api/auth', authRoutes);

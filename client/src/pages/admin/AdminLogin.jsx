@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authAPI } from '../../services/api';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import logo from '../../assets/The day News Logo.jpeg';
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -13,19 +14,60 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Trim and normalize username input
+    const normalizedValue = name === 'username' ? value.trim().toLowerCase() : value;
+    
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: normalizedValue,
     });
+    
+    // Clear error when user starts typing
+    if (error) {
+      setError('');
+    }
+  };
+
+  const validateForm = () => {
+    const { username, password } = formData;
+    
+    if (!username || username.length < 3) {
+      setError('Username must be at least 3 characters long');
+      return false;
+    }
+    
+    if (username.length > 30) {
+      setError('Username cannot exceed 30 characters');
+      return false;
+    }
+    
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      setError('Username can only contain letters, numbers, and underscores');
+      return false;
+    }
+    
+    if (!password || password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return false;
+    }
+    
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    // Client-side validation
+    if (!validateForm()) {
+      return;
+    }
+    
     setLoading(true);
 
     try {
-      const data = await authAPI.login(formData.username, formData.password);
+      const data = await authAPI.login(formData.username.trim().toLowerCase(), formData.password);
       if (data.token) {
         localStorage.setItem('token', data.token);
         navigate('/admin/dashboard', { replace: true });
@@ -33,7 +75,12 @@ const AdminLogin = () => {
         setError('Login failed. Please try again.');
       }
     } catch (err) {
-      setError(err.message || 'Invalid credentials');
+      // Handle rate limiting errors
+      if (err.message && err.message.includes('Too many')) {
+        setError('Too many login attempts. Please wait 15 minutes before trying again.');
+      } else {
+        setError(err.message || 'Invalid credentials');
+      }
       // Clear any invalid token
       localStorage.removeItem('token');
     } finally {
@@ -42,57 +89,63 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-2xl">TDN</span>
+    <div className="min-h-screen flex items-center justify-center py-12 md:py-16 lg:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="glass-card rounded-organic-lg p-8 md:p-10 lg:p-12 w-full max-w-md mx-auto animate-fade-in">
+          <div className="text-center mb-8 md:mb-10">
+            <div className="flex items-center justify-center mb-6">
+              <img 
+                src={logo} 
+                alt="THE DAY NEWS" 
+                className="h-16 md:h-20 w-auto object-contain"
+              />
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2 text-premium-lg">Admin Login</h1>
+            <p className="text-gray-600 text-base md:text-lg">THE DAY NEWS</p>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800">Admin Login</h1>
-          <p className="text-gray-600 mt-2">THE DAY NEWS</p>
+
+          {error && <ErrorMessage message={error} />}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="username" className="block text-gray-700 font-medium mb-2.5 text-sm md:text-base">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+                className="w-full px-5 py-3 glass-input rounded-full text-base focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-gray-700 font-medium mb-2.5 text-sm md:text-base">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full px-5 py-3 glass-input rounded-full text-base focus:outline-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full px-8 py-3.5 btn-liquid rounded-full text-white font-medium text-base md:text-lg ripple disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none"
+            >
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+          </form>
         </div>
-
-        {error && <ErrorMessage message={error} />}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-        </form>
       </div>
     </div>
   );

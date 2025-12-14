@@ -60,7 +60,7 @@ const HomePage = () => {
               Welcome to THE DAY NEWS
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl mb-12 text-gray-100 drop-shadow-lg">
-              Stay informed with the latest news and insightful podcasts
+              Your Media Partner In Cyberspace
             </p>
           </div>
 
@@ -138,19 +138,19 @@ const HomePage = () => {
         </section>
       )}
 
-      {/* Latest Feed */}
+      {/* Latest Podcast Feed */}
       <section className="py-16 md:py-20 lg:py-24 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/50 to-transparent"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-10 md:mb-12 text-center text-premium-lg">
-            Latest
+            Latest Podcast
           </h2>
           {latestPodcasts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto">
               {latestPodcasts.map((podcast, index) => (
                 <div 
                   key={podcast._id}
-                  className="animate-fade-in"
+                  className="animate-fade-in h-full"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <PodcastCard podcast={podcast} showPlayIcon={true} />
