@@ -138,7 +138,7 @@ const HomePage = () => {
         </section>
       )}
 
-      {/* Latest Podcast Feed */}
+      {/* Latest Podcast Section */}
       <section className="py-16 md:py-20 lg:py-24 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/50 to-transparent"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
