@@ -79,7 +79,7 @@ const AdminLogin = () => {
       if (err.message && err.message.includes('Too many')) {
         setError('Too many login attempts. Please wait 15 minutes before trying again.');
       } else {
-        setError(err.message || 'Invalid credentials');
+      setError(err.message || 'Invalid credentials');
       }
       // Clear any invalid token
       localStorage.removeItem('token');
@@ -99,52 +99,52 @@ const AdminLogin = () => {
                 alt="THE DAY NEWS" 
                 className="h-16 md:h-20 w-auto object-contain"
               />
-            </div>
+          </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2 text-premium-lg">Admin Login</h1>
             <p className="text-gray-600 text-base md:text-lg">THE DAY NEWS</p>
+        </div>
+
+        {error && <ErrorMessage message={error} />}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+              <label htmlFor="username" className="block text-gray-700 font-medium mb-2.5 text-sm md:text-base">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+                className="w-full px-5 py-3 glass-input rounded-full text-base focus:outline-none"
+            />
           </div>
 
-          {error && <ErrorMessage message={error} />}
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="username" className="block text-gray-700 font-medium mb-2.5 text-sm md:text-base">
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-                className="w-full px-5 py-3 glass-input rounded-full text-base focus:outline-none"
-              />
-            </div>
-
-            <div>
+          <div>
               <label htmlFor="password" className="block text-gray-700 font-medium mb-2.5 text-sm md:text-base">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
                 className="w-full px-5 py-3 glass-input rounded-full text-base focus:outline-none"
-              />
-            </div>
+            />
+          </div>
 
-            <button
-              type="submit"
-              disabled={loading}
+          <button
+            type="submit"
+            disabled={loading}
               className="w-full px-8 py-3.5 btn-liquid rounded-full text-white font-medium text-base md:text-lg ripple disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none"
-            >
-              {loading ? 'Logging in...' : 'Login'}
-            </button>
-          </form>
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
         </div>
       </div>
     </div>

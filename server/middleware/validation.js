@@ -4,8 +4,10 @@ import { body, validationResult } from 'express-validator';
 export const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    // Get the first error message for better UX
+    const firstError = errors.array()[0];
     return res.status(400).json({
-      message: 'Validation failed',
+      message: firstError.msg || 'Validation failed',
       errors: errors.array(),
     });
   }
@@ -72,6 +74,39 @@ export const validateUpcoming = [
     .withMessage('Description is required')
     .isLength({ min: 10 })
     .withMessage('Description must be at least 10 characters long'),
+  handleValidationErrors,
+];
+
+// Contact form validation rules
+export const validateContact = [
+  body('name')
+    .trim()
+    .notEmpty()
+    .withMessage('Name is required')
+    .isLength({ min: 2, max: 100 })
+    .withMessage('Name must be between 2 and 100 characters'),
+  body('email')
+    .trim()
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Please provide a valid email address')
+    .normalizeEmail(),
+  body('message')
+    .trim()
+    .notEmpty()
+    .withMessage('Message is required')
+    .isLength({ min: 10, max: 2000 })
+    .withMessage('Message must be between 10 and 2000 characters'),
+  body('submitTip')
+    .optional()
+    .customSanitizer((value) => {
+      // Convert to boolean: handle undefined, null, string "true"/"false", or actual boolean
+      if (value === undefined || value === null || value === '') return false;
+      if (value === 'true' || value === true) return true;
+      if (value === 'false' || value === false) return false;
+      return Boolean(value);
+    }),
   handleValidationErrors,
 ];
 

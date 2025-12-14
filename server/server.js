@@ -11,6 +11,8 @@ import authRoutes from './routes/authRoutes.js';
 import podcastRoutes from './routes/podcastRoutes.js';
 import sectionRoutes from './routes/sectionRoutes.js';
 import upcomingRoutes from './routes/upcomingRoutes.js';
+import chatbotRoutes from './routes/chatbotRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
 
 // Load env vars
 dotenv.config();
@@ -58,6 +60,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/podcasts', podcastRoutes);
 app.use('/api/sections', sectionRoutes);
 app.use('/api/upcoming', upcomingRoutes);
+app.use('/api/chatbot', chatbotRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

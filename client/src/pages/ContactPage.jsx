@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -8,6 +10,8 @@ const ContactPage = () => {
     submitTip: false,
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -15,15 +19,51 @@ const ContactPage = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setFormData({ name: '', email: '', message: '', submitTip: false });
-    setTimeout(() => setSubmitted(false), 5000);
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch(`${API_URL}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Show specific validation errors if available
+        let errorMessage = data.message || 'Failed to send message. Please try again.';
+        
+        // If there are specific validation errors, show them
+        if (data.errors && Array.isArray(data.errors) && data.errors.length > 0) {
+          const errorMessages = data.errors.map(err => err.msg || err.message).filter(Boolean);
+          if (errorMessages.length > 0) {
+            errorMessage = errorMessages[0]; // Show first error
+          }
+        }
+        
+        throw new Error(errorMessage);
+      }
+
+      // Success
+      setSubmitted(true);
+      setFormData({ name: '', email: '', message: '', submitTip: false });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      console.error('Contact form error:', err);
+      setError(err.message || 'Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,7 +81,13 @@ const ContactPage = () => {
           
           {submitted && (
             <div className="glass-blue rounded-organic px-5 py-4 mb-6 text-green-700 border border-green-300/50">
-              Thank you for your message! We'll get back to you soon.
+              Thank you for your message! We have received it and will get back to you soon.
+            </div>
+          )}
+
+          {error && (
+            <div className="glass-blue rounded-organic px-5 py-4 mb-6 text-red-700 border border-red-300/50">
+              {error}
             </div>
           )}
 
@@ -106,9 +152,10 @@ const ContactPage = () => {
 
             <button
               type="submit"
-              className="w-full px-8 py-3.5 btn-liquid rounded-full text-white font-medium text-base md:text-lg ripple"
+              disabled={loading}
+              className="w-full px-8 py-3.5 btn-liquid rounded-full text-white font-medium text-base md:text-lg ripple disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send Message
+              {loading ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>
