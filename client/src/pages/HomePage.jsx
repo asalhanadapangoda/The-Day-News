@@ -26,12 +26,6 @@ const HomePage = () => {
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 4);
         setLatestPodcasts(sorted);
-        
-        // Get all podcasts with short videos for hero section
-        const withShortVideos = (latestList.podcasts || [])
-          .filter(p => p.shortVideoLink)
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setPodcastsWithShortVideos(withShortVideos);
       } catch (err) {
         setError(err.message);
       } finally {
