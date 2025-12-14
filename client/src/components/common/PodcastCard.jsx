@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
-
-const PodcastCard = ({ podcast, showPlayIcon = true }) => {
+const PodcastCard = ({ podcast }) => {
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -16,28 +14,16 @@ const PodcastCard = ({ podcast, showPlayIcon = true }) => {
 
   return (
     <div className="glass-card rounded-organic overflow-hidden animate-fade-in h-full flex flex-col">
-      <Link to={`/podcasts/${podcast._id}`} className="flex flex-col flex-1">
+      {/* Card content - not clickable */}
+      <div className="flex flex-col flex-1">
         {podcast.thumbnail && (
           <div className="relative h-48 md:h-56 bg-gradient-to-br from-blue-100 to-cyan-100 overflow-hidden flex-shrink-0">
             <img
               src={podcast.thumbnail}
               alt={podcast.name}
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+              className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-            {showPlayIcon && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 md:w-20 md:h-20 glass rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 glow-blue-hover border-2 border-white/30">
-                  <svg
-                    className="w-8 h-8 md:w-10 md:h-10 text-blue-600 ml-1 drop-shadow-lg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                  </svg>
-                </div>
-              </div>
-            )}
           </div>
         )}
         <div className="p-5 md:p-6 flex flex-col flex-1">
@@ -50,7 +36,9 @@ const PodcastCard = ({ podcast, showPlayIcon = true }) => {
             {podcast.duration && <span className="px-2 py-1 glass-blue rounded-full text-xs">{podcast.duration}</span>}
           </div>
         </div>
-      </Link>
+      </div>
+      
+      {/* Only the button is clickable */}
       <div className="px-5 md:px-6 pb-5 md:pb-6 mt-auto">
         {podcast.fullVideoLink ? (
           <a
@@ -62,12 +50,9 @@ const PodcastCard = ({ podcast, showPlayIcon = true }) => {
             View Full Episode
           </a>
         ) : (
-          <Link
-            to={`/podcasts/${podcast._id}`}
-            className="block w-full text-center px-4 py-2.5 btn-liquid rounded-full text-white font-medium text-sm md:text-base ripple"
-          >
-            View Full Episode
-          </Link>
+          <div className="block w-full text-center px-4 py-2.5 bg-gray-300 rounded-full text-gray-600 font-medium text-sm md:text-base cursor-not-allowed">
+            No Video Available
+          </div>
         )}
       </div>
     </div>

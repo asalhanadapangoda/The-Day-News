@@ -1,4 +1,5 @@
 import Podcast from '../models/Podcast.js';
+import { uploadToCloudinary } from '../middleware/upload.js';
 
 // @desc    Get all podcasts (public)
 // @route   GET /api/podcasts
@@ -124,7 +125,21 @@ export const getRelatedPodcasts = async (req, res) => {
 // @access  Private/Admin
 export const createPodcast = async (req, res) => {
   try {
-    const podcast = await Podcast.create(req.body);
+    const podcastData = { ...req.body };
+
+    // Handle thumbnail upload if file exists
+    if (req.file) {
+      try {
+        const result = await uploadToCloudinary(req.file, 'thedaynews/podcasts');
+        podcastData.thumbnail = result.secure_url;
+      } catch (uploadError) {
+        return res.status(400).json({ 
+          message: 'Failed to upload thumbnail: ' + uploadError.message 
+        });
+      }
+    }
+
+    const podcast = await Podcast.create(podcastData);
     res.status(201).json(podcast);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -136,9 +151,23 @@ export const createPodcast = async (req, res) => {
 // @access  Private/Admin
 export const updatePodcast = async (req, res) => {
   try {
+    const podcastData = { ...req.body };
+
+    // Handle thumbnail upload if file exists
+    if (req.file) {
+      try {
+        const result = await uploadToCloudinary(req.file, 'thedaynews/podcasts');
+        podcastData.thumbnail = result.secure_url;
+      } catch (uploadError) {
+        return res.status(400).json({ 
+          message: 'Failed to upload thumbnail: ' + uploadError.message 
+        });
+      }
+    }
+
     const podcast = await Podcast.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      podcastData,
       { new: true, runValidators: true }
     );
 

@@ -6,18 +6,27 @@ const getToken = () => {
 };
 
 // Base fetch function
-const fetchAPI = async (endpoint, options = {}) => {
+const fetchAPI = async (endpoint, options = {}, skipJsonStringify = false) => {
   const token = getToken();
   const config = {
     headers: {
-      'Content-Type': 'application/json',
       ...options.headers,
     },
     ...options,
   };
 
+  // Only set Content-Type for JSON, not for FormData
+  if (!skipJsonStringify && !(options.body instanceof FormData)) {
+    config.headers['Content-Type'] = 'application/json';
+  }
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  // Stringify body only if not FormData and not already stringified
+  if (!skipJsonStringify && options.body && !(options.body instanceof FormData) && typeof options.body !== 'string') {
+    config.body = JSON.stringify(options.body);
   }
 
   try {
@@ -68,16 +77,50 @@ export const podcastAPI = {
   getFeatured: (limit = 3) => fetchAPI(`/podcasts/featured?limit=${limit}`),
   getRelated: (id) => fetchAPI(`/podcasts/${id}/related`),
   // Admin routes
-  create: (data) =>
-    fetchAPI('/podcasts', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }),
-  update: (id, data) =>
-    fetchAPI(`/podcasts/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    }),
+  create: (data, file = null) => {
+    if (file) {
+      // Use FormData for file uploads
+      const formData = new FormData();
+      formData.append('thumbnail', file);
+      Object.keys(data).forEach(key => {
+        if (key !== 'thumbnail' && data[key] !== undefined && data[key] !== null && data[key] !== '') {
+          formData.append(key, data[key]);
+        }
+      });
+      return fetchAPI('/podcasts', {
+        method: 'POST',
+        headers: {}, // Don't set Content-Type, let browser set it with boundary
+        body: formData,
+      }, true); // Pass true to skip JSON.stringify
+    } else {
+      return fetchAPI('/podcasts', {
+        method: 'POST',
+        body: data, // Will be stringified in fetchAPI
+      });
+    }
+  },
+  update: (id, data, file = null) => {
+    if (file) {
+      // Use FormData for file uploads
+      const formData = new FormData();
+      formData.append('thumbnail', file);
+      Object.keys(data).forEach(key => {
+        if (key !== 'thumbnail' && data[key] !== undefined && data[key] !== null && data[key] !== '') {
+          formData.append(key, data[key]);
+        }
+      });
+      return fetchAPI(`/podcasts/${id}`, {
+        method: 'PUT',
+        headers: {}, // Don't set Content-Type, let browser set it with boundary
+        body: formData,
+      }, true); // Pass true to skip JSON.stringify
+    } else {
+      return fetchAPI(`/podcasts/${id}`, {
+        method: 'PUT',
+        body: data, // Will be stringified in fetchAPI
+      });
+    }
+  },
   delete: (id) =>
     fetchAPI(`/podcasts/${id}`, {
       method: 'DELETE',

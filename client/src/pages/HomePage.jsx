@@ -153,7 +153,7 @@ const HomePage = () => {
                   className="animate-fade-in h-full"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <PodcastCard podcast={podcast} showPlayIcon={true} />
+                  <PodcastCard podcast={podcast} />
                 </div>
               ))}
             </div>

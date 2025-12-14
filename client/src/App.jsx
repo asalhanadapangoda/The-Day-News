@@ -8,7 +8,6 @@ import PublicRoute from './components/auth/PublicRoute';
 // User Pages
 import HomePage from './pages/HomePage';
 import PodcastsPage from './pages/PodcastsPage';
-import SingleEpisodePage from './pages/SingleEpisodePage';
 import UpcomingPage from './pages/UpcomingPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -44,7 +43,6 @@ function App() {
         <Route element={<UserLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/podcasts" element={<PodcastsPage />} />
-          <Route path="/podcasts/:id" element={<SingleEpisodePage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />

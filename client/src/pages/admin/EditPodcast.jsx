@@ -33,8 +33,11 @@ const EditPodcast = () => {
       await podcastAPI.delete(id);
       setPodcasts(podcasts.filter((p) => p._id !== id));
       setDeleteConfirm(null);
+      // Show success message
+      setError('');
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to delete podcast');
+      setDeleteConfirm(null);
     }
   };
 
@@ -46,20 +49,20 @@ const EditPodcast = () => {
   if (error) return <ErrorMessage message={error} />;
 
   return (
-    <div>
+    <div className="bg-white rounded-lg shadow-md p-8 max-w-7xl">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Edit Podcasts</h2>
         <button
           onClick={() => navigate('/admin/dashboard/add-podcast')}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
         >
           Add New Podcast
         </button>
       </div>
 
       {podcasts.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <p className="text-gray-600 mb-4">No podcasts found.</p>
+        <div className="text-center py-12">
+          <p className="text-gray-600 mb-4">No podcasts found. Add your first podcast.</p>
           <button
             onClick={() => navigate('/admin/dashboard/add-podcast')}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -70,35 +73,33 @@ const EditPodcast = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {podcasts.map((podcast) => (
-            <div key={podcast._id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div key={podcast._id} className="bg-gray-50 rounded-lg p-6 border border-gray-200">
               {podcast.thumbnail && (
                 <img
                   src={podcast.thumbnail}
                   alt={podcast.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover rounded-lg mb-4"
                 />
               )}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
-                  {podcast.name}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  {podcast.description || podcast.shortDescription}
-                </p>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => handleUpdate(podcast._id)}
-                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => setDeleteConfirm(podcast._id)}
-                    className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
-                  >
-                    Delete
-                  </button>
-                </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
+                {podcast.name}
+              </h3>
+              <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                {podcast.description || podcast.shortDescription}
+              </p>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => handleUpdate(podcast._id)}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={() => setDeleteConfirm(podcast._id)}
+                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}

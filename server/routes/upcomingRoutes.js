@@ -8,6 +8,7 @@ import {
 import { protect } from '../middleware/auth.js';
 import { validateUpcoming } from '../middleware/validation.js';
 import { adminLimiter } from '../middleware/rateLimiter.js';
+import upload from '../middleware/upload.js';
 
 const router = express.Router();
 
@@ -15,8 +16,8 @@ const router = express.Router();
 router.get('/', getUpcoming);
 
 // Admin routes - All protected with rate limiting and validation
-router.post('/', adminLimiter, protect, validateUpcoming, createUpcoming);
-router.put('/:id', adminLimiter, protect, validateUpcoming, updateUpcoming);
+router.post('/', adminLimiter, protect, upload.single('photo'), validateUpcoming, createUpcoming);
+router.put('/:id', adminLimiter, protect, upload.single('photo'), validateUpcoming, updateUpcoming);
 router.delete('/:id', adminLimiter, protect, deleteUpcoming);
 
 export default router;

@@ -17,6 +17,7 @@ const ManageUpcoming = () => {
   });
   const [editingId, setEditingId] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
 
   useEffect(() => {
     fetchUpcoming();
@@ -88,15 +89,14 @@ const ManageUpcoming = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this upcoming podcast?')) {
-      return;
-    }
-
     try {
       await upcomingAPI.delete(id);
-      fetchUpcoming();
+      setUpcoming(upcoming.filter((item) => item._id !== id));
+      setDeleteConfirm(null);
+      setError('');
     } catch (err) {
       setError(err.message || 'Failed to delete upcoming podcast');
+      setDeleteConfirm(null);
     }
   };
 
@@ -109,6 +109,7 @@ const ManageUpcoming = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
+    <>
     <div className="bg-white rounded-lg shadow-md p-8 max-w-4xl">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Manage Upcoming Podcasts</h2>
@@ -230,7 +231,7 @@ const ManageUpcoming = () => {
                   Edit
                 </button>
                 <button
-                  onClick={() => handleDelete(item._id)}
+                  onClick={() => setDeleteConfirm(item._id)}
                   className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
                 >
                   Delete
@@ -241,6 +242,39 @@ const ManageUpcoming = () => {
         </div>
       )}
     </div>
+
+      {/* Delete Confirmation Modal - Rendered outside main container */}
+      {deleteConfirm && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setDeleteConfirm(null)}
+        >
+          <div 
+            className="bg-white rounded-lg p-8 max-w-md w-full mx-4 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Confirm Delete</h3>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this upcoming podcast? This action cannot be undone.
+            </p>
+            <div className="flex space-x-4">
+              <button
+                onClick={() => handleDelete(deleteConfirm)}
+                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setDeleteConfirm(null)}
+                className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors font-medium"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

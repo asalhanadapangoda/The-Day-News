@@ -52,8 +52,14 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' })); // Limit JSON payload size
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Rate limiting for all API routes
-app.use('/api', apiLimiter);
+// Rate limiting for all API routes (excluding health check)
+app.use('/api', (req, res, next) => {
+  // Skip rate limiting for health check
+  if (req.path === '/health') {
+    return next();
+  }
+  apiLimiter(req, res, next);
+});
 
 // Routes
 app.use('/api/auth', authRoutes);

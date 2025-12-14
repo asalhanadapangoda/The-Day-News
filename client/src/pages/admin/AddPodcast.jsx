@@ -13,6 +13,7 @@ const AddPodcast = () => {
     section: '',
     photo: '',
   });
+  const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState('');
   const [sections, setSections] = useState([]);
   const [error, setError] = useState('');
@@ -38,13 +39,10 @@ const AddPodcast = () => {
     const { name, value, type, checked, files } = e.target;
     if (type === 'file' && files && files[0]) {
       const file = files[0];
+      setPhotoFile(file); // Store the actual file
       const reader = new FileReader();
       reader.onloadend = () => {
         setPhotoPreview(reader.result);
-        setFormData({
-          ...formData,
-          [name]: reader.result, // Store as base64 for now
-        });
       };
       reader.readAsDataURL(file);
     } else {
@@ -66,11 +64,10 @@ const AddPodcast = () => {
         description: formData.description,
         fullVideoLink: formData.fullVideoLink || undefined,
         section: formData.section || undefined,
-        thumbnail: formData.photo || undefined,
         published: true,
       };
 
-      await podcastAPI.create(podcastData);
+      await podcastAPI.create(podcastData, photoFile);
       navigate('/admin/dashboard/edit-podcast');
     } catch (err) {
       setError(err.message || 'Failed to create podcast');

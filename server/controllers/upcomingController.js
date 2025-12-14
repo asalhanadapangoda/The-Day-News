@@ -1,4 +1,5 @@
 import Upcoming from '../models/Upcoming.js';
+import { uploadToCloudinary } from '../middleware/upload.js';
 
 // @desc    Get all upcoming podcasts
 // @route   GET /api/upcoming
@@ -17,7 +18,21 @@ export const getUpcoming = async (req, res) => {
 // @access  Private/Admin
 export const createUpcoming = async (req, res) => {
   try {
-    const upcoming = await Upcoming.create(req.body);
+    const upcomingData = { ...req.body };
+
+    // Handle photo upload if file exists
+    if (req.file) {
+      try {
+        const result = await uploadToCloudinary(req.file, 'thedaynews/upcoming');
+        upcomingData.photo = result.secure_url;
+      } catch (uploadError) {
+        return res.status(400).json({ 
+          message: 'Failed to upload photo: ' + uploadError.message 
+        });
+      }
+    }
+
+    const upcoming = await Upcoming.create(upcomingData);
     res.status(201).json(upcoming);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -29,9 +44,23 @@ export const createUpcoming = async (req, res) => {
 // @access  Private/Admin
 export const updateUpcoming = async (req, res) => {
   try {
+    const upcomingData = { ...req.body };
+
+    // Handle photo upload if file exists
+    if (req.file) {
+      try {
+        const result = await uploadToCloudinary(req.file, 'thedaynews/upcoming');
+        upcomingData.photo = result.secure_url;
+      } catch (uploadError) {
+        return res.status(400).json({ 
+          message: 'Failed to upload photo: ' + uploadError.message 
+        });
+      }
+    }
+
     const upcoming = await Upcoming.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      upcomingData,
       { new: true, runValidators: true }
     );
 

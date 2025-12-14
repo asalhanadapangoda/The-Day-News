@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { podcastAPI } from '../services/api';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
@@ -8,6 +8,7 @@ import PodcastCard from '../components/common/PodcastCard';
 
 const SingleEpisodePage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [podcast, setPodcast] = useState(null);
   const [relatedPodcasts, setRelatedPodcasts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ const SingleEpisodePage = () => {
   const fetchPodcast = async () => {
     try {
       setLoading(true);
+      setError(null);
       const [podcastData, related] = await Promise.all([
         podcastAPI.getById(id),
         podcastAPI.getRelated(id),
@@ -27,7 +29,16 @@ const SingleEpisodePage = () => {
       setPodcast(podcastData);
       setRelatedPodcasts(related);
     } catch (err) {
-      setError(err.message);
+      // If podcast not found or deleted, redirect to podcasts page
+      if (err.message.includes('not found') || err.message.includes('404')) {
+        setError('This podcast has been deleted or does not exist.');
+        // Redirect to podcasts page after 3 seconds
+        setTimeout(() => {
+          navigate('/podcasts');
+        }, 3000);
+      } else {
+        setError(err.message || 'Failed to load podcast');
+      }
     } finally {
       setLoading(false);
     }
@@ -57,8 +68,32 @@ const SingleEpisodePage = () => {
   };
 
   if (loading) return <LoadingSpinner />;
-  if (error) return <ErrorMessage message={error} />;
-  if (!podcast) return <ErrorMessage message="Podcast not found" />;
+  
+  if (error || !podcast) {
+    return (
+      <div className="min-h-screen py-12 md:py-16 lg:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <div className="glass-card rounded-organic-lg p-8 md:p-10 text-center">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-premium-lg">
+              Podcast Not Found
+            </h1>
+            <p className="text-gray-600 mb-6 text-lg">
+              {error || 'This podcast has been deleted or does not exist.'}
+            </p>
+            <p className="text-gray-500 mb-8 text-sm">
+              Redirecting to podcasts page...
+            </p>
+            <Link
+              to="/podcasts"
+              className="inline-block px-6 py-3 btn-liquid rounded-full text-white font-medium text-base md:text-lg ripple"
+            >
+              Go to Podcasts
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-12 md:py-16 lg:py-20">

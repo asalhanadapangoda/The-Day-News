@@ -138,7 +138,7 @@ const PodcastsPage = () => {
                         className="animate-fade-in h-full"
                         style={{ animationDelay: `${(groupIndex * 0.1) + (index * 0.05)}s` }}
                       >
-                        <PodcastCard podcast={podcast} showPlayIcon={true} />
+                        <PodcastCard podcast={podcast} />
                       </div>
                     ))}
                   </div>

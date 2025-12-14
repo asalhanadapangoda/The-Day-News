@@ -67,22 +67,16 @@ const AdminDashboard = () => {
                 Manage Sections
               </Link>
               <Link
-                to="/admin/dashboard/add-podcast"
-                className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                Add New Podcast
-              </Link>
-              <Link
                 to="/admin/dashboard/edit-podcast"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
               >
-                Edit Podcast
+                Manage Podcasts
               </Link>
               <Link
                 to="/admin/dashboard/upcoming"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
               >
-                Manage Upcoming
+                Manage Upcoming 
               </Link>
             </nav>
 
