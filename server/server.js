@@ -50,8 +50,15 @@ app.use(helmet({
 }));
 
 // CORS Configuration
+// Normalize CLIENT_URL by removing trailing slash for proper CORS matching
+const getCorsOrigin = () => {
+  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+  // Remove trailing slash to ensure exact match with browser origin
+  return clientUrl.replace(/\/+$/, '');
+};
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: getCorsOrigin(),
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
