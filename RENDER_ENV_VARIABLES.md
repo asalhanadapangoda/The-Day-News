@@ -14,11 +14,11 @@
 ### Copy these one by one into Render:
 
 ```
-MONGODB_URI=mongodb+srv://asalhimsanda_db_user:sVshNnfMp5AfHYaN@cluster0.qxsvhvo.mongodb.net/thedaynews?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/thedaynews?retryWrites=true&w=majority
 ```
 
 ```
-JWT_SECRET=c5e0f9c8c1d34a0fb7a7f4e9eaa97b23fcb9d1e6b0a44e54b1ef883b6c7d52fa
+JWT_SECRET=your_jwt_secret_key_here_minimum_32_characters
 ```
 
 ```
@@ -26,15 +26,15 @@ JWT_EXPIRE=7d
 ```
 
 ```
-CLOUDINARY_CLOUD_NAME=dp9gdxzfn
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 ```
 
 ```
-CLOUDINARY_API_KEY=389197514918947
+CLOUDINARY_API_KEY=your_cloudinary_api_key
 ```
 
 ```
-CLOUDINARY_API_SECRET=42tozkeyPB6eK7aMh-DV245qEf4
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
 ```
@@ -47,7 +47,7 @@ GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ```
-RESEND_API_KEY=re_GfgTNTLd_5fT7Zu4RUvLYQ2NbdwSpUQAM
+RESEND_API_KEY=re_your_resend_api_key_here
 ```
 
 ```
