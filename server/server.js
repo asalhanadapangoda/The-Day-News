@@ -83,8 +83,9 @@ app.get('/api/health', (req, res) => {
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || '0.0.0.0'; // Listen on all interfaces for Render deployment
 
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+  logger.info(`Server running on ${HOST}:${PORT}`);
 });
 
