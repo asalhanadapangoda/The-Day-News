@@ -4,6 +4,7 @@ import Footer from './components/layout/Footer';
 import Chatbot from './components/common/Chatbot';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import PublicRoute from './components/auth/PublicRoute';
+import ExternalRedirect from './components/common/ExternalRedirect';
 
 // User Pages
 import HomePage from './pages/HomePage';
@@ -48,6 +49,14 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
         </Route>
 
+        {/* TV Route - Redirect to Google Sites */}
+        <Route
+          path="/tv"
+          element={
+            <ExternalRedirect to="https://sites.google.com/view/thedaynewsglobal/home" />
+          }
+        />
+
         {/* Admin Login - Only accessible when NOT authenticated */}
         <Route
           path="/admin"
@@ -75,14 +84,10 @@ function App() {
           <Route path="upcoming" element={<ManageUpcoming />} />
         </Route>
         
-        {/* Catch-all for any other admin routes - MUST redirect to login if not authenticated */}
+        {/* Catch-all for any other admin routes - redirect to login */}
         <Route 
           path="/admin/*" 
-          element={
-            <ProtectedRoute>
-              <Navigate to="/admin" replace />
-            </ProtectedRoute>
-          } 
+          element={<Navigate to="/admin" replace />}
         />
       </Routes>
     </Router>
