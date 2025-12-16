@@ -7,14 +7,31 @@ const connectDB = async () => {
       logger.error('\n❌ Error: MONGODB_URI is not defined in .env file');
       logger.error('Please add MONGODB_URI to your server/.env file');
       logger.error('Example: MONGODB_URI=mongodb://localhost:27017/thedaynews');
-      process.exit(1);
+      throw new Error('MONGODB_URI is not defined');
     }
 
+    // Set connection options for better reliability
+    const options = {
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+    };
+
     // Connect with better error handling
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    const conn = await mongoose.connect(process.env.MONGODB_URI, options);
     
     logger.info(`✅ MongoDB Connected: ${conn.connection.host}`);
     logger.info(`   Database: ${conn.connection.name}`);
+    
+    // Handle connection events
+    mongoose.connection.on('error', (err) => {
+      logger.error('MongoDB connection error:', err.message);
+    });
+    
+    mongoose.connection.on('disconnected', () => {
+      logger.warn('MongoDB disconnected. Attempting to reconnect...');
+    });
+    
+    return conn;
   } catch (error) {
     logger.error(`\n❌ MongoDB Connection Error: ${error.message}`);
     
@@ -40,10 +57,14 @@ const connectDB = async () => {
       logger.error('\n⚠️  MongoDB host not found. Please check:');
       logger.error('   1. Your MONGODB_URI hostname is correct');
       logger.error('   2. Internet connection (for MongoDB Atlas)');
+    } else if (error.message.includes('MONGODB_URI is not defined')) {
+      // Don't provide additional error messages for missing URI
+    } else {
+      logger.error('\n📖 See MONGODB_SETUP.md for detailed setup instructions\n');
     }
     
-    logger.error('\n📖 See MONGODB_SETUP.md for detailed setup instructions\n');
-    process.exit(1);
+    // Re-throw error so caller can handle it
+    throw error;
   }
 };
 

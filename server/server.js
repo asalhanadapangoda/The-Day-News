@@ -22,10 +22,14 @@ dotenv.config();
 // Validate required environment variables
 validateEnv();
 
-// Connect to database
-connectDB();
-
 const app = express();
+
+// Connect to database (non-blocking - server will start even if connection is pending)
+connectDB().catch((error) => {
+  logger.error('Failed to connect to database on startup:', error.message);
+  // Don't exit - allow server to start and retry connections
+  // MongoDB will retry automatically on subsequent requests
+});
 
 // Security Middleware - Helmet for security headers
 app.use(helmet({
@@ -77,6 +81,25 @@ app.use('/api/contact', contactRoutes);
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
+});
+
+// Root route - API information
+app.get('/', (req, res) => {
+  res.json({
+    message: 'The Day News API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      podcasts: '/api/podcasts',
+      sections: '/api/sections',
+      upcoming: '/api/upcoming',
+      chatbot: '/api/chatbot',
+      contact: '/api/contact',
+    },
+    documentation: 'Visit /api/health to check server status',
+  });
 });
 
 // Error handler
