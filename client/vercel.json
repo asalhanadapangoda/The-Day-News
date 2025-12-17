@@ -1,10 +1,7 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "npm install",
   "rewrites": [
     {
-      "source": "/((?!favicon|.*\\.(ico|jpeg|jpg|png|svg|gif|webp|woff|woff2|ttf|eot|css|js|json|xml|txt|map)).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
