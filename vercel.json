@@ -1,15 +1,4 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd client && npm install && npm run build",
-  "outputDirectory": "client/dist",
-  "installCommand": "cd client && npm install",
-  "devCommand": "cd client && npm run dev",
-  "framework": null,
-  "rewrites": [
-    {
-      "source": "/((?!favicon|.*\\.(ico|jpeg|jpg|png|svg|gif|webp|woff|woff2|ttf|eot|css|js|json|xml|txt|map)).*)",
-      "destination": "/index.html"
-    }
-  ]
+  "$schema": "https://openapi.vercel.sh/vercel.json"
 }
 
