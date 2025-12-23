@@ -84,7 +84,7 @@ const Chatbot = () => {
       {/* Chatbot Toggle Button - Dark Neumorphic Style */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center z-50 group"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center z-50 group"
         style={{
           background: isOpen 
             ? 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)'
@@ -96,11 +96,11 @@ const Chatbot = () => {
         aria-label="Open chatbot"
       >
         {isOpen ? (
-          <svg className="w-6 h-6 text-white transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <svg className="w-7 h-7 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -114,7 +114,7 @@ const Chatbot = () => {
       {/* Chatbot Window - Dark Theme */}
       {isOpen && (
         <div 
-          className="fixed bottom-28 right-6 w-96 h-[600px] rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden animate-fade-in"
+          className="fixed bottom-20 sm:bottom-28 left-2 right-2 sm:left-auto sm:right-6 sm:w-96 w-[calc(100%-1rem)] h-[calc(100vh-7rem)] sm:h-[600px] max-h-[600px] rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden animate-fade-in"
           style={{
             background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
             border: '1px solid rgba(59, 130, 246, 0.2)',
@@ -123,21 +123,21 @@ const Chatbot = () => {
         >
           {/* Header - Dark with Gradient */}
           <div 
-            className="px-5 py-4 flex items-center justify-between border-b"
+            className="px-3 py-3 sm:px-5 sm:py-4 flex items-center justify-between border-b flex-shrink-0"
             style={{
               background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
               borderColor: 'rgba(59, 130, 246, 0.3)',
             }}
           >
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm flex-shrink-0">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
-              <div>
-                <h3 className="font-bold text-white text-base">THE DAY NEWS AI</h3>
-                <p className="text-xs text-blue-200">Your Media Partner In Cyberspace</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-bold text-white text-sm sm:text-base truncate">THE DAY NEWS AI</h3>
+                <p className="text-xs text-blue-200 truncate">Your Media Partner In Cyberspace</p>
               </div>
             </div>
             <button
@@ -153,7 +153,7 @@ const Chatbot = () => {
 
           {/* Messages Container - Dark Background */}
           <div 
-            className="flex-1 overflow-y-auto p-4 space-y-4"
+            className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 min-h-0"
             style={{
               background: 'linear-gradient(to bottom, #1e293b 0%, #0f172a 100%)',
             }}
@@ -165,7 +165,7 @@ const Chatbot = () => {
                 style={{ animationDelay: `${idx * 0.05}s` }}
               >
                 <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                  className={`max-w-[85%] sm:max-w-[80%] rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 ${
                     msg.role === 'user'
                       ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-lg'
                       : 'bg-slate-700/80 text-gray-100 backdrop-blur-sm border border-slate-600/50'
@@ -176,14 +176,14 @@ const Chatbot = () => {
                       : '0 2px 10px rgba(0, 0, 0, 0.3)',
                   }}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                  <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap break-words">{msg.content}</p>
                 </div>
               </div>
             ))}
             {loading && (
               <div className="flex justify-start animate-fade-in">
                 <div 
-                  className="bg-slate-700/80 text-gray-100 rounded-2xl px-4 py-3 backdrop-blur-sm border border-slate-600/50"
+                  className="bg-slate-700/80 text-gray-100 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-sm border border-slate-600/50"
                   style={{ boxShadow: '0 2px 10px rgba(0, 0, 0, 0.3)' }}
                 >
                   <div className="flex space-x-2 items-center">
@@ -200,13 +200,13 @@ const Chatbot = () => {
           {/* Input Area - Dark Theme */}
           <form 
             onSubmit={handleSend} 
-            className="p-4 border-t"
+            className="p-3 sm:p-4 border-t flex-shrink-0"
             style={{
               background: 'linear-gradient(to top, #1e293b 0%, #0f172a 100%)',
               borderColor: 'rgba(59, 130, 246, 0.2)',
             }}
           >
-            <div className="flex space-x-3">
+            <div className="flex space-x-2 sm:space-x-3">
               <input
                 ref={inputRef}
                 type="text"
@@ -214,7 +214,7 @@ const Chatbot = () => {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type your message..."
                 disabled={loading}
-                className="flex-1 px-4 py-3 rounded-xl text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all disabled:opacity-50"
+                className="flex-1 px-3 py-2 sm:px-4 sm:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all disabled:opacity-50"
                 style={{
                   background: 'rgba(30, 41, 59, 0.8)',
                   border: '1px solid rgba(59, 130, 246, 0.2)',
@@ -224,7 +224,7 @@ const Chatbot = () => {
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="px-5 py-3 rounded-xl text-white font-medium text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="px-3 py-2 sm:px-5 sm:py-3 rounded-lg sm:rounded-xl text-white font-medium text-xs sm:text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center flex-shrink-0"
                 style={{
                   background: loading || !input.trim()
                     ? 'rgba(59, 130, 246, 0.3)'
@@ -235,12 +235,12 @@ const Chatbot = () => {
                 }}
               >
                 {loading ? (
-                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
                 ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 )}
