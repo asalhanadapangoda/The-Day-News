@@ -77,6 +77,34 @@ export const validateUpcoming = [
   handleValidationErrors,
 ];
 
+// Article validation rules
+export const validateArticle = [
+  body('name')
+    .trim()
+    .notEmpty()
+    .withMessage('Article name is required')
+    .isLength({ min: 3, max: 200 })
+    .withMessage('Article name must be between 3 and 200 characters'),
+  body('content')
+    .trim()
+    .notEmpty()
+    .withMessage('Article content is required')
+    .isLength({ min: 10 })
+    .withMessage('Article content must be at least 10 characters long'),
+  handleValidationErrors,
+];
+
+// Article Section validation rules
+export const validateArticleSection = [
+  body('name')
+    .trim()
+    .notEmpty()
+    .withMessage('Section name is required')
+    .isLength({ min: 2, max: 50 })
+    .withMessage('Section name must be between 2 and 50 characters'),
+  handleValidationErrors,
+];
+
 // Contact form validation rules
 export const validateContact = [
   body('name')

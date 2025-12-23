@@ -166,5 +166,83 @@ export const upcomingAPI = {
     }),
 };
 
+// Article API
+export const articleAPI = {
+  getAll: (params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    return fetchAPI(`/articles?${queryString}`);
+  },
+  getById: (id) => fetchAPI(`/articles/${id}`),
+  // Admin routes
+  create: (data, file = null) => {
+    if (file) {
+      // Use FormData for file uploads
+      const formData = new FormData();
+      formData.append('photo', file);
+      Object.keys(data).forEach(key => {
+        if (key !== 'photo' && data[key] !== undefined && data[key] !== null && data[key] !== '') {
+          formData.append(key, data[key]);
+        }
+      });
+      return fetchAPI('/articles', {
+        method: 'POST',
+        headers: {}, // Don't set Content-Type, let browser set it with boundary
+        body: formData,
+      }, true); // Pass true to skip JSON.stringify
+    } else {
+      return fetchAPI('/articles', {
+        method: 'POST',
+        body: data, // Will be stringified in fetchAPI
+      });
+    }
+  },
+  update: (id, data, file = null) => {
+    if (file) {
+      // Use FormData for file uploads
+      const formData = new FormData();
+      formData.append('photo', file);
+      Object.keys(data).forEach(key => {
+        if (key !== 'photo' && data[key] !== undefined && data[key] !== null && data[key] !== '') {
+          formData.append(key, data[key]);
+        }
+      });
+      return fetchAPI(`/articles/${id}`, {
+        method: 'PUT',
+        headers: {}, // Don't set Content-Type, let browser set it with boundary
+        body: formData,
+      }, true); // Pass true to skip JSON.stringify
+    } else {
+      return fetchAPI(`/articles/${id}`, {
+        method: 'PUT',
+        body: data, // Will be stringified in fetchAPI
+      });
+    }
+  },
+  delete: (id) =>
+    fetchAPI(`/articles/${id}`, {
+      method: 'DELETE',
+    }),
+  getAllAdmin: () => fetchAPI('/articles/admin/all'),
+};
+
+// Article Section API
+export const articleSectionAPI = {
+  getAll: () => fetchAPI('/article-sections'),
+  create: (data) =>
+    fetchAPI('/article-sections', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  update: (id, data) =>
+    fetchAPI(`/article-sections/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+  delete: (id) =>
+    fetchAPI(`/article-sections/${id}`, {
+      method: 'DELETE',
+    }),
+};
+
 export default API_URL;
 

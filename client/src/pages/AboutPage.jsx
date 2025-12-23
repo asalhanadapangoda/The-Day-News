@@ -28,14 +28,48 @@ const AboutPage = () => {
         {/* Team Section */}
         <section className="mb-12 md:mb-16">
           <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-8 text-center text-premium">Our Team</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-            {/* Example team member - you can add more */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {/* Manodha Nabadawawe - Founder */}
             <div className="glass-card rounded-organic-lg p-6 md:p-8 text-center animate-fade-in">
               <div className="w-24 h-24 md:w-28 md:h-28 gradient-blue rounded-full mx-auto mb-4 shadow-lg glow-blue"></div>
-              <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-premium">Team Member</h3>
-              <p className="text-gray-600">Editor-in-Chief</p>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-premium">Manodha Nabadawawe</h3>
+              <p className="text-gray-600">Founder</p>
             </div>
-            {/* Add more team members as needed */}
+
+            {/* Asal Handapangoda - Project Manager */}
+            <div className="glass-card rounded-organic-lg p-6 md:p-8 text-center animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <div className="w-24 h-24 md:w-28 md:h-28 gradient-blue rounded-full mx-auto mb-4 shadow-lg glow-blue"></div>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-premium">Asal Handapangoda</h3>
+              <p className="text-gray-600">Project Manager</p>
+            </div>
+
+            {/* Sheron */}
+            <div className="glass-card rounded-organic-lg p-6 md:p-8 text-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <div className="w-24 h-24 md:w-28 md:h-28 gradient-blue rounded-full mx-auto mb-4 shadow-lg glow-blue"></div>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-premium">Sheron</h3>
+              <p className="text-gray-600">Team Member</p>
+            </div>
+
+            {/* Imasha Upamali */}
+            <div className="glass-card rounded-organic-lg p-6 md:p-8 text-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="w-24 h-24 md:w-28 md:h-28 gradient-blue rounded-full mx-auto mb-4 shadow-lg glow-blue"></div>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-premium">Imasha Upamali</h3>
+              <p className="text-gray-600">Team Member</p>
+            </div>
+
+            {/* Emash */}
+            <div className="glass-card rounded-organic-lg p-6 md:p-8 text-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              <div className="w-24 h-24 md:w-28 md:h-28 gradient-blue rounded-full mx-auto mb-4 shadow-lg glow-blue"></div>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-premium">Emash</h3>
+              <p className="text-gray-600">Team Member</p>
+            </div>
+
+            {/* Navodhya */}
+            <div className="glass-card rounded-organic-lg p-6 md:p-8 text-center animate-fade-in" style={{ animationDelay: '0.5s' }}>
+              <div className="w-24 h-24 md:w-28 md:h-28 gradient-blue rounded-full mx-auto mb-4 shadow-lg glow-blue"></div>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-premium">Navodhya</h3>
+              <p className="text-gray-600">Team Member</p>
+            </div>
           </div>
         </section>
 

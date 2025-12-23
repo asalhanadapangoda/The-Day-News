@@ -51,6 +51,16 @@ const Header = () => {
                 Podcasts
               </Link>
               <Link
+                to="/articles"
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  isActive('/articles')
+                    ? 'text-white bg-blue-600/80 shadow-lg glow-blue'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-500/20 hover:shadow-md'
+                }`}
+              >
+                Articles
+              </Link>
+              <Link
                 to="/about"
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   isActive('/about')
@@ -121,6 +131,17 @@ const Header = () => {
                 }`}
               >
                 Podcasts
+              </Link>
+              <Link
+                to="/articles"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-4 py-3 rounded-full text-base font-medium transition-all duration-300 ${
+                  isActive('/articles')
+                    ? 'text-white bg-blue-600/80 shadow-lg glow-blue'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-500/20'
+                }`}
+              >
+                Articles
               </Link>
               <Link
                 to="/about"

@@ -9,6 +9,9 @@ import ExternalRedirect from './components/common/ExternalRedirect';
 // User Pages
 import HomePage from './pages/HomePage';
 import PodcastsPage from './pages/PodcastsPage';
+import FullEpisodePage from './pages/FullEpisodePage';
+import ArticlesPage from './pages/ArticlesPage';
+import SingleArticlePage from './pages/SingleArticlePage';
 import UpcomingPage from './pages/UpcomingPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -21,6 +24,10 @@ import EditPodcast from './pages/admin/EditPodcast';
 import UpdatePodcast from './pages/admin/UpdatePodcast';
 import ManageSections from './pages/admin/ManageSections';
 import ManageUpcoming from './pages/admin/ManageUpcoming';
+import ManageArticleSections from './pages/admin/ManageArticleSections';
+import AddArticle from './pages/admin/AddArticle';
+import EditArticle from './pages/admin/EditArticle';
+import UpdateArticle from './pages/admin/UpdateArticle';
 
 // Layout wrapper for user pages
 const UserLayout = () => {
@@ -44,6 +51,9 @@ function App() {
         <Route element={<UserLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/podcasts" element={<PodcastsPage />} />
+          <Route path="/podcasts/:id/video" element={<FullEpisodePage />} />
+          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles/:id" element={<SingleArticlePage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -81,6 +91,10 @@ function App() {
           <Route path="add-podcast" element={<AddPodcast />} />
           <Route path="edit-podcast" element={<EditPodcast />} />
           <Route path="edit-podcast/:id" element={<UpdatePodcast />} />
+          <Route path="article-sections" element={<ManageArticleSections />} />
+          <Route path="add-article" element={<AddArticle />} />
+          <Route path="edit-article" element={<EditArticle />} />
+          <Route path="edit-article/:id" element={<UpdateArticle />} />
           <Route path="upcoming" element={<ManageUpcoming />} />
         </Route>
         

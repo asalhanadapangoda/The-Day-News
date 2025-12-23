@@ -4,6 +4,7 @@ import { podcastAPI, upcomingAPI } from '../services/api';
 import PodcastCard from '../components/common/PodcastCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
+import coverPage from '../assets/coverPage.png';
 
 const HomePage = () => {
   const [upcomingPodcasts, setUpcomingPodcasts] = useState([]);
@@ -45,7 +46,13 @@ const HomePage = () => {
     <div className="min-h-screen">
       {/* Hero/Featured Section with Background Image - Keep existing top layout */}
       <section 
-        className="relative text-white py-20 md:py-32 lg:py-40 gradient-blue-cyan"
+        className="relative text-white py-20 md:py-32 lg:py-40"
+        style={{
+          backgroundImage: `url(${coverPage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-blue-900/30 via-transparent to-blue-900/50"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -53,9 +60,6 @@ const HomePage = () => {
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-premium-lg drop-shadow-2xl">
               Welcome to THE DAY NEWS
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-12 text-gray-100 drop-shadow-lg">
-              Your Media Partner In Cyberspace
-            </p>
           </div>
         </div>
       </section>

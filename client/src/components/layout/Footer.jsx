@@ -17,7 +17,7 @@ const Footer = () => {
               <span className="text-lg md:text-xl font-bold text-gray-800 text-premium">THE DAY NEWS</span>
             </div>
             <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-              Your trusted source for daily news and insightful podcasts.
+            Your Media Partner In Cyberspace
             </p>
           </div>
 
@@ -33,6 +33,11 @@ const Footer = () => {
               <li>
                 <Link to="/podcasts" className="text-gray-600 hover:text-blue-600 transition-colors text-sm md:text-base">
                   Podcasts
+                </Link>
+              </li>
+              <li>
+                <Link to="/articles" className="text-gray-600 hover:text-blue-600 transition-colors text-sm md:text-base">
+                  Articles
                 </Link>
               </li>
               <li>
@@ -98,7 +103,7 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4 md:mb-6 text-gray-800 text-base md:text-lg">Stay Updated</h3>
             <p className="text-gray-600 text-sm md:text-base mb-4 leading-relaxed">
-              Subscribe to get the latest news and podcast updates.
+              Subscribe to get the latest podcasts updates.
             </p>
           </div>
         </div>

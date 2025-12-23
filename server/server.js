@@ -15,6 +15,8 @@ import sectionRoutes from './routes/sectionRoutes.js';
 import upcomingRoutes from './routes/upcomingRoutes.js';
 import chatbotRoutes from './routes/chatbotRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
+import articleRoutes from './routes/articleRoutes.js';
+import articleSectionRoutes from './routes/articleSectionRoutes.js';
 
 // Load env vars
 dotenv.config();
@@ -44,7 +46,7 @@ app.use(helmet({
       fontSrc: ["'self'", "data:"],
       objectSrc: ["'none'"],
       mediaSrc: ["'self'", "https:"],
-      frameSrc: ["'self'", "https:"], // Allow iframes for video embeds
+      frameSrc: ["'self'", "https:", "https://www.youtube.com", "https://youtube.com"], // Allow iframes for video embeds
     },
   },
 }));
@@ -84,6 +86,8 @@ app.use('/api/sections', sectionRoutes);
 app.use('/api/upcoming', upcomingRoutes);
 app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/articles', articleRoutes);
+app.use('/api/article-sections', articleSectionRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -104,6 +108,8 @@ app.get('/', (req, res) => {
       upcoming: '/api/upcoming',
       chatbot: '/api/chatbot',
       contact: '/api/contact',
+      articles: '/api/articles',
+      articleSections: '/api/article-sections',
     },
     documentation: 'Visit /api/health to check server status',
   });

@@ -48,7 +48,7 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-gray-100">
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 bg-gray-800 text-white min-h-screen">
+        <aside className="w-68 bg-gray-800 text-white min-h-screen">
           <div className="p-6">
             <div className="flex items-center space-x-3 mb-8">
               <img 
@@ -64,13 +64,25 @@ const AdminDashboard = () => {
                 to="/admin/dashboard/sections"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
               >
-                Manage Sections
+                 Manage Podcasts Sections
               </Link>
               <Link
                 to="/admin/dashboard/edit-podcast"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
               >
                 Manage Podcasts
+              </Link>
+              <Link
+                to="/admin/dashboard/article-sections"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Manage Article Sections
+              </Link>
+              <Link
+                to="/admin/dashboard/edit-article"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Manage Articles
               </Link>
               <Link
                 to="/admin/dashboard/upcoming"
