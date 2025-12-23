@@ -13,13 +13,13 @@ const AboutPage = () => {
           <div className="glass-card rounded-organic-lg p-8 md:p-10 lg:p-12 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 text-premium">Our Mission</h2>
             <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-4">
-              At THE DAY NEWS, we are committed to delivering accurate, timely, and insightful news
+              At THE DAY NEWS, we are committed to delivering accurate, timely, and insightful Podcasts
               coverage to keep you informed about the events that matter most. Our mission is to
               provide a platform where truth meets clarity, and information empowers action.
             </p>
             <p className="text-gray-700 text-base md:text-lg leading-relaxed">
               Through our daily news coverage and engaging podcast series, we strive to bridge the
-              gap between complex global events and your understanding, making news accessible,
+              gap between complex global events and your understanding, making Podcasts accessible,
               relevant, and meaningful.
             </p>
           </div>
