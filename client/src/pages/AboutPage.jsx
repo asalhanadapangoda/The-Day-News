@@ -8,7 +8,7 @@ const AboutPage = () => {
           </h1>
         </div>
 
-        {/* Mission Statement */}
+        {/* Mission  */}
         <section className="mb-12 md:mb-16">
           <div className="glass-card rounded-organic-lg p-8 md:p-10 lg:p-12 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 text-premium">Our Mission</h2>
