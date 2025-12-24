@@ -31,6 +31,15 @@
                 0 0 0 1px rgba(147, 197, 253, 0.1) inset;
   }
   
+  .glass-blue-scrolled {
+    background: rgba(59, 130, 246, 0.25);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(147, 197, 253, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.3), 
+                0 0 0 1px rgba(147, 197, 253, 0.2) inset;
+  }
+  
   .glass-card {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(20px) saturate(180%);
