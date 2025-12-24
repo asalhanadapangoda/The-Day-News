@@ -46,7 +46,7 @@ const HomePage = () => {
     <div className="min-h-screen">
       {/* Hero/Featured Section with Background Image - Keep existing top layout */}
       <section 
-        className="relative text-white py-20 md:py-32 lg:py-40"
+        className="relative text-white py-26 md:py-42 lg:py-50"
         style={{
           backgroundImage: `url(${coverPage})`,
           backgroundSize: 'cover',
