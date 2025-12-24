@@ -18,6 +18,17 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Ensure backdrop-filter is applied via inline style as fallback
+  const headerStyle = {
+    backdropFilter: 'blur(20px) saturate(180%)',
+    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+  };
+
+  const scrolledHeaderStyle = {
+    backdropFilter: 'blur(30px) saturate(180%)',
+    WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+  };
+
   return (
     <>
       <header 
@@ -26,6 +37,7 @@ const Header = () => {
             ? 'glass-blue-scrolled' 
             : 'glass-blue'
         }`}
+        style={isScrolled ? scrolledHeaderStyle : headerStyle}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">

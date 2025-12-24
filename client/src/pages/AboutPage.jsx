@@ -1,5 +1,3 @@
-import AsalImage from '../assets/Asal.jpeg';
-
 const AboutPage = () => {
   return (
     <div className="min-h-screen py-12 md:py-16 lg:py-20">
@@ -10,7 +8,7 @@ const AboutPage = () => {
           </h1>
         </div>
 
-        {/* Mission  */}
+        {/* Mission */}
         <section className="mb-12 md:mb-16">
           <div className="glass-card rounded-organic-lg p-8 md:p-10 lg:p-12 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 text-premium">Our Mission</h2>
@@ -40,13 +38,7 @@ const AboutPage = () => {
 
             {/* Asal Handapangoda - Project Manager */}
             <div className="glass-card rounded-organic-lg p-6 md:p-8 text-center animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <div className="w-24 h-24 md:w-28 md:h-28 rounded-full mx-auto mb-4 shadow-lg overflow-hidden border-4 border-blue-100">
-                <img 
-                  src={AsalImage} 
-                  alt="Asal Handapangoda" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <div className="w-24 h-24 md:w-28 md:h-28 gradient-blue rounded-full mx-auto mb-4 shadow-lg glow-blue"></div>
               <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-premium">Asal Handapangoda</h3>
               <p className="text-gray-600">Project Manager</p>
             </div>
