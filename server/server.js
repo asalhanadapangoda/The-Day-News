@@ -52,15 +52,46 @@ app.use(helmet({
 }));
 
 // CORS Configuration
-// Normalize CLIENT_URL by removing trailing slash for proper CORS matching
-const getCorsOrigin = () => {
-  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
-  // Remove trailing slash to ensure exact match with browser origin
-  return clientUrl.replace(/\/+$/, '');
+// Support multiple client URLs (CLIENT_URL1 and CLIENT_URL2)
+// Normalize URLs by removing trailing slash for proper CORS matching
+const getCorsOrigins = () => {
+  const origins = [];
+  
+  // Add CLIENT_URL1 if provided
+  if (process.env.CLIENT_URL1) {
+    origins.push(process.env.CLIENT_URL1.replace(/\/+$/, ''));
+  }
+  
+  // Add CLIENT_URL2 if provided
+  if (process.env.CLIENT_URL2) {
+    origins.push(process.env.CLIENT_URL2.replace(/\/+$/, ''));
+  }
+  
+  // Fallback to CLIENT_URL if CLIENT_URL1 and CLIENT_URL2 are not set (backward compatibility)
+  if (origins.length === 0) {
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    origins.push(clientUrl.replace(/\/+$/, ''));
+  }
+  
+  return origins;
 };
 
+const corsOrigins = getCorsOrigins();
+
 app.use(cors({
-  origin: getCorsOrigin(),
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    // Check if origin is in allowed list
+    if (corsOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

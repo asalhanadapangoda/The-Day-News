@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { authAPI } from '../../services/api';
+import { setToken } from '../../utils/auth';
 import ErrorMessage from '../../components/common/ErrorMessage';
 import logo from '../../assets/The day News Logo.jpeg';
 
@@ -12,6 +13,14 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if redirected due to session expiration
+  useEffect(() => {
+    if (location.state?.sessionExpired) {
+      setError('Your session has expired. Please login again.');
+    }
+  }, [location.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,7 +78,8 @@ const AdminLogin = () => {
     try {
       const data = await authAPI.login(formData.username.trim().toLowerCase(), formData.password);
       if (data.token) {
-        localStorage.setItem('token', data.token);
+        // Use setToken utility which also sets session start time
+        setToken(data.token);
         navigate('/admin/dashboard', { replace: true });
       } else {
         setError('Login failed. Please try again.');
@@ -83,6 +93,7 @@ const AdminLogin = () => {
       }
       // Clear any invalid token
       localStorage.removeItem('token');
+      localStorage.removeItem('sessionStartTime');
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { authAPI } from '../../services/api';
+import { isSessionExpired, clearSession } from '../../utils/auth';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 const PublicRoute = ({ children }) => {
@@ -21,6 +22,14 @@ const PublicRoute = ({ children }) => {
       return;
     }
 
+    // Check if session expired
+    if (isSessionExpired()) {
+      clearSession();
+      setIsAuthenticated(false);
+      setLoading(false);
+      return;
+    }
+
     try {
       // Verify token is valid
       const userData = await authAPI.getMe();
@@ -30,12 +39,12 @@ const PublicRoute = ({ children }) => {
         setIsAuthenticated(true);
       } else {
         // User exists but is not admin - remove token
-        localStorage.removeItem('token');
+        clearSession();
         setIsAuthenticated(false);
       }
     } catch (error) {
       // Token is invalid or server unavailable
-      localStorage.removeItem('token');
+      clearSession();
       setIsAuthenticated(false);
       
       // Don't log errors for missing tokens - that's expected

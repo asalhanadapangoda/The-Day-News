@@ -11,6 +11,8 @@ const requiredEnvVars = [
 const optionalEnvVars = [
   'PORT',
   'CLIENT_URL',
+  'CLIENT_URL1',
+  'CLIENT_URL2',
   'GROQ_API_KEY',
   'RESEND_API_KEY',
   'CLOUDINARY_CLOUD_NAME',
