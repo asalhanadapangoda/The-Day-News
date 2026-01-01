@@ -73,7 +73,7 @@ const HomePage = () => {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-10 md:mb-12 text-center text-premium-lg">
               Upcoming Podcasts
             </h2>
-            <div className={`max-w-7xl mx-auto ${displayUpcoming.length === 1 ? 'max-w-4xl' : ''}`}>
+            <div className={`max-w-3xl mx-auto ${displayUpcoming.length === 1 ? 'max-w-2xl' : ''}`}>
               <div className={`grid gap-6 md:gap-8 ${displayUpcoming.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
                 {displayUpcoming.map((upcoming, index) => (
                   <div 
@@ -82,7 +82,7 @@ const HomePage = () => {
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     {upcoming.photo && (
-                      <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
+                      <div className="relative h-56 md:h-72 lg:h-80 overflow-hidden">
                         <img
                           src={upcoming.photo}
                           alt={upcoming.name}
