@@ -5,9 +5,11 @@
 Set these in your Render Dashboard → Environment Variables:
 
 ```
-CLIENT_URL1=https://thedaynewsglobal.lk
-CLIENT_URL2=https://www.thedaynewsglobal.lk
+CLIENT_URL1=https://www.thedaynewsglobal.lk
+CLIENT_URL2=https://thedaynewsglobal.lk
 ```
+
+**Note:** Trailing slashes are automatically removed by the server, so you can use either `https://www.thedaynewsglobal.lk` or `https://www.thedaynewsglobal.lk/` - both will work.
 
 ## Other Required Variables
 
@@ -25,7 +27,7 @@ NODE_ENV=production
 
 ## Important Notes
 
-- **No trailing slashes** in URLs
+- Trailing slashes are automatically removed (you can include them or not)
 - Use `https://` (not `http://`)
 - Both CLIENT_URL1 and CLIENT_URL2 must be set for CORS to work properly
 - After adding/updating variables, **restart your Render service**
@@ -37,8 +39,8 @@ NODE_ENV=production
 3. Click "Add Environment Variable"
 4. Add each variable one by one:
    - Name: `CLIENT_URL1`
-   - Value: `https://thedaynewsglobal.lk`
+   - Value: `https://www.thedaynewsglobal.lk`
    - Click "Save Changes"
-5. Repeat for `CLIENT_URL2` with value `https://www.thedaynewsglobal.lk`
+5. Repeat for `CLIENT_URL2` with value `https://thedaynewsglobal.lk`
 6. Restart your service
 
