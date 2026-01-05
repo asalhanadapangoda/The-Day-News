@@ -53,6 +53,7 @@ app.use(helmet({
 
 // CORS Configuration
 // Support multiple client URLs (CLIENT_URL1 and CLIENT_URL2)
+// For Render: Set CLIENT_URL1=https://thedaynewsglobal.lk and CLIENT_URL2=https://www.thedaynewsglobal.lk
 // Normalize URLs by removing trailing slash for proper CORS matching
 const getCorsOrigins = () => {
   const origins = [];
