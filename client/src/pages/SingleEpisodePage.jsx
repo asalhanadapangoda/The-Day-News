@@ -106,6 +106,9 @@ const SingleEpisodePage = () => {
                 src={podcast.coverImage}
                 alt={podcast.name}
                 className="w-full h-64 md:h-96 object-cover"
+                crossOrigin="anonymous"
+                referrerPolicy="no-referrer"
+                loading="lazy"
               />
             </div>
           )}

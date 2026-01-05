@@ -60,6 +60,9 @@ const SingleArticlePage = () => {
                 src={article.photo}
                 alt={article.name}
                 className="w-full h-full object-cover"
+                crossOrigin="anonymous"
+                referrerPolicy="no-referrer"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
             </div>

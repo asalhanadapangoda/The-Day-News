@@ -48,6 +48,9 @@ const UpcomingPage = () => {
                       src={upcoming.photo}
                       alt={upcoming.name}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                      crossOrigin="anonymous"
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                   </div>
