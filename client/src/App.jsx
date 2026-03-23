@@ -1,110 +1,68 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import Chatbot from './components/common/Chatbot';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import PublicRoute from './components/auth/PublicRoute';
-import ExternalRedirect from './components/common/ExternalRedirect';
+import { Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 
-// User Pages
-import HomePage from './pages/HomePage';
-import PodcastsPage from './pages/PodcastsPage';
-import FullEpisodePage from './pages/FullEpisodePage';
-import ArticlesPage from './pages/ArticlesPage';
-import SingleArticlePage from './pages/SingleArticlePage';
-import UpcomingPage from './pages/UpcomingPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
+// Layouts
+import PublicLayout from './layouts/PublicLayout';
+import AdminLayout from './layouts/AdminLayout';
+
+// Public Pages
+import Home from './pages/Home';
+import Programs from './pages/Programs';
+import ProgramDetail from './pages/ProgramDetail';
+import Articles from './pages/Articles';
+import ArticleDetail from './pages/ArticleDetail';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Search from './pages/Search';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AddPodcast from './pages/admin/AddPodcast';
-import EditPodcast from './pages/admin/EditPodcast';
-import UpdatePodcast from './pages/admin/UpdatePodcast';
-import ManageSections from './pages/admin/ManageSections';
-import ManageUpcoming from './pages/admin/ManageUpcoming';
-import ManageArticleSections from './pages/admin/ManageArticleSections';
-import AddArticle from './pages/admin/AddArticle';
-import EditArticle from './pages/admin/EditArticle';
-import UpdateArticle from './pages/admin/UpdateArticle';
-
-// Layout wrapper for user pages
-const UserLayout = () => {
-  return (
-    <>
-      <Header />
-      <main className="min-h-screen flex flex-col">
-        <Outlet />
-      </main>
-      <Footer />
-      <Chatbot />
-    </>
-  );
-};
+import Dashboard from './pages/admin/Dashboard';
+import ManagePrograms from './pages/admin/ManagePrograms';
+import ManageEpisodes from './pages/admin/ManageEpisodes';
+import ManageArticles from './pages/admin/ManageArticles';
+import ManageCategories from './pages/admin/ManageCategories';
+import ManageAds from './pages/admin/ManageAds';
+import ManageMessages from './pages/admin/ManageMessages';
+import ManageSettings from './pages/admin/ManageSettings';
+import ManageHero from './pages/admin/ManageHero';
+import ManageTeam from './pages/admin/ManageTeam';
 
 function App() {
   return (
-    <Router>
+    <AuthProvider>
       <Routes>
-        {/* Public User Routes - No authentication required */}
-        <Route element={<UserLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/podcasts" element={<PodcastsPage />} />
-          <Route path="/podcasts/:id/video" element={<FullEpisodePage />} />
-          <Route path="/articles" element={<ArticlesPage />} />
-          <Route path="/articles/:id" element={<SingleArticlePage />} />
-          <Route path="/upcoming" element={<UpcomingPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+        {/* Public Routes */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/programs" element={<Programs />} />
+          <Route path="/programs/:slug" element={<ProgramDetail />} />
+          <Route path="/articles" element={<Articles />} />
+          <Route path="/articles/:slug" element={<ArticleDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/search" element={<Search />} />
         </Route>
 
-        {/* TV Route - Redirect to Google Sites */}
-        <Route
-          path="/tv"
-          element={
-            <ExternalRedirect to="https://sites.google.com/view/thedaynewsglobal/home" />
-          }
-        />
+        {/* Admin Login (No Layout) */}
+        <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* Admin Login - Only accessible when NOT authenticated */}
-        <Route
-          path="/admin"
-          element={
-            <PublicRoute>
-              <AdminLogin />
-            </PublicRoute>
-          }
-        />
-        
-        {/* All Admin Dashboard Routes - ALL protected */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Navigate to="/admin/dashboard/edit-podcast" replace />} />
-          <Route path="sections" element={<ManageSections />} />
-          <Route path="add-podcast" element={<AddPodcast />} />
-          <Route path="edit-podcast" element={<EditPodcast />} />
-          <Route path="edit-podcast/:id" element={<UpdatePodcast />} />
-          <Route path="article-sections" element={<ManageArticleSections />} />
-          <Route path="add-article" element={<AddArticle />} />
-          <Route path="edit-article" element={<EditArticle />} />
-          <Route path="edit-article/:id" element={<UpdateArticle />} />
-          <Route path="upcoming" element={<ManageUpcoming />} />
+        {/* Admin Protected Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="programs" element={<ManagePrograms />} />
+          <Route path="episodes" element={<ManageEpisodes />} />
+          <Route path="articles" element={<ManageArticles />} />
+          <Route path="categories" element={<ManageCategories />} />
+          <Route path="ads" element={<ManageAds />} />
+          <Route path="messages" element={<ManageMessages />} />
+          <Route path="settings" element={<ManageSettings />} />
+          <Route path="heroes" element={<ManageHero />} />
+          <Route path="team" element={<ManageTeam />} />
         </Route>
-        
-        {/* Catch-all for any other admin routes - redirect to login */}
-        <Route 
-          path="/admin/*" 
-          element={<Navigate to="/admin" replace />}
-        />
       </Routes>
-    </Router>
+    </AuthProvider>
   );
 }
 

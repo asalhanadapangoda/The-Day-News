@@ -1,68 +1,49 @@
-import User from '../models/User.js';
+import AdminUser from '../models/AdminUser.js';
 import generateToken from '../utils/generateToken.js';
-import logger from '../utils/logger.js';
 
-// @desc    Login user
+// @desc    Auth admin & get token
 // @route   POST /api/auth/login
 // @access  Public
-export const login = async (req, res) => {
+const authAdmin = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { username, password } = req.body;
+    const admin = await AdminUser.findOne({ email });
 
-    // Additional validation (express-validator handles most, but this is a fallback)
-    if (!username || !password) {
-      return res.status(400).json({ message: 'Please provide username and password' });
+    if (admin && (await admin.matchPassword(password))) {
+      res.json({
+        _id: admin._id,
+        name: admin.name,
+        email: admin.email,
+        token: generateToken(admin._id),
+      });
+    } else {
+      res.status(401).json({ message: 'Invalid email or password' });
     }
-
-    // Find user - use case-insensitive search for better security
-    // Use .select('+password') to include password field (it's excluded by default)
-    const user = await User.findOne({ 
-      username: username.trim().toLowerCase() 
-    }).select('+password');
-
-    // Always return the same error message to prevent username enumeration
-    // This makes it harder for attackers to determine if a username exists
-    if (!user) {
-      // Add a small delay to prevent timing attacks
-      await new Promise(resolve => setTimeout(resolve, 100));
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    // Verify password
-    const isMatch = await user.matchPassword(password);
-
-    if (!isMatch) {
-      // Add a small delay even on wrong password to prevent timing attacks
-      await new Promise(resolve => setTimeout(resolve, 100));
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    // Generate token with user ID
-    const token = generateToken(user._id);
-
-    // Return user data and token
-    res.json({
-      _id: user._id,
-      username: user.username,
-      role: user.role,
-      token: token,
-    });
   } catch (error) {
-    // Don't expose internal error details
-    logger.error('Login error:', error);
-    res.status(500).json({ message: 'An error occurred during login. Please try again.' });
+    console.error("LOGIN ERROR:", error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// @desc    Get current user
-// @route   GET /api/auth/me
+// @desc    Get admin profile
+// @route   GET /api/auth/profile
 // @access  Private
-export const getMe = async (req, res) => {
+const getAdminProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).select('-password');
-    res.json(user);
+    const admin = await AdminUser.findById(req.admin._id);
+    if (admin) {
+      res.json({
+        _id: admin._id,
+        name: admin.name,
+        email: admin.email,
+      });
+    } else {
+      res.status(404).json({ message: 'Admin not found' });
+    }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
+export { authAdmin, getAdminProfile };

@@ -5,13 +5,12 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  build: {
-    cssMinify: 'lightningcss',
-    cssCodeSplit: false,
-  },
-  css: {
-    postcss: {
-      plugins: [],
-    },
-  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true
+      }
+    }
+  }
 })

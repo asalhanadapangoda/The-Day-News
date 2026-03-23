@@ -1,17 +1,8 @@
 {
-  "name": "the-day-news",
-  "version": "1.0.0",
+  "name": "the-day-news-v2",
   "private": true,
+  "version": "1.0.0",
   "scripts": {
-    "build": "cd client && npm install && npm run build",
-    "install": "cd client && npm install"
+    "build": "npm --prefix client run build"
   }
 }
-
-
-
-
-
-
-
-

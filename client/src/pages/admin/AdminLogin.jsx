@@ -1,161 +1,107 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { authAPI } from '../../services/api';
-import { setToken } from '../../utils/auth';
-import ErrorMessage from '../../components/common/ErrorMessage';
-import logo from '../../assets/The day News Logo.jpeg';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import AuthContext from '../../context/AuthContext';
+import { Lock, Mail, ShieldAlert } from 'lucide-react';
+import logo from '../../assets/logo.png';
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
+});
 
 const AdminLogin = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Check if redirected due to session expiration
-  useEffect(() => {
-    if (location.state?.sessionExpired) {
-      setError('Your session has expired. Please login again.');
-    }
-  }, [location.state]);
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(loginSchema)
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    // Trim and normalize username input
-    const normalizedValue = name === 'username' ? value.trim().toLowerCase() : value;
-    
-    setFormData({
-      ...formData,
-      [name]: normalizedValue,
-    });
-    
-    // Clear error when user starts typing
-    if (error) {
-      setError('');
-    }
-  };
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    setErrorMsg('');
 
-  const validateForm = () => {
-    const { username, password } = formData;
-    
-    if (!username || username.length < 3) {
-      setError('Username must be at least 3 characters long');
-      return false;
-    }
-    
-    if (username.length > 30) {
-      setError('Username cannot exceed 30 characters');
-      return false;
-    }
-    
-    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-      setError('Username can only contain letters, numbers, and underscores');
-      return false;
-    }
-    
-    if (!password || password.length < 6) {
-      setError('Password must be at least 6 characters long');
-      return false;
-    }
-    
-    return true;
-  };
+    const result = await login(data.email, data.password);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    
-    // Client-side validation
-    if (!validateForm()) {
-      return;
-    }
-    
-    setLoading(true);
+    setIsSubmitting(false);
 
-    try {
-      const data = await authAPI.login(formData.username.trim().toLowerCase(), formData.password);
-      if (data.token) {
-        // Use setToken utility which also sets session start time
-        setToken(data.token);
-        navigate('/admin/dashboard', { replace: true });
-      } else {
-        setError('Login failed. Please try again.');
-      }
-    } catch (err) {
-      // Handle rate limiting errors
-      if (err.message && err.message.includes('Too many')) {
-        setError('Too many login attempts. Please wait 15 minutes before trying again.');
-      } else {
-      setError(err.message || 'Invalid credentials');
-      }
-      // Clear any invalid token
-      localStorage.removeItem('token');
-      localStorage.removeItem('sessionStartTime');
-    } finally {
-      setLoading(false);
+    if (result.success) {
+      navigate('/admin/dashboard');
+    } else {
+      setErrorMsg(result.message);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 md:py-16 lg:py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-card rounded-organic-lg p-8 md:p-10 lg:p-12 w-full max-w-md mx-auto animate-fade-in">
-          <div className="text-center mb-8 md:mb-10">
-            <div className="flex items-center justify-center mb-6">
-              <img 
-                src={logo} 
-                alt="THE DAY NEWS" 
-                className="h-16 md:h-20 w-auto object-contain"
-              />
-          </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2 text-premium-lg">Admin Login</h1>
-            <p className="text-gray-600 text-base md:text-lg">THE DAY NEWS</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#0c0014] p-4 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
+      </div>
+
+      <div className="w-full max-w-md glass-card p-10 relative z-10">
+        <div className="text-center mb-10 flex flex-col items-center">
+          <img src={logo} alt="The Day News Admin" className="h-[100px] w-auto mb-6 object-contain" />
+          <h1 className="text-2xl font-bold text-white tracking-widest uppercase mb-2">Admin Access</h1>
+          <p className="text-gray-400 text-sm">Secure login required to continue</p>
         </div>
 
-        {error && <ErrorMessage message={error} />}
+        {errorMsg && (
+          <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-sm p-4 rounded-lg mb-6 text-center">
+            {errorMsg}
+          </div>
+        )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-              <label htmlFor="username" className="block text-gray-700 font-medium mb-2.5 text-sm md:text-base">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-                className="w-full px-5 py-3 glass-input rounded-full text-base focus:outline-none"
-            />
+            <div className="relative flex items-center">
+              <Mail className="absolute left-4 text-gray-500" size={20} />
+              <input
+                {...register("email")}
+                type="email"
+                placeholder="Admin Email"
+                className="w-full bg-[#121212] border border-white/10 text-white rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              />
+            </div>
+            {errors.email && <p className="text-red-400 text-xs mt-1 ml-1">{errors.email.message}</p>}
           </div>
 
           <div>
-              <label htmlFor="password" className="block text-gray-700 font-medium mb-2.5 text-sm md:text-base">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-                className="w-full px-5 py-3 glass-input rounded-full text-base focus:outline-none"
-            />
+            <div className="relative flex items-center">
+              <Lock className="absolute left-4 text-gray-500" size={20} />
+              <input
+                {...register("password")}
+                type="password"
+                placeholder="Password"
+                className="w-full bg-[#121212] border border-white/10 text-white rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              />
+            </div>
+            {errors.password && <p className="text-red-400 text-xs mt-1 ml-1">{errors.password.message}</p>}
           </div>
 
           <button
             type="submit"
-            disabled={loading}
-              className="w-full px-8 py-3.5 btn-liquid rounded-full text-white font-medium text-base md:text-lg ripple disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none"
+            disabled={isSubmitting}
+            className="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 rounded-lg flex justify-center items-center gap-2 transition-colors disabled:opacity-70 mt-4"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {isSubmitting ? (
+              <span className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></span>
+            ) : (
+              'Login'
+            )}
           </button>
         </form>
+
+        <div className="mt-8 text-center">
+          <button onClick={() => navigate('/')} className="text-gray-500 hover:text-white text-xs transition-colors">
+            ← Return to Public Site
+          </button>
         </div>
       </div>
     </div>
@@ -163,4 +109,3 @@ const AdminLogin = () => {
 };
 
 export default AdminLogin;
-

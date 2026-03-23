@@ -2,26 +2,54 @@ import mongoose from 'mongoose';
 
 const articleSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
-      required: [true, 'Please provide an article name'],
-      trim: true,
+      required: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    excerpt: {
+      type: String,
+      required: true,
     },
     content: {
       type: String,
-      required: [true, 'Please provide article content'],
+      required: true,
     },
-    photo: {
+    featuredImage: {
       type: String,
-      trim: true,
+      required: true,
     },
-    published: {
-      type: Boolean,
-      default: true,
-    },
-    section: {
+    category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'ArticleSection',
+      required: true,
+      ref: 'ArticleCategory',
+    },
+    tags: [
+      {
+        type: String,
+      },
+    ],
+    author: {
+      type: String,
+      required: true,
+      default: 'The Day News Global',
+    },
+    status: {
+      type: String,
+      enum: ['draft', 'published'],
+      default: 'draft',
+    },
+    viewCount: {
+      type: Number,
+      default: 0,
+    },
+    publishDate: {
+      type: Date,
+      default: Date.now,
     },
   },
   {
@@ -29,13 +57,8 @@ const articleSchema = new mongoose.Schema(
   }
 );
 
-// Indexes for faster queries
-articleSchema.index({ createdAt: -1 });
-articleSchema.index({ section: 1, published: 1, createdAt: -1 });
-articleSchema.index({ published: 1, createdAt: -1 });
-articleSchema.index({ name: 'text', content: 'text' }); // Text search index
+articleSchema.index({ category: 1, status: 1, publishDate: -1 });
 
 const Article = mongoose.model('Article', articleSchema);
 
 export default Article;
-
