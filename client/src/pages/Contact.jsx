@@ -76,8 +76,12 @@ const Contact = () => {
                   <MapPin className="text-primary" size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Our Headquarters</h3>
-                  <p className="text-gray-400">{settings?.contactAddress || '123 Media Avenue, New York, NY 10001, USA'}</p>
+                  <h3 className="text-xl font-bold text-white mb-2">Our Lobby Office</h3>
+                  <p className="text-gray-400">{settings?.contactAddress || 'Trace Expert City, Bay 09, Colombo 10, Sri Lanka'}</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2">Our Content Studio</h3>
+                  <p className="text-gray-400">Hacker House, Pannipitiya Rd, Battaramulla</p>
                 </div>
               </div>
 

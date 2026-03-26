@@ -109,6 +109,14 @@ const Home = () => {
             <div className="h-40 bg-white/5 rounded-xl animate-pulse"></div>
           </div>
 
+          {/* Articles Skeleton */}
+          <div>
+            <div className="h-10 bg-white/10 rounded w-64 mb-10 animate-pulse"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(4)].map((_, i) => <Skeleton key={i} type="article" />)}
+            </div>
+          </div>
+
           {/* Episodes Skeleton */}
           <div>
             <div className="h-10 bg-white/10 rounded w-48 mb-8 animate-pulse"></div>
@@ -116,14 +124,6 @@ const Home = () => {
               {[...Array(3)].map((_, i) => <Skeleton key={i} type="episode" />)}
             </div>
           </div>
-
-           {/* Articles Skeleton */}
-           <div>
-              <div className="h-10 bg-white/10 rounded w-64 mb-10 animate-pulse"></div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[...Array(4)].map((_, i) => <Skeleton key={i} type="article" />)}
-              </div>
-           </div>
 
           {/* Posters Skeleton */}
           <div>

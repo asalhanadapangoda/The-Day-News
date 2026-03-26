@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../../services/api';
 import { Pencil, Trash2, Plus, X, UploadCloud, Search } from 'lucide-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { format } from 'date-fns';
 
 const ManageArticles = () => {
@@ -138,6 +140,16 @@ const ManageArticles = () => {
     const matchSearch = art.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCategory && matchSearch;
   });
+
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['link', 'image', 'video'],
+      ['clean']
+    ]
+  };
 
   if (loading) return <div className="text-white">Loading...</div>;
 
@@ -317,18 +329,18 @@ const ManageArticles = () => {
                     ></textarea>
                   </div>
 
-                  {/* Article editor */}
+                  {/* React Quill Editor Container */}
                   <div className="flex-grow flex flex-col pb-4 h-[400px]">
                     <label className="block text-sm font-medium text-gray-400 mb-2">Article Body Content *</label>
-                    <textarea
-                      value={editorContent}
-                      onChange={(e) => setEditorContent(e.target.value)}
-                      className="w-full h-full min-h-[320px] bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none resize-none"
-                      placeholder="Write the full article here..."
-                    />
-                    <p className="text-xs text-gray-500 mt-2">
-                      Plain text editing is enabled for now so the admin page can run without the broken rich text dependency.
-                    </p>
+                    <div className="bg-white text-black rounded-lg overflow-hidden flex-grow flex flex-col h-full editor-container">
+                      <ReactQuill
+                        theme="snow"
+                        value={editorContent}
+                        onChange={setEditorContent}
+                        modules={modules}
+                        className="flex-grow flex flex-col h-full pb-10"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -346,6 +358,16 @@ const ManageArticles = () => {
           </div>
         </div>
       )}
+
+      {/* Global CSS override for Quill to look somewhat better in our modal bounds */}
+      <style jsx="true">{`
+        .editor-container .ql-container {
+          flex-grow: 1;
+          font-family: inherit;
+          font-size: 16px;
+          min-height: 200px;
+        }
+      `}</style>
     </div>
   );
 };
