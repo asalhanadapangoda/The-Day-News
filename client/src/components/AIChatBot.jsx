@@ -32,7 +32,7 @@ const AIChatBot = () => {
       const { data } = await api.post('/ai/chat', {
         messages: [...messages, userMessage].map(m => ({ role: m.role, content: m.content }))
       });
-      
+
       setMessages(prev => [...prev, { role: 'assistant', content: data.message }]);
     } catch (error) {
       console.error('Chat error:', error);
@@ -45,7 +45,7 @@ const AIChatBot = () => {
   return (
     <div className="fixed bottom-6 right-6 z-[999]">
       {/* Chat Toggle Button */}
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-14 h-14 bg-primary hover:bg-primary-hover text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group relative"
       >
@@ -88,11 +88,10 @@ const AIChatBot = () => {
                   <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center border border-white/10 ${m.role === 'user' ? 'bg-primary' : 'bg-white/5'}`}>
                     {m.role === 'user' ? <User size={16} className="text-white" /> : <Sparkles size={16} className="text-primary" />}
                   </div>
-                  <div className={`p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-                    m.role === 'user' 
-                      ? 'bg-primary/20 text-white border border-primary/30 rounded-tr-none' 
-                      : 'bg-white/5 text-gray-300 border border-white/5 rounded-tl-none'
-                  }`}>
+                  <div className={`p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${m.role === 'user'
+                    ? 'bg-primary/20 text-white border border-primary/30 rounded-tr-none'
+                    : 'bg-white/5 text-gray-300 border border-white/5 rounded-tl-none'
+                    }`}>
                     {m.content}
                   </div>
                 </div>
@@ -121,15 +120,15 @@ const AIChatBot = () => {
           {/* Input Area */}
           <form onSubmit={handleSubmit} className="p-4 bg-white/5 border-t border-white/10">
             <div className="relative flex items-center">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask our AI assistant..."
                 className="w-full bg-white/5 border border-white/10 rounded-full py-3 px-5 pr-12 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-gray-600"
               />
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={!input.trim() || isLoading}
                 className="absolute right-2 p-2 bg-primary hover:bg-primary-hover text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
@@ -138,7 +137,6 @@ const AIChatBot = () => {
             </div>
             <div className="text-center mt-3">
               <p className="text-[10px] text-gray-600 uppercase tracking-widest font-mono">
-                Powered by Groq Llama 3
               </p>
             </div>
           </form>
