@@ -30,6 +30,18 @@ const ProgramDetail = () => {
     };
     fetchProgramDetails();
   }, [slug]);
+  
+  // Disable body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
 
   if (loading) {
     return (
@@ -152,7 +164,7 @@ const ProgramDetail = () => {
               )}
             </div>
             
-            <div className="p-6 md:p-8 bg-gradient-to-b from-[#1a1a1a] to-[#0c0014] max-h-[150px] overflow-y-auto">
+            <div className="p-6 md:p-8 bg-gradient-to-b from-[#1a1a1a] to-[#0c0014] max-h-[150px] overflow-hidden">
               <p className="text-gray-300 leading-relaxed italic border-l-2 border-primary pl-4">{playingEpisode.description}</p>
             </div>
           </div>
