@@ -241,7 +241,7 @@ const Home = () => {
       <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex justify-between items-end mb-10 border-b border-white/10 pb-4">
           <h2 className="text-3xl font-bold text-white flex items-center gap-3">
-            <span className="w-2 h-8 bg-purple-500 rounded-full"></span>
+            <span className="w-2 h-8 bg-primary rounded-full"></span>
             Latest News & Stories
           </h2>
           <Link to="/articles" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold">

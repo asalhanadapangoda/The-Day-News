@@ -2,8 +2,8 @@
 @import "react-quill/dist/quill.snow.css"; /* For rich text editor */
 
 @theme {
-  --color-primary: #6A1BB9;
-  --color-primary-hover: #551594;
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
   --color-dark-surface: #1A1A1A;
   --color-dark-card: #242424;
   --color-dark-purple: #2E004F;
@@ -22,7 +22,7 @@
 /* Custom utilities */
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 10px rgba(106, 27, 185, 0.5);
+    text-shadow: 0 0 10px rgba(79, 70, 229, 0.5);
   }
   
   .glass-card {
@@ -30,7 +30,7 @@
   }
 
   .hover-glow {
-    @apply hover:shadow-[0_0_15px_rgba(106,27,185,0.4)] transition-shadow duration-300;
+    @apply hover:shadow-[0_0_15px_rgba(79,70,229,0.4)] transition-shadow duration-300;
   }
 
   /* Admin Sidebar layout specific */

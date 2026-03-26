@@ -82,45 +82,45 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <StatCard 
-          title="Programs" 
-          value={stats.programs} 
-          icon={Video} 
+        <StatCard
+          title="Programs"
+          value={stats.programs}
+          icon={Video}
           colorClass="bg-purple-600"
           link="/admin/programs"
         />
-        <StatCard 
-          title="Episodes" 
-          value={stats.episodes} 
-          icon={Image} 
+        <StatCard
+          title="Episodes"
+          value={stats.episodes}
+          icon={Image}
           colorClass="bg-indigo-600"
           link="/admin/episodes"
         />
-        <StatCard 
-          title="Articles" 
-          value={stats.articles} 
-          icon={FileText} 
+        <StatCard
+          title="Articles"
+          value={stats.articles}
+          icon={FileText}
           colorClass="bg-blue-600"
           link="/admin/articles"
         />
-        <StatCard 
-          title="Article Categories" 
-          value={stats.categories} 
-          icon={Layers} 
+        <StatCard
+          title="Article Categories"
+          value={stats.categories}
+          icon={Layers}
           colorClass="bg-emerald-600"
           link="/admin/categories"
         />
-        <StatCard 
-          title="Advertisements" 
-          value={stats.ads} 
-          icon={ImageIcon} 
+        <StatCard
+          title="Advertisements"
+          value={stats.ads}
+          icon={ImageIcon}
           colorClass="bg-amber-600"
           link="/admin/ads"
         />
-        <StatCard 
-          title="Contact Messages" 
-          value={stats.messages} 
-          icon={MessageSquare} 
+        <StatCard
+          title="Contact Messages"
+          value={stats.messages}
+          icon={MessageSquare}
           colorClass="bg-pink-600"
           link="/admin/messages"
         />
