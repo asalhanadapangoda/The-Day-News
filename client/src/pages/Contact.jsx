@@ -77,7 +77,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Our Lobby Office</h3>
-                  <p className="text-gray-400">{settings?.contactAddress || 'Trace Expert City, Bay 09, Colombo 10, Sri Lanka'}</p>
+                  <p className="text-gray-400">{settings?.contactAddress || 'TRACE Expert City, Bay 09, Colombo 10, Sri Lanka'}</p>
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Our Content Studio</h3>
