@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { Calendar, User, Eye, Facebook, Linkedin, LinkIcon, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
-import { Helmet } from 'react-helmet-async';
 
 const ArticleDetail = () => {
   const { slug } = useParams();
@@ -72,28 +71,6 @@ const ArticleDetail = () => {
 
   return (
     <div className="pb-20">
-      <Helmet>
-        <title>{article.title} | THE DAY NEWS</title>
-        <meta name="description" content={article.excerpt} />
-        
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={window.location.href} />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.excerpt} />
-        <meta property="og:image" content={article.featuredImage} />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={window.location.href} />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={article.excerpt} />
-        <meta name="twitter:image" content={article.featuredImage} />
-        
-        {/* Extra refinement for better scraping */}
-        <link rel="canonical" href={window.location.href} />
-      </Helmet>
-
       {/* Header Banner */}
       <div className="w-full relative min-h-[40vh] md:min-h-[60vh] flex items-end">
         <div className="absolute inset-0">
