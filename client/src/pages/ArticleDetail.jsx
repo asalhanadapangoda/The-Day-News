@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
-import { Calendar, User, Eye, Facebook, Linkedin, LinkIcon } from 'lucide-react';
+import { Calendar, User, Eye, Facebook, Linkedin, LinkIcon, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
 
 const ArticleDetail = () => {
@@ -31,6 +31,26 @@ const ArticleDetail = () => {
     window.scrollTo(0, 0);
     fetchArticleDetails();
   }, [slug]);
+  
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: article.title,
+          text: article.excerpt || article.title,
+          url: window.location.href,
+        });
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Share failed:', err.message);
+        }
+      }
+    } else {
+      // Fallback: clipboard copy
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!");
+    }
+  };
 
   if (loading) {
     return (
@@ -88,16 +108,31 @@ const ArticleDetail = () => {
         {/* Article Body */}
         <div className="bg-transparent">
           {/* Mobile Share */}
-          <div className="flex lg:hidden gap-3 mb-8 pb-8 border-b border-white/10">
+          <div className="flex gap-3 mb-8 pb-8 border-b border-white/10">
             <span className="text-sm text-gray-400 font-bold uppercase flex items-center mr-2">Share:</span>
-            <button className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center">
-              <Facebook size={18} />
+            {/* Native Share Button (Primary for mobile) */}
+            <button 
+              onClick={handleShare}
+              className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
+              title="Share or Copy Link"
+            >
+              <Share2 size={18} />
             </button>
+            <a 
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(article.title)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+              aria-label="Share on Facebook"
+            >
+              <Facebook size={18} />
+            </a>
             <a 
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-[#0077B5] text-white flex items-center justify-center"
+              className="w-10 h-10 rounded-full bg-[#0077B5] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+              aria-label="Share on LinkedIn"
             >
               <Linkedin size={18} />
             </a>
