@@ -82,7 +82,7 @@ const ProgramDetail = () => {
     <div className="w-full pb-20">
       {/* Dynamic Header */}
       <div className="relative w-full h-[50vh] min-h-[400px]">
-        <img src={program.coverImage} className="absolute inset-0 w-full h-full object-cover" alt={program.title} />
+        <img src={program.coverImage} className="absolute inset-0 w-full h-full object-cover object-top" alt={program.title} />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-[#0c0014]/60 to-black/30"></div>
         <div className="absolute bottom-0 left-0 w-full p-8 max-w-7xl mx-auto flex items-end gap-6">
           <div className="pb-4">
