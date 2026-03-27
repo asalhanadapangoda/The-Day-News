@@ -27,6 +27,7 @@ import ManageMessages from './pages/admin/ManageMessages';
 import ManageSettings from './pages/admin/ManageSettings';
 import ManageHero from './pages/admin/ManageHero';
 import ManageTeam from './pages/admin/ManageTeam';
+import ManagePartners from './pages/admin/ManagePartners';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <Route path="settings" element={<ManageSettings />} />
           <Route path="heroes" element={<ManageHero />} />
           <Route path="team" element={<ManageTeam />} />
+          <Route path="partners" element={<ManagePartners />} />
         </Route>
       </Routes>
     </AuthProvider>

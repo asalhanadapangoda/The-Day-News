@@ -5,6 +5,7 @@ import { PlayCircle, ArrowRight, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import AIChatBot from '../components/AIChatBot';
 import Skeleton from '../components/Skeleton';
+import PartnersSection from '../components/PartnersSection';
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,7 @@ const Home = () => {
     heroes: [],
     allPrograms: [],
     allEpisodes: [],
+    partners: [],
   });
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
 
@@ -42,6 +44,7 @@ const Home = () => {
           programsRes,
           adsRes,
           heroesRes,
+          partnersRes,
         ] = await Promise.all([
           api.get('/settings'),
           api.get('/episodes'),
@@ -50,6 +53,7 @@ const Home = () => {
           api.get('/programs'),
           api.get('/ads'),
           api.get('/heroes'),
+          api.get('/partners'),
         ]);
 
         const settings = settingsRes.data;
@@ -59,6 +63,7 @@ const Home = () => {
         const categories = Array.isArray(categoriesRes.data) ? categoriesRes.data : [];
         const ads = Array.isArray(adsRes.data) ? adsRes.data : [];
         const heroes = Array.isArray(heroesRes.data) ? heroesRes.data : [];
+        const partners = Array.isArray(partnersRes.data) ? partnersRes.data : [];
 
         // Extract featured program info
         const featuredProgram = allPrograms.find(p => p.isFeatured) || allPrograms[0];
@@ -77,6 +82,7 @@ const Home = () => {
           heroes,
           allPrograms,
           allEpisodes,
+          partners,
         });
       } catch (error) {
         console.error("Error loading home data", error);
@@ -440,6 +446,7 @@ const Home = () => {
       )}
 
 
+      <PartnersSection partners={data.partners} />
       <AIChatBot />
     </div>
   );
