@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { PlayCircle, Calendar, X } from 'lucide-react';
 import { format } from 'date-fns';
+import { Helmet } from 'react-helmet-async';
 
 const ProgramDetail = () => {
   const { slug } = useParams();
@@ -80,6 +81,25 @@ const ProgramDetail = () => {
 
   return (
     <div className="w-full pb-20">
+      <Helmet>
+        <title>{program.title} | THE DAY NEWS</title>
+        <meta name="description" content={program.description} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:title" content={program.title} />
+        <meta property="og:description" content={program.description} />
+        <meta property="og:image" content={program.coverImage} />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={window.location.href} />
+        <meta name="twitter:title" content={program.title} />
+        <meta name="twitter:description" content={program.description} />
+        <meta name="twitter:image" content={program.coverImage} />
+      </Helmet>
+
       {/* Dynamic Header */}
       <div className="relative w-full h-[50vh] min-h-[400px]">
         <img src={program.coverImage} className="absolute inset-0 w-full h-full object-cover object-top" alt={program.title} />
