@@ -150,34 +150,32 @@ const Home = () => {
   return (
     <div className="w-full">
       {/* 1. Hero Section (Dynamic Slider) */}
-      <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
+      <section className="relative h-[80vh] min-h-[600px] w-full overflow-hidden">
         {data.heroes.length > 0 ? (
           data.heroes.map((hero, index) => (
             <div
               key={hero._id}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                } bg-contain md:bg-cover bg-center bg-no-repeat`}
-              style={{ 
-                backgroundImage: `url(${hero.imageUrl})`, 
-              }}
+                }`}
+              style={{ backgroundImage: `url(${hero.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014]/90 via-[#0c0014]/30 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-[#0c0014]/80 via-[#0c0014]/20 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 w-full p-6 md:p-16 max-w-7xl mx-auto h-full flex flex-col justify-end">
-                <div className="max-w-3xl space-y-3 md:space-y-4">
-                  <h1 className="text-2xl md:text-6xl font-bold text-white leading-tight text-glow drop-shadow-lg">
+              <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 max-w-7xl mx-auto h-full flex flex-col justify-end">
+                <div className="max-w-3xl space-y-4">
+                  <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight text-glow drop-shadow-lg">
                     {hero.title}
                   </h1>
                   {hero.subtitle && (
-                    <p className="text-white text-[10px] md:text-sm font-bold uppercase tracking-widest drop-shadow-md line-clamp-2 md:line-clamp-none">
+                    <p className="text-white text-sm font-bold uppercase tracking-widest drop-shadow-md">
                       {hero.subtitle}
                     </p>
                   )}
                   {hero.linkUrl && (
-                    <div className="pt-2 md:pt-4">
+                    <div className="pt-4">
                       <Link to={hero.linkUrl}
-                        className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-primary hover:bg-primary-hover text-white text-sm md:text-base font-bold rounded-full transition-all hover-glow">
-                        <PlayCircle size={20} className="md:w-6 md:h-6" />
+                        className="inline-flex items-center gap-2 px-8 py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full transition-all hover-glow">
+                        <PlayCircle size={24} />
                         <span>Watch Now</span>
                       </Link>
                     </div>
@@ -187,24 +185,24 @@ const Home = () => {
             </div>
           ))
         ) : (
-          <div className="absolute inset-0 bg-contain md:bg-cover bg-center bg-no-repeat bg-black" style={{ backgroundImage: `url('https://placehold.co/1920x1080/08000f/333?text=Hero+Banner')` }}>
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('https://placehold.co/1920x1080/08000f/333?text=Hero+Banner')` }}>
             <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014]/90 via-[#0c0014]/30 to-transparent"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-[#0c0014]/80 via-[#0c0014]/20 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 w-full p-6 md:p-16 max-w-7xl mx-auto flex flex-col justify-end h-full">
-              <div className="max-w-3xl space-y-4 md:space-y-6">
-                <span className="inline-block px-3 py-1 bg-primary text-white text-[10px] md:text-xs font-bold uppercase tracking-widest rounded-full">
+            <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 max-w-7xl mx-auto">
+              <div className="max-w-3xl space-y-6">
+                <span className="inline-block px-3 py-1 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded-full">
                   Featured Insight
                 </span>
-                <h1 className="text-2xl md:text-6xl font-bold text-white leading-tight text-glow">
+                <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight text-glow">
                   Welcome to The Day News Global
                 </h1>
-                <p className="text-sm md:text-xl text-gray-300 line-clamp-3 md:line-clamp-none">
+                <p className="text-lg md:text-xl text-gray-300">
                   Watch the latest programs and read breaking media features from around the entire world.
                 </p>
-                <div className="pt-2 md:pt-0">
+                <div>
                   <Link to={'/programs'}
-                    className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-primary hover:bg-primary-hover text-white text-sm md:text-base font-bold rounded-full transition-all hover-glow">
-                    <PlayCircle size={20} className="md:w-6 md:h-6" />
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full transition-all hover-glow">
+                    <PlayCircle size={24} />
                     <span>Watch Now</span>
                   </Link>
                 </div>
