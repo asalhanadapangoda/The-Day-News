@@ -237,7 +237,7 @@ const Home = () => {
             Latest News & Stories
           </h2>
           <Link to="/articles" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold">
-            Read All <ArrowRight size={16} />
+            View All Articles <ArrowRight size={16} />
           </Link>
         </div>
 
