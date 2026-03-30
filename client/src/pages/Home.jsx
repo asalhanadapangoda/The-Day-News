@@ -6,7 +6,6 @@ import { format } from 'date-fns';
 import AIChatBot from '../components/AIChatBot';
 import Skeleton from '../components/Skeleton';
 import PartnersSection from '../components/PartnersSection';
-import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -150,11 +149,6 @@ const Home = () => {
 
   return (
     <div className="w-full">
-      <Helmet>
-        <title>The Day News Global | Latest News & Stories</title>
-        <meta name="description" content="Watch the latest programs and read breaking media features from around the entire world on The Day News Global." />
-        <link rel="canonical" href="https://thedaynewsglobal.lk/" />
-      </Helmet>
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
         {data.heroes.length > 0 ? (
