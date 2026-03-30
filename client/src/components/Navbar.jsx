@@ -27,7 +27,6 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-[#0c0014]/90 backdrop-blur-md border-b border-white/10">
-      <meta name="google-site-verification" content="x8d0vmNoTd0SzJKmYkqEIcPLMXlPCOPHkzXLwgooNDw" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
 
