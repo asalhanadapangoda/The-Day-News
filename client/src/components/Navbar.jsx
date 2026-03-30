@@ -27,13 +27,14 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-[#0c0014]/90 backdrop-blur-md border-b border-white/10">
+      <meta name="google-site-verification" content="x8d0vmNoTd0SzJKmYkqEIcPLMXlPCOPHkzXLwgooNDw" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          
+
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center">
-                <img src={logo} alt="The Day News Global" className="h-[75px] w-auto py-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] object-contain" />
+              <img src={logo} alt="The Day News Global" className="h-[75px] w-auto py-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] object-contain" />
             </Link>
           </div>
 
@@ -44,8 +45,7 @@ const Navbar = () => {
                 key={link.name}
                 to={link.path}
                 className={({ isActive }) =>
-                  `text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary ${
-                    isActive ? 'text-primary text-glow' : 'text-gray-300'
+                  `text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary ${isActive ? 'text-primary text-glow' : 'text-gray-300'
                   }`
                 }
               >
@@ -95,15 +95,14 @@ const Navbar = () => {
                 to={link.path}
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wider ${
-                    isActive ? 'bg-primary/20 text-primary' : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                  `block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wider ${isActive ? 'bg-primary/20 text-primary' : 'text-gray-300 hover:bg-white/5 hover:text-white'
                   }`
                 }
               >
                 {link.name}
               </NavLink>
             ))}
-            
+
             <form onSubmit={handleSearch} className="relative mt-4 px-3">
               <input
                 type="text"
