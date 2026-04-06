@@ -23,14 +23,14 @@ const Footer = () => {
     <footer className="bg-[#08000f] border-t border-white/5 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          
+
           {/* Brand & About */}
           <div className="space-y-4">
             <Link to="/" className="inline-block">
               <img src={logo} alt="The Day News Global" className="h-[100px] w-auto object-contain" />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mt-4">
-              {settings?.aboutUsText 
+              {settings?.aboutUsText
                 ? settings.aboutUsText.replace(/<[^>]+>/g, '').substring(0, 150) + '...'
                 : 'The Day News Global serves as a premier, interactive media platform dedicated to the pursuit of knowledge and meaningful insights.'}
             </p>
@@ -69,7 +69,6 @@ const Footer = () => {
               <li><Link to="/privacy" className="text-gray-400 hover:text-primary text-sm transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms" className="text-gray-400 hover:text-primary text-sm transition-colors">Terms of Service</Link></li>
               <li><Link to="/cookies" className="text-gray-400 hover:text-primary text-sm transition-colors">Cookie Policy</Link></li>
-              <li><Link to="/admin/login" className="text-gray-400 hover:text-primary text-sm transition-colors">Admin Login</Link></li>
             </ul>
           </div>
 
