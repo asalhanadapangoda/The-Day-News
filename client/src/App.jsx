@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { Analytics } from '@vercel/analytics/react';
 
 // Layouts
 import PublicLayout from './layouts/PublicLayout';
@@ -64,6 +65,7 @@ function App() {
           <Route path="partners" element={<ManagePartners />} />
         </Route>
       </Routes>
+      <Analytics />
     </AuthProvider>
   );
 }
