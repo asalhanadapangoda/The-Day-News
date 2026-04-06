@@ -32,20 +32,30 @@ const WorldMap = () => {
     });
 
     L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Black_Marble/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png',
       {
-        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-        maxZoom: 18,
+        attribution: '&copy; <a href="https://earthdata.nasa.gov/gibs">NASA GIBS</a>',
+        maxZoom: 8,
       }
     ).addTo(map);
 
     OPERATING_COUNTRIES.forEach((country) => {
+      // Glow layer
+      L.circleMarker([country.lat, country.lng], {
+        color: '#4f46e5', // Brand purple glow
+        fillColor: '#4f46e5',
+        fillOpacity: 0.25,
+        weight: 0,
+        radius: 16,
+      }).addTo(map);
+
+      // Core point
       const marker = L.circleMarker([country.lat, country.lng], {
-        color: '#93c5fd',
-        fillColor: '#1e3a8a',
-        fillOpacity: 0.95,
-        weight: 2.5,
-        radius: 9,
+        color: '#fbbf24', // Gold core
+        fillColor: '#fbbf24',
+        fillOpacity: 0.9,
+        weight: 1.5,
+        radius: 7,
       });
 
       marker.bindTooltip(country.name, {
