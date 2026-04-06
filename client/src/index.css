@@ -64,3 +64,32 @@
 .ql-picker-options {
   @apply !bg-dark-card !border-border-subtle;
 }
+
+/* ── Leaflet World Map Dark Theme ───────────────────────── */
+
+/* Satellite tiles — no filter, display in natural color */
+.leaflet-tile {
+  filter: none;
+}
+
+/* Custom tooltip styling */
+.leaflet-tooltip.leaflet-world-tooltip {
+  background: rgba(24, 16, 40, 0.92) !important;
+  border: 1px solid rgba(79, 70, 229, 0.4) !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  padding: 5px 10px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  white-space: nowrap;
+}
+
+.leaflet-tooltip.leaflet-world-tooltip::before {
+  border-top-color: rgba(79, 70, 229, 0.4) !important;
+}
+
+/* Hide Leaflet attribution (already set in component) */
+.leaflet-control-attribution {
+  display: none !important;
+}

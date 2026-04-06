@@ -1,33 +1,13 @@
-import { useState, useEffect } from 'react';
-import api from '../services/api';
-import { Linkedin, Users } from 'lucide-react';
+import { Globe } from 'lucide-react';
+import WorldMap from '../components/WorldMap';
+
+const OPERATING_COUNTRIES = [
+  'Sri Lanka',
+  'Australia',
+  'Japan',
+];
 
 const About = () => {
-  const [loading, setLoading] = useState(true);
-  const [teamMembers, setTeamMembers] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await api.get('/team');
-        setTeamMembers(data);
-      } catch (error) {
-        console.error('Error loading team data', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
   return (
     <div className="w-full">
       {/* Hero */}
@@ -57,59 +37,40 @@ const About = () => {
           </div>
         </div>
 
-        {/* Our Team Section */}
-        <div>
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold text-white mb-4">Meet Our Team</h2>
+        {/* Global Presence / World Map Section */}
+        <div className="mb-8">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-3 bg-primary/10 border border-primary/20 rounded-full px-5 py-2 mb-5">
+              <Globe size={16} className="text-primary" />
+              <span className="text-primary text-sm font-semibold tracking-widest uppercase">Worldwide</span>
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-4">Our Global Presence</h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              The passionate individuals behind The Day News Global, dedicated to bringing you the most impactful stories from around the world.
+              Delivering trusted news and insights across continents — connecting communities around the world.
             </p>
           </div>
 
-          {teamMembers.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {teamMembers.map(member => (
-                <div
-                  key={member._id}
-                  className="group bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden hover:border-primary/40 transition-all hover:-translate-y-2 duration-500 shadow-lg"
-                >
-                  {/* Photo */}
-                  <div className="relative h-64 overflow-hidden bg-[#111]">
-                    <img
-                      src={member.photoUrl}
-                      alt={member.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/90 via-transparent to-transparent"></div>
-                  </div>
+          {/* Map Container */}
+          <div className="glass-card p-3 md:p-4 mb-8">
+            <WorldMap />
+          </div>
 
-                  {/* Info */}
-                  <div className="p-6 relative">
-                    <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                    <p className="text-primary text-sm font-bold uppercase tracking-widest mb-4">{member.role}</p>
-                    {member.bio && (
-                      <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">{member.bio}</p>
-                    )}
-                    {member.linkedinUrl && (
-                      <a
-                        href={member.linkedinUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 mt-5 text-gray-400 hover:text-[#0077B5] transition-colors text-sm font-medium"
-                      >
-                        <Linkedin size={17} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20 bg-[#1a1a1a] rounded-2xl border border-white/5 text-gray-500">
-              <Users size={48} className="mx-auto mb-4 text-gray-700" />
-              <p className="text-lg">Team information coming soon.</p>
-            </div>
-          )}
+          {/* Country Pills */}
+          <div className="flex flex-wrap justify-center gap-3 mt-8">
+            {OPERATING_COUNTRIES.map((name) => (
+              <div
+                key={name}
+                className="bg-white/5 border border-white/10 hover:border-primary/40 hover:bg-primary/10 rounded-full px-4 py-2 transition-all duration-300 group cursor-default"
+              >
+                <span className="text-gray-300 group-hover:text-white text-sm font-medium transition-colors">
+                  {name}
+                </span>
+              </div>
+            ))}
+          </div>
+
+
         </div>
       </div>
     </div>

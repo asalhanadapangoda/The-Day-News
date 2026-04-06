@@ -26,7 +26,6 @@ import ManageAds from './pages/admin/ManageAds';
 import ManageMessages from './pages/admin/ManageMessages';
 import ManageSettings from './pages/admin/ManageSettings';
 import ManageHero from './pages/admin/ManageHero';
-import ManageTeam from './pages/admin/ManageTeam';
 import ManagePartners from './pages/admin/ManagePartners';
 
 function App() {
@@ -60,7 +59,6 @@ function App() {
           <Route path="messages" element={<ManageMessages />} />
           <Route path="settings" element={<ManageSettings />} />
           <Route path="heroes" element={<ManageHero />} />
-          <Route path="team" element={<ManageTeam />} />
           <Route path="partners" element={<ManagePartners />} />
         </Route>
       </Routes>

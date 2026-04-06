@@ -19,7 +19,6 @@ import messageRoutes from './routes/messageRoutes.js';
 import settingRoutes from './routes/settingRoutes.js';
 import heroRoutes from './routes/heroRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
-import teamRoutes from './routes/teamRoutes.js';
 import partnerRoutes from './routes/partnerRoutes.js';
 
 dotenv.config();
@@ -58,7 +57,6 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/settings', settingRoutes);
 app.use('/api/heroes', heroRoutes);
 app.use('/api/ai', aiRoutes);
-app.use('/api/team', teamRoutes);
 app.use('/api/partners', partnerRoutes);
 
 app.get('/', (req, res) => {
