@@ -11,6 +11,8 @@ import Programs from './pages/Programs';
 import ProgramDetail from './pages/ProgramDetail';
 import Articles from './pages/Articles';
 import ArticleDetail from './pages/ArticleDetail';
+import Events from './pages/Events';
+import EventDetail from './pages/EventDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Search from './pages/Search';
@@ -27,6 +29,7 @@ import ManageMessages from './pages/admin/ManageMessages';
 import ManageSettings from './pages/admin/ManageSettings';
 import ManageHero from './pages/admin/ManageHero';
 import ManagePartners from './pages/admin/ManagePartners';
+import ManageEvents from './pages/admin/ManageEvents';
 
 function App() {
   return (
@@ -39,6 +42,8 @@ function App() {
           <Route path="/programs/:slug" element={<ProgramDetail />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:slug" element={<ArticleDetail />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/:slug" element={<EventDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
@@ -60,6 +65,7 @@ function App() {
           <Route path="settings" element={<ManageSettings />} />
           <Route path="heroes" element={<ManageHero />} />
           <Route path="partners" element={<ManagePartners />} />
+          <Route path="events" element={<ManageEvents />} />
         </Route>
       </Routes>
     </AuthProvider>

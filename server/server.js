@@ -20,6 +20,7 @@ import settingRoutes from './routes/settingRoutes.js';
 import heroRoutes from './routes/heroRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import partnerRoutes from './routes/partnerRoutes.js';
+import eventRoutes from './routes/eventRoutes.js';
 
 dotenv.config();
 
@@ -58,6 +59,7 @@ app.use('/api/settings', settingRoutes);
 app.use('/api/heroes', heroRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/partners', partnerRoutes);
+app.use('/api/events', eventRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');

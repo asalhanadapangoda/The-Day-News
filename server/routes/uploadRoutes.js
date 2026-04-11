@@ -32,4 +32,38 @@ router.post('/', protect, upload.single('file'), async (req, res) => {
   }
 });
 
+router.post('/multiple', protect, upload.array('files', 10), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: 'No images provided' });
+    }
+
+    const uploadPromises = req.files.map((file) => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: 'thedaynewsglobal' },
+          (error, result) => {
+            if (error) {
+              console.error(error);
+              reject(error);
+            } else {
+              resolve(result.secure_url);
+            }
+          }
+        );
+        stream.end(file.buffer);
+      });
+    });
+
+    const urls = await Promise.all(uploadPromises);
+    res.json({
+      message: `${urls.length} images uploaded successfully`,
+      urls,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error during multi-upload' });
+  }
+});
+
 export default router;

@@ -1,7 +1,7 @@
 import { Outlet, Navigate, Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useRef } from 'react';
 import AuthContext from '../context/AuthContext';
-import { LogOut, LayoutDashboard, Video, FileText, Settings, MessageSquare, Layers, Image, Monitor, Handshake } from 'lucide-react';
+import { LogOut, LayoutDashboard, Video, FileText, Settings, MessageSquare, Layers, Image, Monitor, Handshake, Calendar } from 'lucide-react';
 import logo from '../assets/logo.png';
 
 const AdminLayout = () => {
@@ -69,6 +69,7 @@ const AdminLayout = () => {
     { name: 'Messages', path: '/admin/messages', icon: MessageSquare },
     { name: 'Settings', path: '/admin/settings', icon: Settings },
     { name: 'Partners', path: '/admin/partners', icon: Handshake },
+    { name: 'Events', path: '/admin/events', icon: Calendar },
   ];
 
   return (
