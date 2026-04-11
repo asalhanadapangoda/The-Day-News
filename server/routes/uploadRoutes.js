@@ -32,7 +32,7 @@ router.post('/', protect, upload.single('file'), async (req, res) => {
   }
 });
 
-router.post('/multiple', protect, upload.array('files', 10), async (req, res) => {
+router.post('/multiple', protect, upload.array('files', 12), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ message: 'No images provided' });

@@ -99,6 +99,11 @@ const ManageEvents = () => {
   const handleBulkUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
+    
+    if (files.length > 12) {
+      alert('You can only upload a maximum of 12 gallery images at once.');
+      return;
+    }
 
     const fileFormData = new FormData();
     files.forEach(file => fileFormData.append('files', file));
@@ -403,14 +408,13 @@ const ManageEvents = () => {
                  <h3 className="text-xs font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
                     <Video size={14} /> Highlight Reel (Video URL)
                  </h3>
-                  <input 
-                     type="text" 
-                     required
-                     className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-primary transition-all text-sm mb-6"
-                     value={formData.videoUrl}
-                     placeholder="YouTube or Video Direct URL"
-                     onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
-                  />
+                   <input 
+                      type="text" 
+                      className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-primary transition-all text-sm mb-6"
+                      value={formData.videoUrl}
+                      placeholder="YouTube or Video Direct URL (Optional)"
+                      onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                   />
 
                   <h3 className="text-xs font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2 mb-4">
                      <Plus size={14} /> Full Album Link (Optional) - "View All Photos" Button

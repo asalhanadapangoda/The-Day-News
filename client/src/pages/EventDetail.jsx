@@ -159,15 +159,23 @@ const EventDetail = () => {
            </div>
         </div>
 
-        <div className="relative aspect-video w-full rounded-2xl overflow-hidden glass-card shadow-[0_0_50px_rgba(0,0,0,0.5)] border-white/10 group">
-           <iframe 
-              src={getEmbedUrl(event.videoUrl)} 
-              className="w-full h-full absolute inset-0"
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen
-              title="Highlight Reel Video"
-           ></iframe>
+        <div className="relative aspect-video w-full rounded-2xl overflow-hidden glass-card shadow-[0_0_50px_rgba(0,0,0,0.5)] border-white/10 group flex items-center justify-center bg-white/5">
+           {event.videoUrl ? (
+              <iframe 
+                 src={getEmbedUrl(event.videoUrl)} 
+                 className="w-full h-full absolute inset-0"
+                 frameBorder="0" 
+                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                 allowFullScreen
+                 title="Highlight Reel Video"
+              ></iframe>
+           ) : (
+              <div className="text-center p-10 animate-pulse">
+                 <PlayCircle size={64} className="text-primary/30 mx-auto mb-4" />
+                 <h3 className="text-xl md:text-2xl font-bold text-gray-400 uppercase tracking-widest italic">Coming Soon</h3>
+                 <p className="text-gray-500 text-sm mt-2 font-medium">The highlight video for this event is currently being processed.</p>
+              </div>
+           )}
         </div>
       </section>
 
