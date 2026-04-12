@@ -1,42 +1,72 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { AuthProvider as BdAuthProvider } from './Bangladesh/context/AuthContext';
+import Loading from './components/Loading';
 
-// Layouts
+// Layouts (Remain eager as they are small and used by almost everything)
 import PublicLayout from './layouts/PublicLayout';
 import AdminLayout from './layouts/AdminLayout';
+import BdPublicLayout from './Bangladesh/layouts/PublicLayout';
+import BdAdminLayout from './Bangladesh/layouts/AdminLayout';
 
-// Public Pages
-import Home from './pages/Home';
-import Programs from './pages/Programs';
-import ProgramDetail from './pages/ProgramDetail';
-import Articles from './pages/Articles';
-import ArticleDetail from './pages/ArticleDetail';
-import Events from './pages/Events';
-import EventDetail from './pages/EventDetail';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Search from './pages/Search';
+// Global Public Pages (Lazy)
+const Home = lazy(() => import('./pages/Home'));
+const Programs = lazy(() => import('./pages/Programs'));
+const ProgramDetail = lazy(() => import('./pages/ProgramDetail'));
+const Articles = lazy(() => import('./pages/Articles'));
+const ArticleDetail = lazy(() => import('./pages/ArticleDetail'));
+const Events = lazy(() => import('./pages/Events'));
+const EventDetail = lazy(() => import('./pages/EventDetail'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Search = lazy(() => import('./pages/Search'));
 
-// Admin Pages
-import AdminLogin from './pages/admin/AdminLogin';
-import Dashboard from './pages/admin/Dashboard';
-import ManagePrograms from './pages/admin/ManagePrograms';
-import ManageEpisodes from './pages/admin/ManageEpisodes';
-import ManageArticles from './pages/admin/ManageArticles';
-import ManageCategories from './pages/admin/ManageCategories';
-import ManageAds from './pages/admin/ManageAds';
-import ManageMessages from './pages/admin/ManageMessages';
-import ManageSettings from './pages/admin/ManageSettings';
-import ManageHero from './pages/admin/ManageHero';
-import ManagePartners from './pages/admin/ManagePartners';
-import ManageEvents from './pages/admin/ManageEvents';
+// Global Admin Pages (Lazy)
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
+const ManagePrograms = lazy(() => import('./pages/admin/ManagePrograms'));
+const ManageEpisodes = lazy(() => import('./pages/admin/ManageEpisodes'));
+const ManageArticles = lazy(() => import('./pages/admin/ManageArticles'));
+const ManageCategories = lazy(() => import('./pages/admin/ManageCategories'));
+const ManageAds = lazy(() => import('./pages/admin/ManageAds'));
+const ManageMessages = lazy(() => import('./pages/admin/ManageMessages'));
+const ManageSettings = lazy(() => import('./pages/admin/ManageSettings'));
+const ManageHero = lazy(() => import('./pages/admin/ManageHero'));
+const ManagePartners = lazy(() => import('./pages/admin/ManagePartners'));
+const ManageEvents = lazy(() => import('./pages/admin/ManageEvents'));
+
+// Bangladesh Public Pages (Lazy)
+const BdHome = lazy(() => import('./Bangladesh/pages/Home'));
+const BdPrograms = lazy(() => import('./Bangladesh/pages/Programs'));
+const BdProgramDetail = lazy(() => import('./Bangladesh/pages/ProgramDetail'));
+const BdArticles = lazy(() => import('./Bangladesh/pages/Articles'));
+const BdArticleDetail = lazy(() => import('./Bangladesh/pages/ArticleDetail'));
+const BdEvents = lazy(() => import('./Bangladesh/pages/Events'));
+const BdEventDetail = lazy(() => import('./Bangladesh/pages/EventDetail'));
+const BdAbout = lazy(() => import('./Bangladesh/pages/About'));
+const BdContact = lazy(() => import('./Bangladesh/pages/Contact'));
+const BdSearch = lazy(() => import('./Bangladesh/pages/Search'));
+
+// Bangladesh Admin Pages (Lazy)
+const BdAdminLogin = lazy(() => import('./Bangladesh/pages/admin/AdminLogin'));
+const BdDashboard = lazy(() => import('./Bangladesh/pages/admin/Dashboard'));
+const BdManagePrograms = lazy(() => import('./Bangladesh/pages/admin/ManagePrograms'));
+const BdManageEpisodes = lazy(() => import('./Bangladesh/pages/admin/ManageEpisodes'));
+const BdManageArticles = lazy(() => import('./Bangladesh/pages/admin/ManageArticles'));
+const BdManageCategories = lazy(() => import('./Bangladesh/pages/admin/ManageCategories'));
+const BdManageAds = lazy(() => import('./Bangladesh/pages/admin/ManageAds'));
+const BdManageSettings = lazy(() => import('./Bangladesh/pages/admin/ManageSettings'));
+const BdManageHero = lazy(() => import('./Bangladesh/pages/admin/ManageHero'));
+const BdManagePartners = lazy(() => import('./Bangladesh/pages/admin/ManagePartners'));
+const BdManageEvents = lazy(() => import('./Bangladesh/pages/admin/ManageEvents'));
 
 function App() {
   return (
-    <AuthProvider>
+    <Suspense fallback={<Loading />}>
       <Routes>
-        {/* Public Routes */}
-        <Route element={<PublicLayout />}>
+        {/* ── Global Public Routes ── */}
+        <Route element={<AuthProvider><PublicLayout /></AuthProvider>}>
           <Route path="/" element={<Home />} />
           <Route path="/programs" element={<Programs />} />
           <Route path="/programs/:slug" element={<ProgramDetail />} />
@@ -49,11 +79,9 @@ function App() {
           <Route path="/search" element={<Search />} />
         </Route>
 
-        {/* Admin Login (No Layout) */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-
-        {/* Admin Protected Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
+        {/* ── Global Admin Routes ── */}
+        <Route path="/admin/login" element={<AuthProvider><AdminLogin /></AuthProvider>} />
+        <Route path="/admin" element={<AuthProvider><AdminLayout /></AuthProvider>}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="programs" element={<ManagePrograms />} />
@@ -67,8 +95,38 @@ function App() {
           <Route path="partners" element={<ManagePartners />} />
           <Route path="events" element={<ManageEvents />} />
         </Route>
+
+        {/* ── Bangladesh Public Routes ── */}
+        <Route path="/Bangladesh" element={<BdAuthProvider><BdPublicLayout /></BdAuthProvider>}>
+          <Route index element={<BdHome />} />
+          <Route path="programs" element={<BdPrograms />} />
+          <Route path="programs/:slug" element={<BdProgramDetail />} />
+          <Route path="articles" element={<BdArticles />} />
+          <Route path="articles/:slug" element={<BdArticleDetail />} />
+          <Route path="events" element={<BdEvents />} />
+          <Route path="events/:slug" element={<BdEventDetail />} />
+          <Route path="about" element={<BdAbout />} />
+          <Route path="contact" element={<BdContact />} />
+          <Route path="search" element={<BdSearch />} />
+        </Route>
+
+        {/* ── Bangladesh Admin Routes ── */}
+        <Route path="/Bangladesh/TDNG_Admin/login" element={<BdAuthProvider><BdAdminLogin /></BdAuthProvider>} />
+        <Route path="/Bangladesh/TDNG_Admin" element={<BdAuthProvider><BdAdminLayout /></BdAuthProvider>}>
+          <Route index element={<BdDashboard />} />
+          <Route path="dashboard" element={<BdDashboard />} />
+          <Route path="programs" element={<BdManagePrograms />} />
+          <Route path="episodes" element={<BdManageEpisodes />} />
+          <Route path="articles" element={<BdManageArticles />} />
+          <Route path="categories" element={<BdManageCategories />} />
+          <Route path="ads" element={<BdManageAds />} />
+          <Route path="settings" element={<BdManageSettings />} />
+          <Route path="heroes" element={<BdManageHero />} />
+          <Route path="partners" element={<BdManagePartners />} />
+          <Route path="events" element={<BdManageEvents />} />
+        </Route>
       </Routes>
-    </AuthProvider>
+    </Suspense>
   );
 }
 

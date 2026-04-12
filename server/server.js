@@ -21,6 +21,7 @@ import heroRoutes from './routes/heroRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import partnerRoutes from './routes/partnerRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
+import bdRoutes from './Bangladesh/routes/index.js';
 
 dotenv.config();
 
@@ -34,7 +35,7 @@ app.use(cors());
 app.use(cookieParser());
 
 // Security Middleware
-app.use(helmet());
+// app.use(mongoSanitize());
 
 // Rate Limiting
 const authLimiter = rateLimit({
@@ -45,6 +46,7 @@ const authLimiter = rateLimit({
 
 // Apply rate limiter to auth routes
 app.use('/api/auth', authLimiter);
+app.use('/api/bangladesh/auth', authLimiter);
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
@@ -60,6 +62,9 @@ app.use('/api/heroes', heroRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/partners', partnerRoutes);
 app.use('/api/events', eventRoutes);
+
+// Mount Bangladesh Routes
+app.use('/api/bangladesh', bdRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');
