@@ -6,6 +6,7 @@ import ArticleCategory from '../models/ArticleCategory.js';
 const getCategories = async (req, res) => {
   try {
     const categories = await ArticleCategory.find({});
+    res.set('Cache-Control', 'public, max-age=3600');
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

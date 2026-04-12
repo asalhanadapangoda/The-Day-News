@@ -16,6 +16,7 @@ const getSettings = async (req, res) => {
       await settings.populate('featuredHeroId', 'title slug excerpt description coverImage featuredImage videoUrl');
     }
 
+    res.set('Cache-Control', 'public, max-age=3600');
     res.json(settings);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
