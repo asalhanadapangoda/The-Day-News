@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { PlayCircle, Calendar, X } from 'lucide-react';
 import { format } from 'date-fns';
+import { cloudinaryOptimize } from '../utils/cloudinary';
 
 const ProgramDetail = () => {
   const { slug } = useParams();
@@ -82,7 +83,7 @@ const ProgramDetail = () => {
     <div className="w-full pb-20">
       {/* Dynamic Header */}
       <div className="relative w-full h-[50vh] min-h-[400px]">
-        <img src={program.coverImage} className="absolute inset-0 w-full h-full object-cover object-top" alt={program.title} />
+        <img src={cloudinaryOptimize(program.coverImage)} className="absolute inset-0 w-full h-full object-cover object-top" alt={program.title} loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-[#0c0014]/60 to-black/30"></div>
         <div className="absolute bottom-0 left-0 w-full p-8 max-w-7xl mx-auto flex items-end gap-6">
           <div className="pb-4">
@@ -108,7 +109,7 @@ const ProgramDetail = () => {
                 className="bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden hover:border-primary/50 transition-all cursor-pointer group flex flex-col h-full shadow-lg"
               >
                 <div className="relative aspect-video overflow-hidden">
-                  <img src={episode.thumbnailImage} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={episode.title} loading="lazy" />
+                  <img src={cloudinaryOptimize(episode.thumbnailImage)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={episode.title} loading="lazy" />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 flex items-center justify-center transition-colors">
                     <PlayCircle size={48} className="text-white drop-shadow-lg group-hover:scale-110 transition-transform" />
                   </div>

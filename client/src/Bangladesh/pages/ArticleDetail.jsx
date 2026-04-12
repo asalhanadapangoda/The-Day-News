@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { Calendar, User, Eye, Facebook, Linkedin, LinkIcon, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
+import { cloudinaryOptimize } from '../../utils/cloudinary';
 
 const ArticleDetail = () => {
   const { slug } = useParams();
@@ -74,7 +75,7 @@ const ArticleDetail = () => {
       {/* Header Banner */}
       <div className="w-full relative min-h-[40vh] md:min-h-[60vh] flex items-end">
         <div className="absolute inset-0">
-          <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover" />
+          <img src={cloudinaryOptimize(article.featuredImage)} alt={article.title} className="w-full h-full object-cover" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-[#0c0014]/80 to-black/20"></div>
         </div>
         
@@ -175,7 +176,7 @@ const ArticleDetail = () => {
               {relatedArticles.map(rel => (
                 <Link key={rel._id} to={`/Bangladesh/articles/${rel.slug}`} className="group glass-card overflow-hidden block hover-glow flex flex-col h-full">
                   <div className="relative h-40 overflow-hidden">
-                    <img src={rel.featuredImage} alt={rel.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                    <img src={cloudinaryOptimize(rel.featuredImage)} alt={rel.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                   </div>
                   <div className="p-5 flex flex-col flex-grow">
                     <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors">{rel.title}</h3>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { PlayCircle } from 'lucide-react';
 import Skeleton from '../components/Skeleton';
+import { cloudinaryOptimize } from '../../utils/cloudinary';
 
 const Programs = () => {
   const [programs, setPrograms] = useState([]);
@@ -56,7 +57,7 @@ const Programs = () => {
           >
             {/* Background Image */}
             <img 
-              src={program.coverImage} 
+              src={cloudinaryOptimize(program.coverImage)} 
               alt={program.title} 
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
               loading="lazy"

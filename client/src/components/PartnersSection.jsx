@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { cloudinaryOptimize } from '../utils/cloudinary';
 
 const PartnersSection = ({ partners }) => {
   if (!partners || partners.length === 0) return null;
@@ -34,7 +35,7 @@ const PartnersSection = ({ partners }) => {
                 <div className="absolute -inset-6 bg-gradient-to-r from-primary/30 via-pink-500/30 to-purple-500/30 rounded-full blur-2xl opacity-0 group-hover/logo:opacity-100 transition-opacity duration-700 scale-150"></div>
                 
                 <img
-                  src={partner.logoUrl}
+                  src={cloudinaryOptimize(partner.logoUrl)}
                   alt={partner.name}
                   className="h-12 md:h-20 w-auto object-contain grayscale brightness-125 opacity-40 group-hover/logo:grayscale-0 group-hover/logo:opacity-100 group-hover/logo:brightness-100 transition-all duration-700 relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]"
                   title={partner.name}

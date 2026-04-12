@@ -4,6 +4,7 @@ import api from '../services/api';
 import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 import Skeleton from '../components/Skeleton';
+import { cloudinaryOptimize } from '../utils/cloudinary';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -57,7 +58,7 @@ const Events = () => {
           >
             <div className="relative h-64 overflow-hidden">
               <img 
-                src={event.heroImages[0]} 
+                src={cloudinaryOptimize(event.heroImages[0])} 
                 alt={event.title} 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                 loading="lazy"

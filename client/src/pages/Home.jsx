@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import AIChatBot from '../components/AIChatBot';
 import Skeleton from '../components/Skeleton';
 import PartnersSection from '../components/PartnersSection';
+import { cloudinaryOptimize } from '../utils/cloudinary';
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -158,7 +159,7 @@ const Home = () => {
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 } bg-contain md:bg-cover bg-center bg-no-repeat`}
               style={{
-                backgroundImage: `url(${hero.imageUrl})`,
+                backgroundImage: `url(${cloudinaryOptimize(hero.imageUrl)})`,
               }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014]/90 via-[#0c0014]/30 to-transparent"></div>
@@ -245,7 +246,7 @@ const Home = () => {
           {data.recentArticles.map(article => (
             <Link key={article._id} to={`/articles/${article.slug}`} className="group bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg border border-white/5 hover:border-primary/50 transition-colors flex flex-col h-full">
               <div className="relative h-48 overflow-hidden">
-                <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={cloudinaryOptimize(article.featuredImage)} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 {article.category && (
                   <div className="absolute top-3 left-3 bg-primary/90 text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
                     {article.category.name}
@@ -271,7 +272,7 @@ const Home = () => {
             {homeTopAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
                 <div className="relative overflow-hidden rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm shadow-2xl transition-all group-hover:border-primary/30">
-                  <img src={ad.imageUrl} alt={ad.title} className="w-full h-auto object-contain" loading="lazy" />
+                  <img src={cloudinaryOptimize(ad.imageUrl)} alt={ad.title} className="w-full h-auto object-contain" loading="lazy" />
                   <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[8px] text-primary/80 uppercase tracking-widest border border-white/10">
                     Sponsored
                   </div>
@@ -299,7 +300,7 @@ const Home = () => {
             {data.recentEpisodes.map(episode => (
               <Link key={episode._id} to={`/programs/${episode.program?.slug}`} className="group glass-card overflow-hidden block">
                 <div className="relative aspect-video overflow-hidden">
-                  <img src={episode.thumbnailImage} alt={episode.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <img src={cloudinaryOptimize(episode.thumbnailImage)} alt={episode.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                     <PlayCircle size={48} className="text-white/80 group-hover:text-white transform group-hover:scale-110 transition-all drop-shadow-lg" />
                   </div>
@@ -339,7 +340,7 @@ const Home = () => {
                   style={{ aspectRatio: '3/4.5' }}
                 >
                   <img
-                    src={prog.posterImage}
+                    src={cloudinaryOptimize(prog.posterImage)}
                     alt={prog.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     loading="lazy"
@@ -367,7 +368,7 @@ const Home = () => {
             {homeMiddleAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
                 <div className="h-40 md:h-48 rounded-2xl overflow-hidden shadow-2xl border border-white/5 bg-black/20 backdrop-blur-sm relative group-hover:border-primary/30 transition-all">
-                  <img src={ad.imageUrl} alt={ad.title} className="w-full h-full object-cover" loading="lazy" />
+                  <img src={cloudinaryOptimize(ad.imageUrl)} alt={ad.title} className="w-full h-full object-cover" loading="lazy" />
                   <div className="absolute top-3 right-3 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[8px] text-primary/80 uppercase tracking-widest border border-white/10">
                     Sponsored
                   </div>
@@ -408,7 +409,7 @@ const Home = () => {
                       {/* Thumbnail */}
                       <div className="relative aspect-video overflow-hidden">
                         <img
-                          src={episode.thumbnailImage}
+                          src={cloudinaryOptimize(episode.thumbnailImage)}
                           alt={episode.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
