@@ -81,7 +81,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Email Us</h3>
-                  <p className="text-primary hover:underline cursor-pointer">{settings?.contactEmail || 'contact@thedaynewsglobal.com'}</p>
+                  <p className="text-primary hover:underline cursor-pointer">{settings?.contactEmail || 'contact@thedaynewsglobal.lk'}</p>
                 </div>
               </div>
 
