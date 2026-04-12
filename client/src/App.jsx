@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AuthProvider as BdAuthProvider } from './Bangladesh/context/AuthContext';
-import Loading from './components/Loading';
 
 // Layouts (Remain eager as they are small and used by almost everything)
 import PublicLayout from './layouts/PublicLayout';
@@ -63,7 +62,7 @@ const BdManageEvents = lazy(() => import('./Bangladesh/pages/admin/ManageEvents'
 
 function App() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={null}>
       <Routes>
         {/* ── Global Public Routes ── */}
         <Route element={<AuthProvider><PublicLayout /></AuthProvider>}>
