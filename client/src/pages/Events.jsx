@@ -63,9 +63,7 @@ const Events = () => {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-transparent to-transparent"></div>
-              <div className="absolute top-4 left-4 flex gap-2">
-                 <span className="bg-primary/90 text-white text-[10px] font-bold uppercase py-1 px-3 rounded-full backdrop-blur-md">Upcoming</span>
-              </div>
+
             </div>
             
             <div className="p-6 flex flex-col flex-grow">
