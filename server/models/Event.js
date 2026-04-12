@@ -30,7 +30,6 @@ const eventSchema = new mongoose.Schema(
     },
     videoUrl: {
       type: String,
-      required: true,
     },
     galleryImages: {
       type: [String],

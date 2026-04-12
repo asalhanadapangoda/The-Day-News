@@ -48,8 +48,8 @@ const createEvent = async (req, res) => {
   try {
     const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl } = req.body;
 
-    if (!title || !eventDate || !location || !heroImages || !videoUrl || !galleryImages) {
-      return res.status(400).json({ message: 'Please provide all required fields' });
+    if (!title || !eventDate || !location || !heroImages || !galleryImages) {
+      return res.status(400).json({ message: 'Please provide all required fields (Hero images, title, date...)' });
     }
 
     const slug = title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
