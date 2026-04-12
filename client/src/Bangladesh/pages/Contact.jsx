@@ -73,19 +73,7 @@ const Contact = () => {
             </p>
 
             <div className="space-y-8">
-              <div className="flex items-start gap-6 bg-[#1a1a1a] p-6 rounded-xl border border-white/5">
-                <div className="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin className="text-primary" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Our Lobby Office</h3>
-                  <p className="text-gray-400">{settings?.contactAddress || 'The Third Place, TRACE Expert City, Colombo 10'}</p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Our Content Studio</h3>
-                  <p className="text-gray-400">Hacker House, Pannipitiya Rd, Battaramulla</p>
-                </div>
-              </div>
+
 
               <div className="flex items-start gap-6 bg-[#1a1a1a] p-6 rounded-xl border border-white/5">
                 <div className="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
