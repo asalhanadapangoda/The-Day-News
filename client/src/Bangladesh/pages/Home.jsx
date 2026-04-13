@@ -157,11 +157,15 @@ const Home = () => {
             <div
               key={hero._id}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                } bg-contain md:bg-cover bg-center bg-no-repeat`}
-              style={{
-                backgroundImage: `url(${cloudinaryOptimize(hero.imageUrl, 1920)})`,
-              }}
+                } bg-black`}
             >
+              <img 
+                src={cloudinaryOptimize(hero.imageUrl, 1920)} 
+                alt={hero.title}
+                className="w-full h-full object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchpriority={index === 0 ? "high" : "auto"}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014]/90 via-[#0c0014]/30 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-[#0c0014]/80 via-[#0c0014]/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-16 max-w-7xl mx-auto h-full flex flex-col justify-end">

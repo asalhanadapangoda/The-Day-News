@@ -83,7 +83,7 @@ const ProgramDetail = () => {
     <div className="w-full pb-20">
       {/* Dynamic Header */}
       <div className="relative w-full h-[50vh] min-h-[400px]">
-        <img src={cloudinaryOptimize(program.coverImage, 1200)} className="absolute inset-0 w-full h-full object-cover object-top" alt={program.title} loading="eager" />
+        <img src={cloudinaryOptimize(program.coverImage, 1200)} className="absolute inset-0 w-full h-full object-cover object-top" alt={program.title} loading="eager" fetchpriority="high" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-[#0c0014]/60 to-black/30"></div>
         <div className="absolute bottom-0 left-0 w-full p-8 max-w-7xl mx-auto flex items-end gap-6">
           <div className="pb-4">

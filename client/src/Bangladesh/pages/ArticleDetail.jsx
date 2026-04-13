@@ -75,7 +75,7 @@ const ArticleDetail = () => {
       {/* Header Banner */}
       <div className="w-full relative min-h-[40vh] md:min-h-[60vh] flex items-end">
         <div className="absolute inset-0">
-          <img src={cloudinaryOptimize(article.featuredImage, 1200)} alt={article.title} className="w-full h-full object-cover" loading="eager" />
+          <img src={cloudinaryOptimize(article.featuredImage, 1200)} alt={article.title} className="w-full h-full object-cover" loading="eager" fetchpriority="high" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-[#0c0014]/80 to-black/20"></div>
         </div>
         

@@ -109,7 +109,7 @@ const EventDetail = () => {
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
           >
-            <img src={cloudinaryOptimize(image, 1920)} className="w-full h-full object-cover object-center" alt={`${event.title} - Hero ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+            <img src={cloudinaryOptimize(image, 1920)} className="w-full h-full object-cover object-center" alt={`${event.title} - Hero ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : "low"} />
           </div>
         ))}
         
