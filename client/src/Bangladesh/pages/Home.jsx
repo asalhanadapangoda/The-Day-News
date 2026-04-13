@@ -7,6 +7,7 @@ import AIChatBot from '../components/AIChatBot';
 import Skeleton from '../components/Skeleton';
 import PartnersSection from '../components/PartnersSection';
 import { cloudinaryOptimize } from '../../utils/cloudinary';
+import OptimizedImage from '../../components/OptimizedImage';
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -159,12 +160,13 @@ const Home = () => {
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 } bg-black`}
             >
-              <img 
-                src={cloudinaryOptimize(hero.imageUrl, 1920)} 
+              <OptimizedImage 
+                src={hero.imageUrl} 
                 alt={hero.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full"
                 loading={index === 0 ? "eager" : "lazy"}
                 fetchpriority={index === 0 ? "high" : "auto"}
+                sizes="100vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014]/90 via-[#0c0014]/30 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-[#0c0014]/80 via-[#0c0014]/20 to-transparent"></div>
@@ -250,7 +252,13 @@ const Home = () => {
           {data.recentArticles.map(article => (
             <Link key={article._id} to={`/Bangladesh/articles/${article.slug}`} className="group bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg border border-white/5 hover:border-primary/50 transition-colors flex flex-col h-full">
               <div className="relative h-48 overflow-hidden">
-                <img src={cloudinaryOptimize(article.featuredImage, 600)} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <OptimizedImage 
+                  src={article.featuredImage} 
+                  alt={article.title} 
+                  className="w-full h-full" 
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
                 {article.category && (
                   <div className="absolute top-3 left-3 bg-primary/90 text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
                     {article.category.name}
@@ -276,7 +284,14 @@ const Home = () => {
             {homeTopAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
                 <div className="relative overflow-hidden rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm shadow-2xl transition-all group-hover:border-primary/30">
-                  <img src={cloudinaryOptimize(ad.imageUrl, 800)} alt={ad.title} className="w-full h-auto object-contain" loading="lazy" />
+                  <OptimizedImage 
+                    src={ad.imageUrl} 
+                    alt={ad.title} 
+                    className="w-full h-auto" 
+                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    objectFit="contain"
+                  />
                   <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[8px] text-primary/80 uppercase tracking-widest border border-white/10">
                     Sponsored
                   </div>
@@ -305,7 +320,13 @@ const Home = () => {
               {data.recentEpisodes.map(episode => (
                 <Link key={episode._id} to={`/Bangladesh/programs/${episode.program?.slug}`} className="group glass-card overflow-hidden block">
                   <div className="relative aspect-video overflow-hidden">
-                    <img src={cloudinaryOptimize(episode.thumbnailImage, 600)} alt={episode.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                    <OptimizedImage 
+                      src={episode.thumbnailImage} 
+                      alt={episode.title} 
+                      className="w-full h-full" 
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                       <PlayCircle size={48} className="text-white/80 group-hover:text-white transform group-hover:scale-110 transition-all drop-shadow-lg" />
                     </div>
@@ -361,11 +382,12 @@ const Home = () => {
                   className="group relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 hover:border-primary/50 transition-all hover:-translate-y-2 duration-500 bg-[#1a1a1a]"
                   style={{ aspectRatio: '3/4.5' }}
                 >
-                  <img
-                    src={cloudinaryOptimize(prog.posterImage, 600)}
+                  <OptimizedImage
+                    src={prog.posterImage}
                     alt={prog.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full group-hover:scale-110 transition-transform duration-700"
                     loading="lazy"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -390,7 +412,13 @@ const Home = () => {
             {homeMiddleAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
                 <div className="h-40 md:h-48 rounded-2xl overflow-hidden shadow-2xl border border-white/5 bg-black/20 backdrop-blur-sm relative group-hover:border-primary/30 transition-all">
-                  <img src={cloudinaryOptimize(ad.imageUrl, 800)} alt={ad.title} className="w-full h-full object-cover" loading="lazy" />
+                  <OptimizedImage 
+                    src={ad.imageUrl} 
+                    alt={ad.title} 
+                    className="w-full h-full" 
+                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                   <div className="absolute top-3 right-3 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[8px] text-primary/80 uppercase tracking-widest border border-white/10">
                     Sponsored
                   </div>
@@ -430,11 +458,12 @@ const Home = () => {
                     <div key={episode._id} className="bg-[#111111] rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all shadow-lg flex flex-col group">
                       {/* Thumbnail */}
                       <div className="relative aspect-video overflow-hidden">
-                        <img
-                          src={cloudinaryOptimize(episode.thumbnailImage, 600)}
+                        <OptimizedImage
+                          src={episode.thumbnailImage}
                           alt={episode.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
+                          sizes="(max-width: 768px) 50vw, 300px"
                         />
                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                           <PlayCircle size={44} className="text-white/70 group-hover:text-white group-hover:scale-110 transition-all drop-shadow-lg" />

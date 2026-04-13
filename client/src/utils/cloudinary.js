@@ -51,3 +51,17 @@ export function cloudinaryOptimize(url, width) {
     return url;
   }
 }
+
+/**
+ * Generate a srcset string for Cloudinary images.
+ * @param {string} url      The raw image URL.
+ * @param {number[]} widths Array of widths to generate (e.g. [400, 800, 1200]).
+ * @returns {string}        The srcset string (or empty if not Cloudinary).
+ */
+export function cloudinarySrcSet(url, widths = [400, 800, 1200, 1920]) {
+  if (!url || typeof url !== 'string' || !url.includes('res.cloudinary.com')) return '';
+  
+  return widths
+    .map(w => `${cloudinaryOptimize(url, w)} ${w}w`)
+    .join(', ');
+}
