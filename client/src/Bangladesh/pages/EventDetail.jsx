@@ -109,7 +109,7 @@ const EventDetail = () => {
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
           >
-            <img src={cloudinaryOptimize(image)} className="w-full h-full object-cover object-center" alt={`${event.title} - Hero ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+            <img src={cloudinaryOptimize(image, 1920)} className="w-full h-full object-cover object-center" alt={`${event.title} - Hero ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
           </div>
         ))}
         
@@ -197,7 +197,7 @@ const EventDetail = () => {
                    onClick={() => openLightbox(index)}
                    className="group relative h-64 rounded-xl overflow-hidden cursor-pointer shadow-lg border border-white/5 hover:border-primary/50 transition-all duration-500"
                  >
-                    <img src={cloudinaryOptimize(image)} className="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700" alt={`Gallery ${index + 1}`} loading="lazy" />
+                    <img src={cloudinaryOptimize(image, 800)} className="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700" alt={`Gallery ${index + 1}`} loading="lazy" />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
                        <div className="bg-primary/80 backdrop-blur-md p-3 rounded-full text-white transform translate-y-4 group-hover:translate-y-0 transition-transform">
                           <ImageIcon size={24} />
@@ -248,7 +248,7 @@ const EventDetail = () => {
 
            <div className="relative w-full max-w-6xl aspect-auto max-h-[85vh] flex items-center justify-center">
               <img 
-                src={cloudinaryOptimize(event.galleryImages[currentGalleryIndex])} 
+                src={cloudinaryOptimize(event.galleryImages[currentGalleryIndex], 1920)} 
                 className="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-lg animate-in zoom-in-95 duration-500" 
                 alt="Lightbox Full-screen" 
               />

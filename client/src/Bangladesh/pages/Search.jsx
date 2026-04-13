@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { format } from 'date-fns';
 import { Search as SearchIcon, Video, FileText } from 'lucide-react';
+import { cloudinaryOptimize } from '../../utils/cloudinary';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -101,7 +102,7 @@ const Search = () => {
                 {results.programs.map((program) => (
                   <Link key={program._id} to={`/Bangladesh/programs/${program.slug}`} className="group glass-card overflow-hidden block">
                     <div className="h-40 overflow-hidden relative">
-                      <img src={program.coverImage} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                      <img src={cloudinaryOptimize(program.coverImage, 600)} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                     </div>
                     <div className="p-4">
                       <h3 className="text-lg font-bold text-white group-hover:text-primary">{program.title}</h3>
@@ -122,7 +123,7 @@ const Search = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {results.episodes.map(episode => (
                   <Link key={episode._id} to={`/Bangladesh/programs/${episode.program?.slug || ''}`} className="glass-card flex p-4 gap-4 hover-glow transition-all">
-                    <img src={episode.thumbnailImage} className="w-32 h-24 object-cover rounded" />
+                    <img src={cloudinaryOptimize(episode.thumbnailImage, 400)} className="w-32 h-24 object-cover rounded" />
                     <div>
                       <h4 className="text-white font-bold line-clamp-1">{episode.title}</h4>
                       <p className="text-gray-400 text-sm line-clamp-2 mt-1">{episode.description}</p>
@@ -144,7 +145,7 @@ const Search = () => {
                 {results.articles.map((article) => (
                   <Link key={article._id} to={`/Bangladesh/articles/${article.slug}`} className="glass-card block h-full hover-glow transition-all overflow-hidden flex flex-col">
                     <div className="h-48 overflow-hidden">
-                      <img src={article.featuredImage} className="w-full h-full object-cover" />
+                      <img src={cloudinaryOptimize(article.featuredImage, 600)} className="w-full h-full object-cover" />
                     </div>
                     <div className="p-4 flex-grow flex flex-col">
                       <h4 className="text-white font-bold line-clamp-2 mb-2">{article.title}</h4>

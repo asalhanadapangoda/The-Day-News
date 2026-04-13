@@ -92,7 +92,7 @@ const Articles = () => {
           {articles.map((article) => (
             <Link key={article._id} to={`/Bangladesh/articles/${article.slug}`} className="group glass-card overflow-hidden block flex flex-col h-full hover-glow">
               <div className="relative h-48 overflow-hidden">
-                <img src={cloudinaryOptimize(article.featuredImage)} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={cloudinaryOptimize(article.featuredImage, 800)} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 {article.category && (
                   <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
                     {article.category.name}

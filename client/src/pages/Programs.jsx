@@ -57,7 +57,7 @@ const Programs = () => {
           >
             {/* Background Image */}
             <img 
-              src={cloudinaryOptimize(program.coverImage)} 
+              src={cloudinaryOptimize(program.coverImage, 600)} 
               alt={program.title} 
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
               loading="lazy"
