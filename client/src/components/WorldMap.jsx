@@ -38,6 +38,7 @@ const WorldMap = () => {
       attributionControl: false,
       minZoom: 1,
       maxZoom: 8,
+      zoomSnap: 0.1,
     });
 
     L.tileLayer(
@@ -85,7 +86,7 @@ const WorldMap = () => {
     const focusOnMarkers = () => {
       const bounds = markerGroup.getBounds();
       // Add extra padding for small screens to ensure we see some context
-      const padding = window.innerWidth < 768 ? [30, 30] : [80, 80];
+      const padding = [0, 0];
       map.fitBounds(bounds, { padding: padding, animate: true });
     };
 
