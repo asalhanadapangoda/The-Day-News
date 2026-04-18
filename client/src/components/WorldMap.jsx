@@ -3,10 +3,17 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const OPERATING_COUNTRIES = [
-  { name: 'Sri Lanka', lat: 7.8731, lng: 80.7718 },
   { name: 'Australia', lat: -25.2744, lng: 133.7751 },
-  { name: 'Japan', lat: 36.2048, lng: 138.2529 },
   { name: 'Bangladesh', lat: 23.6850, lng: 90.3563 },
+  { name: 'Sri Lanka', lat: 7.8731, lng: 80.7718 },
+  { name: 'Japan', lat: 36.2048, lng: 138.2529 },
+  { name: 'India', lat: 20.5937, lng: 78.9629 },
+  { name: 'USA', lat: 37.0902, lng: -95.7129 },
+  { name: 'Thailand', lat: 15.8700, lng: 100.9925 },
+  { name: 'Denmark', lat: 56.2639, lng: 9.5018 },
+  { name: 'South Africa', lat: -30.5595, lng: 22.9375 },
+  { name: 'New Zealand', lat: -40.9006, lng: 174.8860 },
+  { name: 'Samoa', lat: -13.7590, lng: -172.1046 },
 ];
 
 const WorldMap = () => {
@@ -111,7 +118,7 @@ const WorldMap = () => {
     <div
       ref={containerRef}
       className="w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
-      style={{ height: height }}
+      style={{ height: height, background: '#08000f' }}
     />
   );
 };

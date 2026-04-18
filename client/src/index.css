@@ -93,3 +93,8 @@
 .leaflet-control-attribution {
   display: none !important;
 }
+
+.leaflet-container {
+  background: #08000F !important;
+  outline: none;
+}

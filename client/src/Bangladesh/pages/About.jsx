@@ -2,10 +2,17 @@ import { Globe } from 'lucide-react';
 import WorldMap from '../components/WorldMap';
 
 const OPERATING_COUNTRIES = [
-  'Sri Lanka',
   'Australia',
-  'Japan',
   'Bangladesh',
+  'Sri Lanka',
+  'Japan',
+  'India',
+  'USA',
+  'Thailand',
+  'Denmark',
+  'South Africa',
+  'New Zealand',
+  'Samoa',
 ];
 
 const About = () => {
