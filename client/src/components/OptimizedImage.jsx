@@ -9,6 +9,7 @@ import { cloudinaryOptimize, cloudinarySrcSet } from '../utils/cloudinary';
  * - Quality/Format optimization via Cloudinary
  * - Native lazy loading
  * - Fetch priority for heroes
+ * - Width/Height for CLS prevention
  */
 const OptimizedImage = ({ 
   src, 
@@ -18,11 +19,20 @@ const OptimizedImage = ({
   sizes = "100vw",
   loading = "lazy",
   fetchpriority = "auto",
-  objectFit = "cover"
+  objectFit = "cover",
+  width,
+  height,
+  style = {}
 }) => {
   if (!src) return null;
 
   const isCloudinary = src.includes('res.cloudinary.com');
+
+  // Common styles for both optimized and fallback images
+  const baseImgStyle = {
+    objectFit: objectFit,
+    ...style
+  };
 
   if (!isCloudinary) {
     return (
@@ -31,6 +41,9 @@ const OptimizedImage = ({
         alt={alt} 
         className={className} 
         loading={loading}
+        width={width}
+        height={height}
+        style={baseImgStyle}
       />
     );
   }
@@ -41,9 +54,12 @@ const OptimizedImage = ({
       srcSet={cloudinarySrcSet(src, widths)}
       sizes={sizes}
       alt={alt}
-      className={`${className} ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}`}
+      className={className}
       loading={loading}
       fetchpriority={fetchpriority}
+      width={width}
+      height={height}
+      style={baseImgStyle}
     />
   );
 };

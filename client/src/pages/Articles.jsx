@@ -3,35 +3,22 @@ import { Link, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import { format } from 'date-fns';
 import Skeleton from '../components/Skeleton';
-import { cloudinaryOptimize } from '../utils/cloudinary';
+import OptimizedImage from '../components/OptimizedImage';
+import { useQuery } from '@tanstack/react-query';
 
 const Articles = () => {
-  const [articles, setArticles] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
-  
   const currentCategory = searchParams.get('category') || '';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [catsRes, articlesRes] = await Promise.all([
-          api.get('/categories'),
-          api.get(currentCategory ? `/articles?category=${currentCategory}` : '/articles')
-        ]);
-        
-        setCategories(catsRes.data);
-        setArticles(articlesRes.data);
-      } catch (error) {
-        console.error("Error loading articles", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [currentCategory]);
+  const { data: categories = [] } = useQuery({ 
+    queryKey: ['categories'], 
+    queryFn: () => api.get('/categories').then(res => res.data) 
+  });
+
+  const { data: articles = [], isLoading: loading } = useQuery({ 
+    queryKey: ['articles', currentCategory], 
+    queryFn: () => api.get(currentCategory ? `/articles?category=${currentCategory}` : '/articles').then(res => res.data) 
+  });
 
   const handleCategoryChange = (slug) => {
     if (slug) {
@@ -92,7 +79,15 @@ const Articles = () => {
           {articles.map((article) => (
             <Link key={article._id} to={`/articles/${article.slug}`} className="group glass-card overflow-hidden block flex flex-col h-full hover-glow">
               <div className="relative h-48 overflow-hidden">
-                <img src={cloudinaryOptimize(article.featuredImage, 800)} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <OptimizedImage 
+                  src={article.featuredImage} 
+                  alt={article.title} 
+                  className="w-full h-full" 
+                  loading="lazy"
+                  width={400}
+                  height={225}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
                 {article.category && (
                   <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
                     {article.category.name}

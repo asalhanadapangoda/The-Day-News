@@ -84,6 +84,7 @@ const WorldMap = () => {
 
     // Dynamic focus function
     const focusOnMarkers = () => {
+      if (!mapRef.current) return;
       const bounds = markerGroup.getBounds();
       // Add extra padding for small screens to ensure we see some context
       const padding = [0, 0];
@@ -91,10 +92,11 @@ const WorldMap = () => {
     };
 
     // Initial focus
-    setTimeout(focusOnMarkers, 200);
+    const timeoutId = setTimeout(focusOnMarkers, 200);
 
     // Update on resize
     const handleResize = () => {
+      if (!mapRef.current) return;
       map.invalidateSize();
       focusOnMarkers();
     };
@@ -104,9 +106,11 @@ const WorldMap = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      clearTimeout(timeoutId);
       if (mapRef.current) {
-        mapRef.current.remove();
+        const instance = mapRef.current;
         mapRef.current = null;
+        instance.remove();
       }
     };
   }, []);

@@ -3,29 +3,19 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { Calendar, MapPin, PlayCircle, X, ChevronLeft, ChevronRight, Image as ImageIcon, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
-import { cloudinaryOptimize } from '../utils/cloudinary';
+import OptimizedImage from '../components/OptimizedImage';
+import { useQuery } from '@tanstack/react-query';
 
 const EventDetail = () => {
   const { slug } = useParams();
-  const [event, setEvent] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
 
-  useEffect(() => {
-    const fetchEventDetails = async () => {
-      try {
-        const { data } = await api.get(`/events/${slug}`);
-        setEvent(data);
-      } catch (error) {
-        console.error("Error loading event details", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEventDetails();
-  }, [slug]);
+  const { data: event, isLoading: loading } = useQuery({
+    queryKey: ['event', slug],
+    queryFn: () => api.get(`/events/${slug}`).then(res => res.data)
+  });
 
   // Hero Rotation (Every 5 seconds)
   useEffect(() => {
@@ -109,7 +99,16 @@ const EventDetail = () => {
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
           >
-            <img src={cloudinaryOptimize(image, 1920)} className="w-full h-full object-cover object-center" alt={`${event.title} - Hero ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : "low"} />
+            <OptimizedImage 
+              src={image} 
+              className="w-full h-full" 
+              alt={`${event.title} - Hero ${index + 1}`} 
+              loading={index === 0 ? "eager" : "lazy"} 
+              fetchpriority={index === 0 ? "high" : "low"} 
+              width={1920}
+              height={1080}
+              sizes="100vw"
+            />
           </div>
         ))}
         
@@ -197,7 +196,15 @@ const EventDetail = () => {
                    onClick={() => openLightbox(index)}
                    className="group relative h-64 rounded-xl overflow-hidden cursor-pointer shadow-lg border border-white/5 hover:border-primary/50 transition-all duration-500"
                  >
-                    <img src={cloudinaryOptimize(image, 800)} className="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700" alt={`Gallery ${index + 1}`} loading="lazy" />
+                    <OptimizedImage 
+                      src={image} 
+                      className="w-full h-full" 
+                      alt={`Gallery ${index + 1}`} 
+                      loading="lazy" 
+                      width={400}
+                      height={300}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
                        <div className="bg-primary/80 backdrop-blur-md p-3 rounded-full text-white transform translate-y-4 group-hover:translate-y-0 transition-transform">
                           <ImageIcon size={24} />

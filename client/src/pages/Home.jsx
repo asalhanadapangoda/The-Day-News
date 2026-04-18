@@ -1,100 +1,39 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import api from '../services/api';
 import { PlayCircle, ArrowRight, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
-import AIChatBot from '../components/AIChatBot';
 import Skeleton from '../components/Skeleton';
-import PartnersSection from '../components/PartnersSection';
-import { cloudinaryOptimize } from '../utils/cloudinary';
 import OptimizedImage from '../components/OptimizedImage';
 
+// Lazy load non-critical components
+const AIChatBot = lazy(() => import('../components/AIChatBot'));
+const PartnersSection = lazy(() => import('../components/PartnersSection'));
+
 const Home = () => {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState({
-    settings: null,
-    recentEpisodes: [],
-    recentArticles: [],
-    categories: [],
-    featuredProgram: null,
-    featuredEpisodes: [],
-    ads: [],
-    heroes: [],
-    allPrograms: [],
-    allEpisodes: [],
-    partners: [],
-  });
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
 
+  // Fetch all data using React Query
+  const { data: settings } = useQuery({ queryKey: ['settings'], queryFn: () => api.get('/settings').then(res => res.data) });
+  const { data: episodes = [] } = useQuery({ queryKey: ['episodes'], queryFn: () => api.get('/episodes').then(res => res.data) });
+  const { data: articles = [] } = useQuery({ queryKey: ['articles'], queryFn: () => api.get('/articles').then(res => res.data) });
+  const { data: categories = [] } = useQuery({ queryKey: ['categories'], queryFn: () => api.get('/categories').then(res => res.data) });
+  const { data: programs = [] } = useQuery({ queryKey: ['programs'], queryFn: () => api.get('/programs').then(res => res.data) });
+  const { data: ads = [] } = useQuery({ queryKey: ['ads'], queryFn: () => api.get('/ads').then(res => res.data) });
+  const { data: heroes = [] } = useQuery({ queryKey: ['heroes'], queryFn: () => api.get('/heroes').then(res => res.data) });
+  const { data: partners = [] } = useQuery({ queryKey: ['partners'], queryFn: () => api.get('/partners').then(res => res.data), staleTime: 1000 * 60 * 30 });
+
+  const loading = !heroes.length && !articles.length; // Simplified loading state
+
   useEffect(() => {
-    if (data.heroes.length > 1) {
+    if (heroes.length > 1) {
       const interval = setInterval(() => {
-        setCurrentHeroIndex((prev) => (prev + 1) % data.heroes.length);
+        setCurrentHeroIndex((prev) => (prev + 1) % heroes.length);
       }, 5000);
       return () => clearInterval(interval);
     }
-  }, [data.heroes]);
-
-  useEffect(() => {
-    const fetchHomeData = async () => {
-      try {
-        const [
-          settingsRes,
-          episodesRes,
-          articlesRes,
-          categoriesRes,
-          programsRes,
-          adsRes,
-          heroesRes,
-          partnersRes,
-        ] = await Promise.all([
-          api.get('/settings'),
-          api.get('/episodes'),
-          api.get('/articles'),
-          api.get('/categories'),
-          api.get('/programs'),
-          api.get('/ads'),
-          api.get('/heroes'),
-          api.get('/partners'),
-        ]);
-
-        const settings = settingsRes.data;
-        const allEpisodes = Array.isArray(episodesRes.data) ? episodesRes.data : [];
-        const allPrograms = Array.isArray(programsRes.data) ? programsRes.data : [];
-        const articles = Array.isArray(articlesRes.data) ? articlesRes.data : [];
-        const categories = Array.isArray(categoriesRes.data) ? categoriesRes.data : [];
-        const ads = Array.isArray(adsRes.data) ? adsRes.data : [];
-        const heroes = Array.isArray(heroesRes.data) ? heroesRes.data : [];
-        const partners = Array.isArray(partnersRes.data) ? partnersRes.data : [];
-
-        // Extract featured program info
-        const featuredProgram = allPrograms.find(p => p.isFeatured) || allPrograms[0];
-        const featuredEpisodes = featuredProgram
-          ? allEpisodes.filter(e => e.program?._id === featuredProgram._id).slice(0, 3)
-          : [];
-
-        setData({
-          settings,
-          recentEpisodes: allEpisodes.slice(0, 3), // Get latest 3 overall
-          recentArticles: articles.slice(0, 4), // Get latest 4 articles
-          categories,
-          featuredProgram,
-          featuredEpisodes,
-          ads,
-          heroes,
-          allPrograms,
-          allEpisodes,
-          partners,
-        });
-      } catch (error) {
-        console.error("Error loading home data", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHomeData();
-  }, []);
+  }, [heroes]);
 
   if (loading) {
     return (
@@ -132,29 +71,30 @@ const Home = () => {
               {[...Array(3)].map((_, i) => <Skeleton key={i} type="episode" />)}
             </div>
           </div>
-
-          {/* Posters Skeleton */}
-          <div>
-            <div className="h-10 bg-white/10 rounded w-48 mb-10 animate-pulse"></div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[...Array(4)].map((_, i) => <Skeleton key={i} type="poster" />)}
-            </div>
-          </div>
         </div>
       </div>
     );
   }
 
-  const getAdsByPlacement = (placement) => data.ads.filter(ad => ad.placement === placement);
+  // Derived data
+  const featuredProgram = programs.find(p => p.isFeatured) || programs[0];
+  const featuredEpisodes = featuredProgram
+    ? episodes.filter(e => e.program?._id === featuredProgram._id).slice(0, 3)
+    : [];
+
+  const getAdsByPlacement = (placement) => ads.filter(ad => ad.placement === placement);
   const homeTopAds = getAdsByPlacement('home_top');
   const homeMiddleAds = getAdsByPlacement('home_middle');
+
+  const recentEpisodes = episodes.slice(0, 3);
+  const recentArticles = articles.slice(0, 4);
 
   return (
     <div className="w-full">
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
-        {data.heroes.length > 0 ? (
-          data.heroes.map((hero, index) => (
+        {heroes.length > 0 ? (
+          heroes.map((hero, index) => (
             <div
               key={hero._id}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
@@ -167,6 +107,8 @@ const Home = () => {
                 loading={index === 0 ? "eager" : "lazy"}
                 fetchpriority={index === 0 ? "high" : "auto"}
                 sizes="100vw"
+                width={1920}
+                height={1080}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014]/90 via-[#0c0014]/30 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-[#0c0014]/80 via-[#0c0014]/20 to-transparent"></div>
@@ -221,9 +163,9 @@ const Home = () => {
         )}
 
         {/* Slider Controls */}
-        {data.heroes.length > 1 && (
+        {heroes.length > 1 && (
           <div className="absolute bottom-8 right-8 z-20 flex gap-2">
-            {data.heroes.map((_, idx) => (
+            {heroes.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentHeroIndex(idx)}
@@ -249,7 +191,7 @@ const Home = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {data.recentArticles.map(article => (
+          {recentArticles.map(article => (
             <Link key={article._id} to={`/articles/${article.slug}`} className="group bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg border border-white/5 hover:border-primary/50 transition-colors flex flex-col h-full">
               <div className="relative h-48 overflow-hidden">
                 <OptimizedImage 
@@ -258,6 +200,8 @@ const Home = () => {
                   className="w-full h-full" 
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  width={400}
+                  height={225}
                 />
                 {article.category && (
                   <div className="absolute top-3 left-3 bg-primary/90 text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
@@ -291,6 +235,8 @@ const Home = () => {
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     objectFit="contain"
+                    width={600}
+                    height={200}
                   />
                   <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[8px] text-primary/80 uppercase tracking-widest border border-white/10">
                     Sponsored
@@ -316,7 +262,7 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {data.recentEpisodes.map(episode => (
+            {recentEpisodes.map(episode => (
               <Link key={episode._id} to={`/programs/${episode.program?.slug}`} className="group glass-card overflow-hidden block">
                 <div className="relative aspect-video overflow-hidden">
                   <OptimizedImage 
@@ -325,6 +271,8 @@ const Home = () => {
                     className="w-full h-full" 
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    width={480}
+                    height={270}
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                     <PlayCircle size={48} className="text-white/80 group-hover:text-white transform group-hover:scale-110 transition-all drop-shadow-lg" />
@@ -344,7 +292,7 @@ const Home = () => {
       </section>
 
       {/* 5. All Programs Poster Section */}
-      {data.allPrograms && data.allPrograms.filter(p => p.posterImage).length > 0 && (
+      {programs && programs.filter(p => p.posterImage).length > 0 && (
         <section className="py-16 border-y border-white/5 bg-gradient-to-b from-[#0c0014] to-[#0a0012]">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex justify-between items-end mb-10 border-b border-white/10 pb-4">
@@ -357,7 +305,7 @@ const Home = () => {
               </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {data.allPrograms.filter(p => p.posterImage).map(prog => (
+              {programs.filter(p => p.posterImage).map(prog => (
                 <Link
                   key={prog._id}
                   to={`/programs/${prog.slug}`}
@@ -370,6 +318,8 @@ const Home = () => {
                     className="w-full h-full group-hover:scale-110 transition-transform duration-700"
                     loading="lazy"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    width={300}
+                    height={450}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -400,6 +350,8 @@ const Home = () => {
                     className="w-full h-full" 
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    width={600}
+                    height={200}
                   />
                   <div className="absolute top-3 right-3 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[8px] text-primary/80 uppercase tracking-widest border border-white/10">
                     Sponsored
@@ -412,10 +364,10 @@ const Home = () => {
       )}
 
       {/* 7. Per-Program Latest Episodes */}
-      {data.allPrograms.length > 0 && data.allEpisodes.length > 0 && (
+      {programs.length > 0 && episodes.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 py-16 space-y-16">
-          {data.allPrograms.map(prog => {
-            const progEpisodes = data.allEpisodes
+          {programs.map(prog => {
+            const progEpisodes = episodes
               .filter(e => e.program?._id === prog._id)
               .slice(0, 3);
             if (progEpisodes.length === 0) return null;
@@ -446,6 +398,8 @@ const Home = () => {
                           className="w-full h-full group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
                           sizes="(max-width: 768px) 50vw, 300px"
+                          width={320}
+                          height={180}
                         />
                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                           <PlayCircle size={44} className="text-white/70 group-hover:text-white group-hover:scale-110 transition-all drop-shadow-lg" />
@@ -484,8 +438,13 @@ const Home = () => {
       )}
 
 
-      <PartnersSection partners={data.partners} />
-      <AIChatBot />
+      <Suspense fallback={<div className="h-64 bg-white/5 animate-pulse rounded-2xl mx-auto max-w-7xl mb-12"></div>}>
+        <PartnersSection partners={partners} />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <AIChatBot />
+      </Suspense>
     </div>
   );
 };

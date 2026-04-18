@@ -3,25 +3,14 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { PlayCircle } from 'lucide-react';
 import Skeleton from '../components/Skeleton';
-import { cloudinaryOptimize } from '../utils/cloudinary';
+import OptimizedImage from '../components/OptimizedImage';
+import { useQuery } from '@tanstack/react-query';
 
 const Programs = () => {
-  const [programs, setPrograms] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPrograms = async () => {
-      try {
-        const { data } = await api.get('/programs');
-        setPrograms(data);
-      } catch (error) {
-        console.error("Error loading programs", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPrograms();
-  }, []);
+  const { data: programs = [], isLoading: loading } = useQuery({
+    queryKey: ['programs'],
+    queryFn: () => api.get('/programs').then(res => res.data)
+  });
 
   if (loading) {
     return (
@@ -56,11 +45,14 @@ const Programs = () => {
             className="group relative h-72 rounded-2xl overflow-hidden block shadow-2xl border border-white/5 hover:border-primary/50 transition-all duration-500"
           >
             {/* Background Image */}
-            <img 
-              src={cloudinaryOptimize(program.coverImage, 600)} 
+            <OptimizedImage 
+              src={program.coverImage} 
               alt={program.title} 
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+              className="w-full h-full" 
               loading="lazy"
+              width={600}
+              height={400}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
             
             {/* Overlays */}

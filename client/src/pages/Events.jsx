@@ -4,25 +4,14 @@ import api from '../services/api';
 import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 import Skeleton from '../components/Skeleton';
-import { cloudinaryOptimize } from '../utils/cloudinary';
+import OptimizedImage from '../components/OptimizedImage';
+import { useQuery } from '@tanstack/react-query';
 
 const Events = () => {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const { data } = await api.get('/events');
-        setEvents(data);
-      } catch (error) {
-        console.error("Error loading events", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvents();
-  }, []);
+  const { data: events = [], isLoading: loading } = useQuery({
+    queryKey: ['events'],
+    queryFn: () => api.get('/events').then(res => res.data)
+  });
 
   if (loading) {
     return (
@@ -57,11 +46,14 @@ const Events = () => {
             className="group glass-card overflow-hidden block flex flex-col h-full border-white/5 hover:border-primary/40"
           >
             <div className="relative h-64 overflow-hidden">
-              <img 
-                src={cloudinaryOptimize(event.heroImages[0], 800)} 
+              <OptimizedImage 
+                src={event.heroImages[0]} 
                 alt={event.title} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                className="w-full h-full" 
                 loading="lazy"
+                width={600}
+                height={400}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-transparent to-transparent"></div>
 

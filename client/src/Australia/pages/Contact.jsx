@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import localApi from '../services/api';
 import globalApi from '../../services/api';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -16,21 +17,10 @@ const contactSchema = z.object({
 const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState({ state: 'idle', message: '' }); // idle, loading, success, error
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
-    resolver: zodResolver(contactSchema)
+  const { data: settings } = useQuery({
+    queryKey: ['settings'],
+    queryFn: () => localApi.get('/settings').then(res => res.data)
   });
-
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const { data } = await localApi.get('/settings');
-        setSettings(data);
-      } catch (error) {
-        console.error("Error loading contact info", error);
-      }
-    };
-    fetchSettings();
-  }, []);
 
   const onSubmit = async (data) => {
     try {
@@ -90,7 +80,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
-                  <p className="text-gray-400">+94 77 688 0658</p>
+                  <p className="text-gray-400">+61 432 683 730</p>
                 </div>
               </div>
             </div>

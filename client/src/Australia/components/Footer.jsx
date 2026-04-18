@@ -1,23 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Linkedin, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import api from '../services/api';
 import logo from '../../assets/logo.png';
 
 const Footer = () => {
-  const [settings, setSettings] = useState(null);
-
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const { data } = await api.get('/settings');
-        setSettings(data);
-      } catch (error) {
-        console.error("Error fetching settings for footer", error);
-      }
-    };
-    fetchSettings();
-  }, []);
+  const { data: settings } = useQuery({
+    queryKey: ['au-settings'],
+    queryFn: () => api.get('/settings').then(res => res.data),
+    staleTime: 1000 * 60 * 30, // 30 mins
+  });
 
   return (
     <footer className="bg-[#08000f] border-t border-white/5 pt-16 pb-8">
@@ -27,7 +19,13 @@ const Footer = () => {
           {/* Brand & About */}
           <div className="space-y-4">
             <Link to="/Australia" className="inline-block">
-              <img src={logo} alt="The Day News Global" className="h-[100px] w-auto object-contain" />
+              <img
+                src={logo}
+                alt="The Day News Global"
+                className="h-[100px] w-auto object-contain"
+                width={250}
+                height={100}
+              />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mt-4">
               {settings?.aboutUsText
@@ -84,7 +82,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-primary flex-shrink-0" />
-                <span className="text-gray-400 text-sm">+94 77 688 0658</span>
+                <span className="text-gray-400 text-sm">+61 432 683 730</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-primary flex-shrink-0" />

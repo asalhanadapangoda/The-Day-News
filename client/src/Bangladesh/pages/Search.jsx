@@ -3,53 +3,31 @@ import { useSearchParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { format } from 'date-fns';
 import { Search as SearchIcon, Video, FileText } from 'lucide-react';
-import { cloudinaryOptimize } from '../../utils/cloudinary';
+import { useQuery } from '@tanstack/react-query';
+import OptimizedImage from '../../components/OptimizedImage';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
-  
-  const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState({ articles: [], episodes: [], programs: [] });
 
-  useEffect(() => {
-    const fetchSearchResults = async () => {
-      if (!query) return;
-      
-      try {
-        setLoading(true);
-        // We will simple fetch all and filter in memory, or realistically we'd do a search backend endpoint
-        // For demonstration, simulating search over fetched lists
-        const [articlesRes, episodesRes, programsRes] = await Promise.all([
-          api.get('/articles'),
-          api.get('/episodes'),
-          api.get('/programs')
-        ]);
-        
-        const q = query.toLowerCase();
-        
-        const articles = articlesRes.data.filter(a => 
-          a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q)
-        );
-        
-        const episodes = episodesRes.data.filter(e => 
-          e.title.toLowerCase().includes(q) || e.description.toLowerCase().includes(q)
-        );
-        
-        const programs = programsRes.data.filter(p => 
-          p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
-        );
-
-        setResults({ articles, episodes, programs });
-      } catch (error) {
-        console.error("Error searching", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSearchResults();
-  }, [query]);
+  const { data: results = { articles: [], episodes: [], programs: [] }, isLoading: loading } = useQuery({
+    queryKey: ['search', query],
+    queryFn: async () => {
+      if (!query) return { articles: [], episodes: [], programs: [] };
+      const [articlesRes, episodesRes, programsRes] = await Promise.all([
+        api.get('/articles'),
+        api.get('/episodes'),
+        api.get('/programs')
+      ]);
+      const q = query.toLowerCase();
+      return {
+        articles: articlesRes.data.filter(a => a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q)),
+        episodes: episodesRes.data.filter(e => e.title.toLowerCase().includes(q) || e.description.toLowerCase().includes(q)),
+        programs: programsRes.data.filter(p => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
+      };
+    },
+    enabled: !!query
+  });
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -102,7 +80,15 @@ const Search = () => {
                 {results.programs.map((program) => (
                   <Link key={program._id} to={`/Bangladesh/programs/${program.slug}`} className="group glass-card overflow-hidden block">
                     <div className="h-40 overflow-hidden relative">
-                      <img src={cloudinaryOptimize(program.coverImage, 600)} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                      <OptimizedImage 
+                        src={program.coverImage} 
+                        className="w-full h-full" 
+                        width={400} 
+                        height={225}
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        loading="lazy"
+                        alt={program.title}
+                      />
                     </div>
                     <div className="p-4">
                       <h3 className="text-lg font-bold text-white group-hover:text-primary">{program.title}</h3>
@@ -123,7 +109,14 @@ const Search = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {results.episodes.map(episode => (
                   <Link key={episode._id} to={`/Bangladesh/programs/${episode.program?.slug || ''}`} className="glass-card flex p-4 gap-4 hover-glow transition-all">
-                    <img src={cloudinaryOptimize(episode.thumbnailImage, 400)} className="w-32 h-24 object-cover rounded" />
+                    <OptimizedImage 
+                      src={episode.thumbnailImage} 
+                      className="w-32 h-24 rounded flex-shrink-0" 
+                      width={128}
+                      height={96}
+                      loading="lazy"
+                      alt={episode.title}
+                    />
                     <div>
                       <h4 className="text-white font-bold line-clamp-1">{episode.title}</h4>
                       <p className="text-gray-400 text-sm line-clamp-2 mt-1">{episode.description}</p>
@@ -145,7 +138,15 @@ const Search = () => {
                 {results.articles.map((article) => (
                   <Link key={article._id} to={`/Bangladesh/articles/${article.slug}`} className="glass-card block h-full hover-glow transition-all overflow-hidden flex flex-col">
                     <div className="h-48 overflow-hidden">
-                      <img src={cloudinaryOptimize(article.featuredImage, 600)} className="w-full h-full object-cover" />
+                      <OptimizedImage 
+                        src={article.featuredImage} 
+                        className="w-full h-full" 
+                        width={400}
+                        height={225}
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        loading="lazy"
+                        alt={article.title}
+                      />
                     </div>
                     <div className="p-4 flex-grow flex flex-col">
                       <h4 className="text-white font-bold line-clamp-2 mb-2">{article.title}</h4>

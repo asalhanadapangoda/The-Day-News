@@ -3,34 +3,26 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { PlayCircle, Calendar, X } from 'lucide-react';
 import { format } from 'date-fns';
-import { cloudinaryOptimize } from '../../utils/cloudinary';
+import { useQuery } from '@tanstack/react-query';
+import OptimizedImage from '../../components/OptimizedImage';
 
 const ProgramDetail = () => {
   const { slug } = useParams();
-  const [program, setProgram] = useState(null);
-  const [episodes, setEpisodes] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [playingEpisode, setPlayingEpisode] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchProgramDetails = async () => {
-      try {
-        const { data: programData } = await api.get(`/programs/${slug}`);
-        setProgram(programData);
+  const { data: program, isLoading: programLoading } = useQuery({
+    queryKey: ['program', slug],
+    queryFn: () => api.get(`/programs/${slug}`).then(res => res.data)
+  });
 
-        if (programData) {
-          const { data: episodesData } = await api.get(`/episodes?program=${programData._id}`);
-          setEpisodes(episodesData);
-        }
-      } catch (error) {
-        console.error("Error loading program details", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProgramDetails();
-  }, [slug]);
+  const { data: episodes = [], isLoading: episodesLoading } = useQuery({
+    queryKey: ['episodes', program?._id],
+    queryFn: () => api.get(`/episodes?program=${program._id}`).then(res => res.data),
+    enabled: !!program?._id
+  });
+
+  const loading = programLoading || (!!program?._id && episodesLoading);
   
   // Disable body scroll when modal is open
   useEffect(() => {
@@ -83,7 +75,16 @@ const ProgramDetail = () => {
     <div className="w-full pb-20">
       {/* Dynamic Header */}
       <div className="relative w-full h-[50vh] min-h-[400px]">
-        <img src={cloudinaryOptimize(program.coverImage, 1200)} className="absolute inset-0 w-full h-full object-cover object-top" alt={program.title} loading="eager" fetchpriority="high" />
+        <OptimizedImage 
+          src={program.coverImage} 
+          className="absolute inset-0 w-full h-full object-cover object-top" 
+          alt={program.title} 
+          loading="eager" 
+          fetchpriority="high" 
+          width={1920}
+          height={600}
+          sizes="100vw"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-[#0c0014]/60 to-black/30"></div>
         <div className="absolute bottom-0 left-0 w-full p-8 max-w-7xl mx-auto flex items-end gap-6">
           <div className="pb-4">
@@ -109,7 +110,15 @@ const ProgramDetail = () => {
                 className="bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden hover:border-primary/50 transition-all cursor-pointer group flex flex-col h-full shadow-lg"
               >
                 <div className="relative aspect-video overflow-hidden">
-                  <img src={cloudinaryOptimize(episode.thumbnailImage, 600)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={episode.title} loading="lazy" />
+                  <OptimizedImage 
+                    src={episode.thumbnailImage} 
+                    className="w-full h-full" 
+                    alt={episode.title} 
+                    loading="lazy" 
+                    width={480}
+                    height={270}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 flex items-center justify-center transition-colors">
                     <PlayCircle size={48} className="text-white drop-shadow-lg group-hover:scale-110 transition-transform" />
                   </div>

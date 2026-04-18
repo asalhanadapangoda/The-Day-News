@@ -3,35 +3,24 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { Calendar, User, Eye, Facebook, Linkedin, LinkIcon, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
-import { cloudinaryOptimize } from '../../utils/cloudinary';
+import { useQuery } from '@tanstack/react-query';
+import OptimizedImage from '../../components/OptimizedImage';
 
 const ArticleDetail = () => {
   const { slug } = useParams();
-  const [article, setArticle] = useState(null);
-  const [relatedArticles, setRelatedArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchArticleDetails = async () => {
-      try {
-        const { data } = await api.get(`/articles/${slug}`);
-        setArticle(data);
+  const { data: article, isLoading: articleLoading } = useQuery({
+    queryKey: ['article', slug],
+    queryFn: () => api.get(`/articles/${slug}`).then(res => res.data)
+  });
 
-        if (data.category) {
-          const { data: related } = await api.get(`/articles?category=${data.category.slug}`);
-          setRelatedArticles(related.filter(a => a._id !== data._id).slice(0, 3));
-        }
-      } catch (error) {
-        console.error("Error loading article details", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    // Scroll to top on load
-    window.scrollTo(0, 0);
-    fetchArticleDetails();
-  }, [slug]);
+  const { data: relatedArticles = [], isLoading: relatedLoading } = useQuery({
+    queryKey: ['relatedArticles', article?.category?.slug],
+    queryFn: () => api.get(`/articles?category=${article.category.slug}`).then(res => res.data.filter(a => a._id !== article._id).slice(0, 3)),
+    enabled: !!article?.category?.slug
+  });
+
+  const loading = articleLoading;
   
   const handleShare = async () => {
     if (navigator.share) {
@@ -75,7 +64,16 @@ const ArticleDetail = () => {
       {/* Header Banner */}
       <div className="w-full relative min-h-[40vh] md:min-h-[60vh] flex items-end">
         <div className="absolute inset-0">
-          <img src={cloudinaryOptimize(article.featuredImage, 1200)} alt={article.title} className="w-full h-full object-cover" loading="eager" fetchpriority="high" />
+          <OptimizedImage 
+            src={article.featuredImage} 
+            alt={article.title} 
+            className="w-full h-full" 
+            loading="eager" 
+            fetchpriority="high" 
+            width={1200}
+            height={600}
+            sizes="100vw"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-[#0c0014]/80 to-black/20"></div>
         </div>
         
@@ -176,7 +174,15 @@ const ArticleDetail = () => {
               {relatedArticles.map(rel => (
                 <Link key={rel._id} to={`/Australia/articles/${rel.slug}`} className="group glass-card overflow-hidden block hover-glow flex flex-col h-full">
                   <div className="relative h-40 overflow-hidden">
-                    <img src={cloudinaryOptimize(rel.featuredImage, 600)} alt={rel.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                    <OptimizedImage 
+                      src={rel.featuredImage} 
+                      alt={rel.title} 
+                      className="w-full h-full" 
+                      loading="lazy"
+                      width={400}
+                      height={225}
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
                   </div>
                   <div className="p-5 flex flex-col flex-grow">
                     <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors">{rel.title}</h3>
