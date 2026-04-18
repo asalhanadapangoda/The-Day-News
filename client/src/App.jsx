@@ -2,12 +2,15 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AuthProvider as BdAuthProvider } from './Bangladesh/context/AuthContext';
+import { AuthProvider as AuAuthProvider } from './Australia/context/AuthContext';
 
 // Layouts (Remain eager as they are small and used by almost everything)
 import PublicLayout from './layouts/PublicLayout';
 import AdminLayout from './layouts/AdminLayout';
 import BdPublicLayout from './Bangladesh/layouts/PublicLayout';
 import BdAdminLayout from './Bangladesh/layouts/AdminLayout';
+import AuPublicLayout from './Australia/layouts/PublicLayout';
+import AuAdminLayout from './Australia/layouts/AdminLayout';
 
 // Global Public Pages (Lazy)
 const Home = lazy(() => import('./pages/Home'));
@@ -59,6 +62,25 @@ const BdManageSettings = lazy(() => import('./Bangladesh/pages/admin/ManageSetti
 const BdManageHero = lazy(() => import('./Bangladesh/pages/admin/ManageHero'));
 const BdManagePartners = lazy(() => import('./Bangladesh/pages/admin/ManagePartners'));
 const BdManageEvents = lazy(() => import('./Bangladesh/pages/admin/ManageEvents'));
+
+// Australia Public Pages (Lazy)
+const AuHome = lazy(() => import('./Australia/pages/Home'));
+const AuPrograms = lazy(() => import('./Australia/pages/Programs'));
+const AuProgramDetail = lazy(() => import('./Australia/pages/ProgramDetail'));
+const AuArticles = lazy(() => import('./Australia/pages/Articles'));
+const AuArticleDetail = lazy(() => import('./Australia/pages/ArticleDetail'));
+const AuAbout = lazy(() => import('./Australia/pages/About'));
+const AuContact = lazy(() => import('./Australia/pages/Contact'));
+const AuSearch = lazy(() => import('./Australia/pages/Search'));
+
+// Australia Admin Pages (Lazy)
+const AuAdminLogin = lazy(() => import('./Australia/pages/admin/AdminLogin'));
+const AuDashboard = lazy(() => import('./Australia/pages/admin/Dashboard'));
+const AuManagePrograms = lazy(() => import('./Australia/pages/admin/ManagePrograms'));
+const AuManageEpisodes = lazy(() => import('./Australia/pages/admin/ManageEpisodes'));
+const AuManageArticles = lazy(() => import('./Australia/pages/admin/ManageArticles'));
+const AuManageCategories = lazy(() => import('./Australia/pages/admin/ManageCategories'));
+const AuManageHero = lazy(() => import('./Australia/pages/admin/ManageHero'));
 
 function App() {
   return (
@@ -123,6 +145,30 @@ function App() {
           <Route path="heroes" element={<BdManageHero />} />
           <Route path="partners" element={<BdManagePartners />} />
           <Route path="events" element={<BdManageEvents />} />
+        </Route>
+
+        {/* ── Australia Public Routes ── */}
+        <Route path="/Australia" element={<AuAuthProvider><AuPublicLayout /></AuAuthProvider>}>
+          <Route index element={<AuHome />} />
+          <Route path="programs" element={<AuPrograms />} />
+          <Route path="programs/:slug" element={<AuProgramDetail />} />
+          <Route path="articles" element={<AuArticles />} />
+          <Route path="articles/:slug" element={<AuArticleDetail />} />
+          <Route path="about" element={<AuAbout />} />
+          <Route path="contact" element={<AuContact />} />
+          <Route path="search" element={<AuSearch />} />
+        </Route>
+
+        {/* ── Australia Admin Routes ── */}
+        <Route path="/Australia/TDNG_Admin/login" element={<AuAuthProvider><AuAdminLogin /></AuAuthProvider>} />
+        <Route path="/Australia/TDNG_Admin" element={<AuAuthProvider><AuAdminLayout /></AuAuthProvider>}>
+          <Route index element={<AuDashboard />} />
+          <Route path="dashboard" element={<AuDashboard />} />
+          <Route path="programs" element={<AuManagePrograms />} />
+          <Route path="episodes" element={<AuManageEpisodes />} />
+          <Route path="articles" element={<AuManageArticles />} />
+          <Route path="categories" element={<AuManageCategories />} />
+          <Route path="heroes" element={<AuManageHero />} />
         </Route>
       </Routes>
     </Suspense>

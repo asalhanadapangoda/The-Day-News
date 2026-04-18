@@ -43,7 +43,7 @@ const OptimizedImage = ({
       alt={alt}
       className={`${className} ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}`}
       loading={loading}
-      fetchPriority={fetchpriority}
+      fetchpriority={fetchpriority}
     />
   );
 };
