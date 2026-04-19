@@ -1,6 +1,6 @@
-import { Globe, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import WorldMap from '../components/WorldMap';
+import { lazy, Suspense } from 'react';
+import { Globe } from 'lucide-react';
+const WorldMap = lazy(() => import('../components/WorldMap'));
 
 const OPERATING_COUNTRIES = [
   'Australia',
@@ -25,7 +25,7 @@ const About = () => {
         <div className="absolute w-96 h-96 bg-primary/30 rounded-full blur-[100px] -top-20 -left-20"></div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 text-glow tracking-wider uppercase">About Us</h1>
-          <p className="text-xl text-primary font-semibold">The Day News Global</p>
+          <p className="text-xl text-primary font-semibold">The Day News Global - New Zealand</p>
         </div>
       </div>
 
@@ -33,40 +33,16 @@ const About = () => {
         {/* Mission Statement */}
         <div className="glass-card p-8 md:p-12 mb-20 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-bl-full"></div>
-          <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-primary pl-4">About THE DAY NEWS</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-primary pl-4">About THE DAY NEWS NZ</h2>
           <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
             <p>
               The Day News Global serves as a premier, interactive media platform dedicated to the pursuit of knowledge.
-              We empower a global audience to gain meaningful insights through active engagement with diverse perspectives.
+              Our New Zealand portal empowers a local and global audience to gain meaningful insights through active engagement with diverse perspectives from Aotearoa.
             </p>
             <p>
               Positioned as your strategic media partner in cyberspace, we bridge the gap between unheard information
               and actionable understanding, fostering a community where continuous learning is integrated into the daily experience.
             </p>
-          </div>
-        </div>
-        
-        {/* Our Products Section */}
-        <div className="glass-card p-8 md:p-12 mb-20 relative overflow-hidden group">
-          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all duration-500"></div>
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-            <div className="flex-grow">
-              <h2 className="text-3xl font-bold text-white mb-6 border-l-4 border-primary pl-4 flex items-center gap-3">
-                Our Media Products
-              </h2>
-              <p className="text-gray-300 text-lg leading-relaxed mb-4">
-                We offer premium and platinum media packages tailored to amplify your brand&apos;s digital presence. From high-quality podcast production to comprehensive social media strategy, our products are designed for impact.
-              </p>
-            </div>
-            <div className="flex-shrink-0">
-              <Link 
-                to="/Products" 
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-8 py-4 rounded-full font-bold transition-all duration-300 hover:gap-4 shadow-xl shadow-primary/20 whitespace-nowrap"
-              >
-                View Our Products
-                <ArrowRight size={20} />
-              </Link>
-            </div>
           </div>
         </div>
 
@@ -80,13 +56,15 @@ const About = () => {
             </div>
             <h2 className="text-4xl font-bold text-white mb-4">Our Global Presence</h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Delivering trusted news and insights across continents — connecting communities around the world.
+              Delivering trusted news and insights across continents — connecting communities from New Zealand to around the world.
             </p>
           </div>
 
           {/* Map Container */}
-          <div className="glass-card p-3 md:p-4 mb-8">
-            <WorldMap />
+          <div className="glass-card p-3 md:p-4 mb-8 min-h-[400px]">
+            <Suspense fallback={<div className="w-full h-[400px] flex items-center justify-center text-gray-500 italic">Loading map...</div>}>
+              <WorldMap />
+            </Suspense>
           </div>
 
           {/* Country Pills */}
@@ -102,8 +80,6 @@ const About = () => {
               </div>
             ))}
           </div>
-
-
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AuthProvider as BdAuthProvider } from './Bangladesh/context/AuthContext';
 import { AuthProvider as AuAuthProvider } from './Australia/context/AuthContext';
+import { AuthProvider as NzAuthProvider } from './NewZealand/context/AuthContext';
 import ScrollToTop from './components/ScrollToTop';
 
 // Layouts (Remain eager as they are small and used by almost everything)
@@ -12,6 +13,8 @@ import BdPublicLayout from './Bangladesh/layouts/PublicLayout';
 import BdAdminLayout from './Bangladesh/layouts/AdminLayout';
 import AuPublicLayout from './Australia/layouts/PublicLayout';
 import AuAdminLayout from './Australia/layouts/AdminLayout';
+import NzPublicLayout from './NewZealand/layouts/PublicLayout';
+import NzAdminLayout from './NewZealand/layouts/AdminLayout';
 
 // Global Public Pages (Lazy)
 const Home = lazy(() => import('./pages/Home'));
@@ -24,7 +27,7 @@ const EventDetail = lazy(() => import('./pages/EventDetail'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Search = lazy(() => import('./pages/Search'));
-const Product = lazy(() => import('./pages/Product'));
+const Products = lazy(() => import('./pages/Products'));
 
 // Global Admin Pages (Lazy)
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
@@ -84,6 +87,21 @@ const AuManageArticles = lazy(() => import('./Australia/pages/admin/ManageArticl
 const AuManageCategories = lazy(() => import('./Australia/pages/admin/ManageCategories'));
 const AuManageHero = lazy(() => import('./Australia/pages/admin/ManageHero'));
 
+// New Zealand Public Pages (Lazy)
+const NzHome = lazy(() => import('./NewZealand/pages/Home'));
+const NzArticles = lazy(() => import('./NewZealand/pages/Articles'));
+const NzArticleDetail = lazy(() => import('./NewZealand/pages/ArticleDetail'));
+const NzAbout = lazy(() => import('./NewZealand/pages/About'));
+const NzContact = lazy(() => import('./NewZealand/pages/Contact'));
+const NzSearch = lazy(() => import('./NewZealand/pages/Search'));
+
+// New Zealand Admin Pages (Lazy)
+const NzAdminLogin = lazy(() => import('./NewZealand/pages/admin/AdminLogin'));
+const NzDashboard = lazy(() => import('./NewZealand/pages/admin/Dashboard'));
+const NzManageArticles = lazy(() => import('./NewZealand/pages/admin/ManageArticles'));
+const NzManageCategories = lazy(() => import('./NewZealand/pages/admin/ManageCategories'));
+const NzManageHero = lazy(() => import('./NewZealand/pages/admin/ManageHero'));
+
 function App() {
   return (
     <Suspense fallback={null}>
@@ -101,7 +119,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/Product" element={<Product />} />
+          <Route path="/Products" element={<Products />} />
         </Route>
 
         {/* ── Global Admin Routes ── */}
@@ -173,6 +191,26 @@ function App() {
           <Route path="articles" element={<AuManageArticles />} />
           <Route path="categories" element={<AuManageCategories />} />
           <Route path="heroes" element={<AuManageHero />} />
+        </Route>
+
+        {/* ── New Zealand Public Routes ── */}
+        <Route path="/NewZealand" element={<NzAuthProvider><NzPublicLayout /></NzAuthProvider>}>
+          <Route index element={<NzHome />} />
+          <Route path="articles" element={<NzArticles />} />
+          <Route path="articles/:slug" element={<NzArticleDetail />} />
+          <Route path="about" element={<NzAbout />} />
+          <Route path="contact" element={<NzContact />} />
+          <Route path="search" element={<NzSearch />} />
+        </Route>
+
+        {/* ── New Zealand Admin Routes ── */}
+        <Route path="/NewZealand/TDNG_Admin/login" element={<NzAuthProvider><NzAdminLogin /></NzAuthProvider>} />
+        <Route path="/NewZealand/TDNG_Admin" element={<NzAuthProvider><NzAdminLayout /></NzAuthProvider>}>
+          <Route index element={<NzDashboard />} />
+          <Route path="dashboard" element={<NzDashboard />} />
+          <Route path="articles" element={<NzManageArticles />} />
+          <Route path="categories" element={<NzManageCategories />} />
+          <Route path="heroes" element={<NzManageHero />} />
         </Route>
       </Routes>
     </Suspense>

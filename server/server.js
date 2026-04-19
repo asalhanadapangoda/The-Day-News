@@ -24,6 +24,7 @@ import partnerRoutes from './routes/partnerRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import bdRoutes from './Bangladesh/routes/index.js';
 import auRoutes from './Australia/routes/index.js';
+import nzRoutes from './NewZealand/routes/index.js';
 
 dotenv.config();
 
@@ -52,6 +53,7 @@ const authLimiter = rateLimit({
 app.use('/api/auth', authLimiter);
 app.use('/api/bangladesh/auth', authLimiter);
 app.use('/api/australia/auth', authLimiter);
+app.use('/api/newzealand/auth', authLimiter);
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
@@ -73,6 +75,9 @@ app.use('/api/bangladesh', bdRoutes);
 
 // Mount Australia Routes
 app.use('/api/australia', auRoutes);
+
+// Mount New Zealand Routes
+app.use('/api/newzealand', nzRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');

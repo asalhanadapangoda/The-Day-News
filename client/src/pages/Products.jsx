@@ -7,25 +7,24 @@ const Product = () => {
       name: "Premium Package",
       price: "LKR 125,000",
       features: [
-        "Podcast video (30–40 minutes)",
-        "Photography",
+        "Podcast Interview (30–40 minutes)",
+        "3 Podcast mid-range videos",
+        "Photography Coverage",
         "3 voice-cut videos",
-        "3 mid-range videos",
-        "Highlight reel video",
-        "Article",
-        "2 social media posts"
+        "Highlight/Promo video (60-90 seconds)",
+        "Web Article",
+        "2 social media promotional posts"
       ]
     },
     {
       name: "Platinum Package",
       price: "LKR 75,000",
       features: [
-        "Photography",
+        "Photography Coverage",
         "3 voice-cut videos",
-        "3 mid-range videos",
-        "Highlight reel video",
-        "Article",
-        "2 social media posts"
+        "Highlight/Promo video (60-90 seconds)",
+        "Web Article",
+        "2 social media promotional posts"
       ]
     }
   ];
@@ -46,8 +45,8 @@ const Product = () => {
         {/* Packages Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-20">
           {packages.map((pkg, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="glass-card p-8 md:p-10 flex flex-col h-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02]"
             >
               <div className="mb-8">
@@ -76,23 +75,23 @@ const Product = () => {
         <div className="py-12 md:py-16 relative overflow-hidden text-center">
           {/* Animated decorative background */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl aspect-square bg-primary/10 rounded-full blur-[100px] -z-10 animate-pulse-slow"></div>
-          
+
           <div className="relative z-10 flex flex-col items-center max-w-4xl mx-auto px-6">
             <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight mb-8">
               Need More <span className="text-gradient-primary">Information?</span>
             </h2>
-            
-            <Link 
-              to="/contact" 
+
+            <Link
+              to="/contact"
               className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-500 transform bg-[#0c0014] rounded-full hover:scale-105 shadow-[0_0_25px_rgba(79,70,229,0.2)] hover:shadow-[0_0_40px_rgba(79,70,229,0.4)] overflow-hidden border border-white/10"
             >
               <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-shimmer"></div>
               <span className="relative flex items-center gap-3 text-base">
                 Contact Us Today
-                <svg 
-                  className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
+                <svg
+                  className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
