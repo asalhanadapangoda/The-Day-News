@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AuthProvider as BdAuthProvider } from './Bangladesh/context/AuthContext';
 import { AuthProvider as AuAuthProvider } from './Australia/context/AuthContext';
+import ScrollToTop from './components/ScrollToTop';
 
 // Layouts (Remain eager as they are small and used by almost everything)
 import PublicLayout from './layouts/PublicLayout';
@@ -23,6 +24,7 @@ const EventDetail = lazy(() => import('./pages/EventDetail'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Search = lazy(() => import('./pages/Search'));
+const Product = lazy(() => import('./pages/Product'));
 
 // Global Admin Pages (Lazy)
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
@@ -85,6 +87,7 @@ const AuManageHero = lazy(() => import('./Australia/pages/admin/ManageHero'));
 function App() {
   return (
     <Suspense fallback={null}>
+      <ScrollToTop />
       <Routes>
         {/* ── Global Public Routes ── */}
         <Route element={<AuthProvider><PublicLayout /></AuthProvider>}>
@@ -98,6 +101,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/Product" element={<Product />} />
         </Route>
 
         {/* ── Global Admin Routes ── */}

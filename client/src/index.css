@@ -10,6 +10,18 @@
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #B3B3B3;
   --color-border-subtle: #333333;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+
+  @keyframes shimmer {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+  }
 }
 
 /* Custom base styles for dark media platform */
@@ -41,6 +53,10 @@
   /* Global Select styling for visibility */
   select option {
     @apply bg-[#1a1a1a] text-white;
+  }
+
+  .text-gradient-primary {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary via-indigo-400 to-primary bg-[length:200%_auto] animate-[shimmer_4s_linear_infinite];
   }
 }
 
