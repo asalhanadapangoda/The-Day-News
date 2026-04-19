@@ -19,18 +19,16 @@ const Footer = () => {
           {/* Brand & About */}
           <div className="space-y-4">
             <Link to="/NewZealand" className="inline-block">
-               <img
-                  src={logo}
-                  alt="The Day News Global"
-                  className="h-[80px] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.15)]"
-                  width={200}
-                  height={80}
-                />
+              <img
+                src={logo}
+                alt="The Day News Global"
+                className="h-[80px] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.15)]"
+                width={200}
+                height={80}
+              />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mt-4">
-              {settings?.aboutUsText
-                ? settings.aboutUsText.replace(/<[^>]+>/g, '').substring(0, 150) + '...'
-                : 'Your Media Partner In Cyberspace - Delivering news from Aotearoa to the world.'}
+              Your Media Partner In Cyberspace...
             </p>
             <div className="flex space-x-4 pt-2">
               <a href="https://www.facebook.com/thedaynewsglobal/" className="text-gray-400 hover:text-primary transition-colors">
@@ -76,7 +74,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="text-primary flex-shrink-0 mt-0.5" />
                 <span className="text-gray-400 text-sm">
-                  The Day News Global - New Zealand Portal
+                  The Third Place, TRACE Expert City, Colombo 10
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -97,7 +95,7 @@ const Footer = () => {
             © 2026 The Day News Global. New Zealand Regional Portal.
           </p>
           <div className="text-gray-500 text-xs text-glow-primary">
-            Trusted journalism for Aotearoa.
+            Designed for truth, built for clarity.
           </div>
         </div>
       </div>
