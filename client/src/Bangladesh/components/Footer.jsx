@@ -96,7 +96,7 @@ const Footer = () => {
 
         <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            {settings?.footerText || '© 2026 The Day News Global. All rights reserved.'}
+            {settings?.footerText || '© 2026 The Day News Global. Trusted journalism, 24/7.'}
           </p>
           <div className="text-gray-500 text-xs">
             Designed for truth, built for clarity.

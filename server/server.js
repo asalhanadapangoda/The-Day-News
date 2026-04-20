@@ -25,6 +25,13 @@ import eventRoutes from './routes/eventRoutes.js';
 import bdRoutes from './Bangladesh/routes/index.js';
 import auRoutes from './Australia/routes/index.js';
 import nzRoutes from './NewZealand/routes/index.js';
+import jpRoutes from './Japan/routes/index.js';
+import inRoutes from './India/routes/index.js';
+import usRoutes from './USA/routes/index.js';
+import thRoutes from './Thailand/routes/index.js';
+import dkRoutes from './Denmark/routes/index.js';
+import smRoutes from './Samoa/routes/index.js';
+import zaRoutes from './SouthAfrica/routes/index.js';
 
 dotenv.config();
 
@@ -39,8 +46,8 @@ app.use(cookieParser());
 app.use(compression());
 
 // Security Middleware
-// app.use(helmet());
-// app.use(mongoSanitize());
+app.use(helmet());
+app.use(mongoSanitize());
 
 // Rate Limiting
 const authLimiter = rateLimit({
@@ -54,6 +61,13 @@ app.use('/api/auth', authLimiter);
 app.use('/api/bangladesh/auth', authLimiter);
 app.use('/api/australia/auth', authLimiter);
 app.use('/api/newzealand/auth', authLimiter);
+app.use('/api/japan/auth', authLimiter);
+app.use('/api/india/auth', authLimiter);
+app.use('/api/usa/auth', authLimiter);
+app.use('/api/thailand/auth', authLimiter);
+app.use('/api/denmark/auth', authLimiter);
+app.use('/api/samoa/auth', authLimiter);
+app.use('/api/southafrica/auth', authLimiter);
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
@@ -78,6 +92,27 @@ app.use('/api/australia', auRoutes);
 
 // Mount New Zealand Routes
 app.use('/api/newzealand', nzRoutes);
+
+// Mount Japan Routes
+app.use('/api/japan', jpRoutes);
+
+// Mount India Routes
+app.use('/api/india', inRoutes);
+
+// Mount USA Routes
+app.use('/api/usa', usRoutes);
+
+// Mount Thailand Routes
+app.use('/api/thailand', thRoutes);
+
+// Mount Denmark Routes
+app.use('/api/denmark', dkRoutes);
+
+// Mount Samoa Routes
+app.use('/api/samoa', smRoutes);
+
+// Mount South Africa Routes
+app.use('/api/southafrica', zaRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');

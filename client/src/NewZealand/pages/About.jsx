@@ -25,7 +25,7 @@ const About = () => {
         <div className="absolute w-96 h-96 bg-primary/30 rounded-full blur-[100px] -top-20 -left-20"></div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 text-glow tracking-wider uppercase">About Us</h1>
-          <p className="text-xl text-primary font-semibold">The Day News Global - New Zealand</p>
+          <p className="text-xl text-primary font-semibold">The Day News Global</p>
         </div>
       </div>
 
@@ -33,7 +33,7 @@ const About = () => {
         {/* Mission Statement */}
         <div className="glass-card p-8 md:p-12 mb-20 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-bl-full"></div>
-          <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-primary pl-4">About THE DAY NEWS NZ</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-primary pl-4">About THE DAY NEWS GLOBAL</h2>
           <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
             <p>
               The Day News Global serves as a premier, interactive media platform dedicated to the pursuit of knowledge.

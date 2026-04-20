@@ -4,6 +4,13 @@ import { AuthProvider } from './context/AuthContext';
 import { AuthProvider as BdAuthProvider } from './Bangladesh/context/AuthContext';
 import { AuthProvider as AuAuthProvider } from './Australia/context/AuthContext';
 import { AuthProvider as NzAuthProvider } from './NewZealand/context/AuthContext';
+import { AuthProvider as JpAuthProvider } from './Japan/context/AuthContext';
+import { AuthProvider as InAuthProvider } from './India/context/AuthContext';
+import { AuthProvider as UsAuthProvider } from './USA/context/AuthContext';
+import { AuthProvider as ThAuthProvider } from './Thailand/context/AuthContext';
+import { AuthProvider as DkAuthProvider } from './Denmark/context/AuthContext';
+import { AuthProvider as SmAuthProvider } from './Samoa/context/AuthContext';
+import { AuthProvider as ZaAuthProvider } from './SouthAfrica/context/AuthContext';
 import ScrollToTop from './components/ScrollToTop';
 
 // Layouts (Remain eager as they are small and used by almost everything)
@@ -15,6 +22,20 @@ import AuPublicLayout from './Australia/layouts/PublicLayout';
 import AuAdminLayout from './Australia/layouts/AdminLayout';
 import NzPublicLayout from './NewZealand/layouts/PublicLayout';
 import NzAdminLayout from './NewZealand/layouts/AdminLayout';
+import JpPublicLayout from './Japan/layouts/PublicLayout';
+import JpAdminLayout from './Japan/layouts/AdminLayout';
+import InPublicLayout from './India/layouts/PublicLayout';
+import InAdminLayout from './India/layouts/AdminLayout';
+import UsPublicLayout from './USA/layouts/PublicLayout';
+import UsAdminLayout from './USA/layouts/AdminLayout';
+import ThPublicLayout from './Thailand/layouts/PublicLayout';
+import ThAdminLayout from './Thailand/layouts/AdminLayout';
+import DkPublicLayout from './Denmark/layouts/PublicLayout';
+import DkAdminLayout from './Denmark/layouts/AdminLayout';
+import SmPublicLayout from './Samoa/layouts/PublicLayout';
+import SmAdminLayout from './Samoa/layouts/AdminLayout';
+import ZaPublicLayout from './SouthAfrica/layouts/PublicLayout';
+import ZaAdminLayout from './SouthAfrica/layouts/AdminLayout';
 
 // Global Public Pages (Lazy)
 const Home = lazy(() => import('./pages/Home'));
@@ -101,6 +122,97 @@ const NzDashboard = lazy(() => import('./NewZealand/pages/admin/Dashboard'));
 const NzManageArticles = lazy(() => import('./NewZealand/pages/admin/ManageArticles'));
 const NzManageCategories = lazy(() => import('./NewZealand/pages/admin/ManageCategories'));
 const NzManageHero = lazy(() => import('./NewZealand/pages/admin/ManageHero'));
+
+// Japan Pages (Lazy)
+const JpHome = lazy(() => import('./Japan/pages/Home'));
+const JpArticles = lazy(() => import('./Japan/pages/Articles'));
+const JpArticleDetail = lazy(() => import('./Japan/pages/ArticleDetail'));
+const JpAbout = lazy(() => import('./Japan/pages/About'));
+const JpContact = lazy(() => import('./Japan/pages/Contact'));
+const JpSearch = lazy(() => import('./Japan/pages/Search'));
+const JpAdminLogin = lazy(() => import('./Japan/pages/admin/AdminLogin'));
+const JpDashboard = lazy(() => import('./Japan/pages/admin/Dashboard'));
+const JpManageArticles = lazy(() => import('./Japan/pages/admin/ManageArticles'));
+const JpManageCategories = lazy(() => import('./Japan/pages/admin/ManageCategories'));
+const JpManageHero = lazy(() => import('./Japan/pages/admin/ManageHero'));
+
+// India Pages (Lazy)
+const InHome = lazy(() => import('./India/pages/Home'));
+const InArticles = lazy(() => import('./India/pages/Articles'));
+const InArticleDetail = lazy(() => import('./India/pages/ArticleDetail'));
+const InAbout = lazy(() => import('./India/pages/About'));
+const InContact = lazy(() => import('./India/pages/Contact'));
+const InSearch = lazy(() => import('./India/pages/Search'));
+const InAdminLogin = lazy(() => import('./India/pages/admin/AdminLogin'));
+const InDashboard = lazy(() => import('./India/pages/admin/Dashboard'));
+const InManageArticles = lazy(() => import('./India/pages/admin/ManageArticles'));
+const InManageCategories = lazy(() => import('./India/pages/admin/ManageCategories'));
+const InManageHero = lazy(() => import('./India/pages/admin/ManageHero'));
+
+// USA Pages (Lazy)
+const UsHome = lazy(() => import('./USA/pages/Home'));
+const UsArticles = lazy(() => import('./USA/pages/Articles'));
+const UsArticleDetail = lazy(() => import('./USA/pages/ArticleDetail'));
+const UsAbout = lazy(() => import('./USA/pages/About'));
+const UsContact = lazy(() => import('./USA/pages/Contact'));
+const UsSearch = lazy(() => import('./USA/pages/Search'));
+const UsAdminLogin = lazy(() => import('./USA/pages/admin/AdminLogin'));
+const UsDashboard = lazy(() => import('./USA/pages/admin/Dashboard'));
+const UsManageArticles = lazy(() => import('./USA/pages/admin/ManageArticles'));
+const UsManageCategories = lazy(() => import('./USA/pages/admin/ManageCategories'));
+const UsManageHero = lazy(() => import('./USA/pages/admin/ManageHero'));
+
+// Thailand Pages (Lazy)
+const ThHome = lazy(() => import('./Thailand/pages/Home'));
+const ThArticles = lazy(() => import('./Thailand/pages/Articles'));
+const ThArticleDetail = lazy(() => import('./Thailand/pages/ArticleDetail'));
+const ThAbout = lazy(() => import('./Thailand/pages/About'));
+const ThContact = lazy(() => import('./Thailand/pages/Contact'));
+const ThSearch = lazy(() => import('./Thailand/pages/Search'));
+const ThAdminLogin = lazy(() => import('./Thailand/pages/admin/AdminLogin'));
+const ThDashboard = lazy(() => import('./Thailand/pages/admin/Dashboard'));
+const ThManageArticles = lazy(() => import('./Thailand/pages/admin/ManageArticles'));
+const ThManageCategories = lazy(() => import('./Thailand/pages/admin/ManageCategories'));
+const ThManageHero = lazy(() => import('./Thailand/pages/admin/ManageHero'));
+
+// Denmark Pages (Lazy)
+const DkHome = lazy(() => import('./Denmark/pages/Home'));
+const DkArticles = lazy(() => import('./Denmark/pages/Articles'));
+const DkArticleDetail = lazy(() => import('./Denmark/pages/ArticleDetail'));
+const DkAbout = lazy(() => import('./Denmark/pages/About'));
+const DkContact = lazy(() => import('./Denmark/pages/Contact'));
+const DkSearch = lazy(() => import('./Denmark/pages/Search'));
+const DkAdminLogin = lazy(() => import('./Denmark/pages/admin/AdminLogin'));
+const DkDashboard = lazy(() => import('./Denmark/pages/admin/Dashboard'));
+const DkManageArticles = lazy(() => import('./Denmark/pages/admin/ManageArticles'));
+const DkManageCategories = lazy(() => import('./Denmark/pages/admin/ManageCategories'));
+const DkManageHero = lazy(() => import('./Denmark/pages/admin/ManageHero'));
+
+// Samoa Pages (Lazy)
+const SmHome = lazy(() => import('./Samoa/pages/Home'));
+const SmArticles = lazy(() => import('./Samoa/pages/Articles'));
+const SmArticleDetail = lazy(() => import('./Samoa/pages/ArticleDetail'));
+const SmAbout = lazy(() => import('./Samoa/pages/About'));
+const SmContact = lazy(() => import('./Samoa/pages/Contact'));
+const SmSearch = lazy(() => import('./Samoa/pages/Search'));
+const SmAdminLogin = lazy(() => import('./Samoa/pages/admin/AdminLogin'));
+const SmDashboard = lazy(() => import('./Samoa/pages/admin/Dashboard'));
+const SmManageArticles = lazy(() => import('./Samoa/pages/admin/ManageArticles'));
+const SmManageCategories = lazy(() => import('./Samoa/pages/admin/ManageCategories'));
+const SmManageHero = lazy(() => import('./Samoa/pages/admin/ManageHero'));
+
+// South Africa Pages (Lazy)
+const ZaHome = lazy(() => import('./SouthAfrica/pages/Home'));
+const ZaArticles = lazy(() => import('./SouthAfrica/pages/Articles'));
+const ZaArticleDetail = lazy(() => import('./SouthAfrica/pages/ArticleDetail'));
+const ZaAbout = lazy(() => import('./SouthAfrica/pages/About'));
+const ZaContact = lazy(() => import('./SouthAfrica/pages/Contact'));
+const ZaSearch = lazy(() => import('./SouthAfrica/pages/Search'));
+const ZaAdminLogin = lazy(() => import('./SouthAfrica/pages/admin/AdminLogin'));
+const ZaDashboard = lazy(() => import('./SouthAfrica/pages/admin/Dashboard'));
+const ZaManageArticles = lazy(() => import('./SouthAfrica/pages/admin/ManageArticles'));
+const ZaManageCategories = lazy(() => import('./SouthAfrica/pages/admin/ManageCategories'));
+const ZaManageHero = lazy(() => import('./SouthAfrica/pages/admin/ManageHero'));
 
 function App() {
   return (
@@ -211,6 +323,132 @@ function App() {
           <Route path="articles" element={<NzManageArticles />} />
           <Route path="categories" element={<NzManageCategories />} />
           <Route path="heroes" element={<NzManageHero />} />
+        </Route>
+
+        {/* ── Japan Routes ── */}
+        <Route path="/Japan" element={<JpAuthProvider><JpPublicLayout /></JpAuthProvider>}>
+          <Route index element={<JpHome />} />
+          <Route path="articles" element={<JpArticles />} />
+          <Route path="articles/:slug" element={<JpArticleDetail />} />
+          <Route path="about" element={<JpAbout />} />
+          <Route path="contact" element={<JpContact />} />
+          <Route path="search" element={<JpSearch />} />
+        </Route>
+        <Route path="/Japan/TDNG_Admin/login" element={<JpAuthProvider><JpAdminLogin /></JpAuthProvider>} />
+        <Route path="/Japan/TDNG_Admin" element={<JpAuthProvider><JpAdminLayout /></JpAuthProvider>}>
+          <Route index element={<JpDashboard />} />
+          <Route path="dashboard" element={<JpDashboard />} />
+          <Route path="articles" element={<JpManageArticles />} />
+          <Route path="categories" element={<JpManageCategories />} />
+          <Route path="heroes" element={<JpManageHero />} />
+        </Route>
+
+        {/* ── India Routes ── */}
+        <Route path="/India" element={<InAuthProvider><InPublicLayout /></InAuthProvider>}>
+          <Route index element={<InHome />} />
+          <Route path="articles" element={<InArticles />} />
+          <Route path="articles/:slug" element={<InArticleDetail />} />
+          <Route path="about" element={<InAbout />} />
+          <Route path="contact" element={<InContact />} />
+          <Route path="search" element={<InSearch />} />
+        </Route>
+        <Route path="/India/TDNG_Admin/login" element={<InAuthProvider><InAdminLogin /></InAuthProvider>} />
+        <Route path="/India/TDNG_Admin" element={<InAuthProvider><InAdminLayout /></InAuthProvider>}>
+          <Route index element={<InDashboard />} />
+          <Route path="dashboard" element={<InDashboard />} />
+          <Route path="articles" element={<InManageArticles />} />
+          <Route path="categories" element={<InManageCategories />} />
+          <Route path="heroes" element={<InManageHero />} />
+        </Route>
+
+        {/* ── USA Routes ── */}
+        <Route path="/USA" element={<UsAuthProvider><UsPublicLayout /></UsAuthProvider>}>
+          <Route index element={<UsHome />} />
+          <Route path="articles" element={<UsArticles />} />
+          <Route path="articles/:slug" element={<UsArticleDetail />} />
+          <Route path="about" element={<UsAbout />} />
+          <Route path="contact" element={<UsContact />} />
+          <Route path="search" element={<UsSearch />} />
+        </Route>
+        <Route path="/USA/TDNG_Admin/login" element={<UsAuthProvider><UsAdminLogin /></UsAuthProvider>} />
+        <Route path="/USA/TDNG_Admin" element={<UsAuthProvider><UsAdminLayout /></UsAuthProvider>}>
+          <Route index element={<UsDashboard />} />
+          <Route path="dashboard" element={<UsDashboard />} />
+          <Route path="articles" element={<UsManageArticles />} />
+          <Route path="categories" element={<UsManageCategories />} />
+          <Route path="heroes" element={<UsManageHero />} />
+        </Route>
+
+        {/* ── Thailand Routes ── */}
+        <Route path="/Thailand" element={<ThAuthProvider><ThPublicLayout /></ThAuthProvider>}>
+          <Route index element={<ThHome />} />
+          <Route path="articles" element={<ThArticles />} />
+          <Route path="articles/:slug" element={<ThArticleDetail />} />
+          <Route path="about" element={<ThAbout />} />
+          <Route path="contact" element={<ThContact />} />
+          <Route path="search" element={<ThSearch />} />
+        </Route>
+        <Route path="/Thailand/TDNG_Admin/login" element={<ThAuthProvider><ThAdminLogin /></ThAuthProvider>} />
+        <Route path="/Thailand/TDNG_Admin" element={<ThAuthProvider><ThAdminLayout /></ThAuthProvider>}>
+          <Route index element={<ThDashboard />} />
+          <Route path="dashboard" element={<ThDashboard />} />
+          <Route path="articles" element={<ThManageArticles />} />
+          <Route path="categories" element={<ThManageCategories />} />
+          <Route path="heroes" element={<ThManageHero />} />
+        </Route>
+
+        {/* ── Denmark Routes ── */}
+        <Route path="/Denmark" element={<DkAuthProvider><DkPublicLayout /></DkAuthProvider>}>
+          <Route index element={<DkHome />} />
+          <Route path="articles" element={<DkArticles />} />
+          <Route path="articles/:slug" element={<DkArticleDetail />} />
+          <Route path="about" element={<DkAbout />} />
+          <Route path="contact" element={<DkContact />} />
+          <Route path="search" element={<DkSearch />} />
+        </Route>
+        <Route path="/Denmark/TDNG_Admin/login" element={<DkAuthProvider><DkAdminLogin /></DkAuthProvider>} />
+        <Route path="/Denmark/TDNG_Admin" element={<DkAuthProvider><DkAdminLayout /></DkAuthProvider>}>
+          <Route index element={<DkDashboard />} />
+          <Route path="dashboard" element={<DkDashboard />} />
+          <Route path="articles" element={<DkManageArticles />} />
+          <Route path="categories" element={<DkManageCategories />} />
+          <Route path="heroes" element={<DkManageHero />} />
+        </Route>
+
+        {/* ── Samoa Routes ── */}
+        <Route path="/Samoa" element={<SmAuthProvider><SmPublicLayout /></SmAuthProvider>}>
+          <Route index element={<SmHome />} />
+          <Route path="articles" element={<SmArticles />} />
+          <Route path="articles/:slug" element={<SmArticleDetail />} />
+          <Route path="about" element={<SmAbout />} />
+          <Route path="contact" element={<SmContact />} />
+          <Route path="search" element={<SmSearch />} />
+        </Route>
+        <Route path="/Samoa/TDNG_Admin/login" element={<SmAuthProvider><SmAdminLogin /></SmAuthProvider>} />
+        <Route path="/Samoa/TDNG_Admin" element={<SmAuthProvider><SmAdminLayout /></SmAuthProvider>}>
+          <Route index element={<SmDashboard />} />
+          <Route path="dashboard" element={<SmDashboard />} />
+          <Route path="articles" element={<SmManageArticles />} />
+          <Route path="categories" element={<SmManageCategories />} />
+          <Route path="heroes" element={<SmManageHero />} />
+        </Route>
+
+        {/* ── South Africa Routes ── */}
+        <Route path="/SouthAfrica" element={<ZaAuthProvider><ZaPublicLayout /></ZaAuthProvider>}>
+          <Route index element={<ZaHome />} />
+          <Route path="articles" element={<ZaArticles />} />
+          <Route path="articles/:slug" element={<ZaArticleDetail />} />
+          <Route path="about" element={<ZaAbout />} />
+          <Route path="contact" element={<ZaContact />} />
+          <Route path="search" element={<ZaSearch />} />
+        </Route>
+        <Route path="/SouthAfrica/TDNG_Admin/login" element={<ZaAuthProvider><ZaAdminLogin /></ZaAuthProvider>} />
+        <Route path="/SouthAfrica/TDNG_Admin" element={<ZaAuthProvider><ZaAdminLayout /></ZaAuthProvider>}>
+          <Route index element={<ZaDashboard />} />
+          <Route path="dashboard" element={<ZaDashboard />} />
+          <Route path="articles" element={<ZaManageArticles />} />
+          <Route path="categories" element={<ZaManageCategories />} />
+          <Route path="heroes" element={<ZaManageHero />} />
         </Route>
       </Routes>
     </Suspense>
