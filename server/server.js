@@ -47,7 +47,7 @@ app.use(compression());
 
 // Security Middleware
 app.use(helmet());
-app.use(mongoSanitize());
+// app.use(mongoSanitize());
 
 // Rate Limiting
 const authLimiter = rateLimit({
