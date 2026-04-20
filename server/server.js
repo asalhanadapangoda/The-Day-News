@@ -45,9 +45,23 @@ app.use(cors());
 app.use(cookieParser());
 app.use(compression());
 
+// Express 5 Query Fix (Making req.query writable for mongoSanitize)
+app.use((req, res, next) => {
+  if (req.query) {
+    const rawQuery = req.query;
+    Object.defineProperty(req, 'query', {
+      value: { ...rawQuery },
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    });
+  }
+  next();
+});
+
 // Security Middleware
 app.use(helmet());
-// app.use(mongoSanitize());
+app.use(mongoSanitize());
 
 // Rate Limiting
 const authLimiter = rateLimit({
