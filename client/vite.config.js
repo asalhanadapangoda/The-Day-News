@@ -27,8 +27,16 @@ export default defineConfig({
         manualChunks: (id) => {
           const REGIONS = ['Bangladesh', 'Australia', 'NewZealand', 'Japan', 'India', 'USA', 'Thailand', 'Denmark', 'Samoa', 'SouthAfrica'];
 
-          // Vendor: React core
-          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+          // Vendor: React core + its peer deps (react-is, scheduler, prop-types)
+          // These MUST be in the same chunk as React — they call React.forwardRef etc.
+          // at module init time and will crash if vendor-react hasn't loaded first.
+          if (
+            id.includes('node_modules/react/') ||
+            id.includes('node_modules/react-dom/') ||
+            id.includes('node_modules/react-is/') ||
+            id.includes('node_modules/scheduler/') ||
+            id.includes('node_modules/prop-types/')
+          ) {
             return 'vendor-react';
           }
           // Vendor: Routing
