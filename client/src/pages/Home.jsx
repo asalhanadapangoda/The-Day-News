@@ -15,14 +15,14 @@ const Home = () => {
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
 
   // Fetch all data using React Query
-  const { data: settings } = useQuery({ queryKey: ['settings'], queryFn: () => api.get('/settings').then(res => res.data) });
+  const { data: settings } = useQuery({ queryKey: ['settings'], queryFn: () => api.get('/settings').then(res => res.data), staleTime: 1000 * 60 * 30 });
   const { data: episodes = [] } = useQuery({ queryKey: ['episodes'], queryFn: () => api.get('/episodes').then(res => res.data) });
   const { data: articles = [] } = useQuery({ queryKey: ['articles'], queryFn: () => api.get('/articles').then(res => res.data) });
-  const { data: categories = [] } = useQuery({ queryKey: ['categories'], queryFn: () => api.get('/categories').then(res => res.data) });
+  const { data: categories = [] } = useQuery({ queryKey: ['categories'], queryFn: () => api.get('/categories').then(res => res.data), staleTime: 1000 * 60 * 30 });
   const { data: programs = [] } = useQuery({ queryKey: ['programs'], queryFn: () => api.get('/programs').then(res => res.data) });
   const { data: ads = [] } = useQuery({ queryKey: ['ads'], queryFn: () => api.get('/ads').then(res => res.data) });
-  const { data: heroes = [] } = useQuery({ queryKey: ['heroes'], queryFn: () => api.get('/heroes').then(res => res.data) });
-  const { data: partners = [] } = useQuery({ queryKey: ['partners'], queryFn: () => api.get('/partners').then(res => res.data), staleTime: 1000 * 60 * 30 });
+  const { data: heroes = [] } = useQuery({ queryKey: ['heroes'], queryFn: () => api.get('/heroes').then(res => res.data), staleTime: Infinity });
+  const { data: partners = [] } = useQuery({ queryKey: ['partners'], queryFn: () => api.get('/partners').then(res => res.data), staleTime: Infinity });
 
   const loading = !heroes.length && !articles.length; // Simplified loading state
 

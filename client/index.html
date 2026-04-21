@@ -7,8 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
     content="The Day News Global - Stay updated with the latest news, stories, and programs from around the world. Watch our featured programs and read the latest media features." />
-  <link rel="preconnect" href="https://res.cloudinary.com" />
+
+  <!-- DNS prefetch & preconnect for external resources -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
   <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Google Fonts: non-blocking load via print media swap trick -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  </noscript>
+
   <title>THE DAY NEWS</title>
 </head>
 

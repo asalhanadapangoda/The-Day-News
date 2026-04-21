@@ -21,8 +21,8 @@ const Home = () => {
   const { data: categories = [] } = useQuery({ queryKey: ['bd-categories'], queryFn: () => api.get('/categories').then(res => res.data) });
   const { data: programs = [] } = useQuery({ queryKey: ['bd-programs'], queryFn: () => api.get('/programs').then(res => res.data) });
   const { data: ads = [] } = useQuery({ queryKey: ['bd-ads'], queryFn: () => api.get('/ads').then(res => res.data) });
-  const { data: heroes = [] } = useQuery({ queryKey: ['bd-heroes'], queryFn: () => api.get('/heroes').then(res => res.data) });
-  const { data: partners = [] } = useQuery({ queryKey: ['bd-partners'], queryFn: () => api.get('/partners').then(res => res.data), staleTime: 1000 * 60 * 30 });
+  const { data: heroes = [] } = useQuery({ queryKey: ['bd-heroes'], queryFn: () => api.get('/heroes').then(res => res.data) , staleTime: Infinity });
+  const { data: partners = [] } = useQuery({ queryKey: ['bd-partners'], queryFn: () => api.get('/partners').then(res => res.data), staleTime: Infinity * 60 * 30 });
 
   const loading = !heroes.length && !articles.length;
 

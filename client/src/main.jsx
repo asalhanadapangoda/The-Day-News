@@ -7,13 +7,15 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import App from './App.jsx';
 import './index.css';
 
-// Create a client
+// Create a client with performance-optimized cache settings
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      gcTime: 1000 * 60 * 30, // 30 minutes
+      staleTime: 1000 * 60 * 15, // 15 minutes — reduces redundant API calls
+      gcTime: 1000 * 60 * 60,    // 60 minutes — keep data in memory longer
       refetchOnWindowFocus: false,
+      refetchOnMount: false,     // Don't re-fetch if data is fresh
+      retry: 1,                  // Only retry once on failure (reduces TBT on bad networks)
     },
   },
 });

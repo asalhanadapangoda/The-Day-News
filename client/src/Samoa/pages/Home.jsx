@@ -28,7 +28,7 @@ const Home = () => {
   const { data: heroes = [] } = useQuery({ 
     queryKey: ['sm-heroes'], 
     queryFn: () => api.get('/heroes').then(res => res.data),
-    staleTime: 1000 * 60 * 30, // 30 minutes
+    staleTime: Infinity * 60 * 30, // 30 minutes
   });
 
   const loading = !heroes.length && !articles.length;

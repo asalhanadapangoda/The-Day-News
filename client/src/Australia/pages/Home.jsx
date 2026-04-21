@@ -19,7 +19,7 @@ const Home = () => {
   const { data: articles = [] } = useQuery({ queryKey: ['au-articles'], queryFn: () => api.get('/articles').then(res => res.data) });
   const { data: categories = [] } = useQuery({ queryKey: ['au-categories'], queryFn: () => api.get('/categories').then(res => res.data) });
   const { data: programs = [] } = useQuery({ queryKey: ['au-programs'], queryFn: () => api.get('/programs').then(res => res.data) });
-  const { data: heroes = [] } = useQuery({ queryKey: ['au-heroes'], queryFn: () => api.get('/heroes').then(res => res.data) });
+  const { data: heroes = [] } = useQuery({ queryKey: ['au-heroes'], queryFn: () => api.get('/heroes').then(res => res.data) , staleTime: Infinity });
 
   const loading = !heroes.length && !articles.length;
 

@@ -40,6 +40,9 @@ const Navbar = () => {
                 className="h-[75px] w-auto py-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] object-contain" 
                 width={180}
                 height={75}
+                              loading="eager"
+                fetchpriority="high"
+                decoding="sync"
               />
             </Link>
           </div>
