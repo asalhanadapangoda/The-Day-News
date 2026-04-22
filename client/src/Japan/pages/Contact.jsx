@@ -80,10 +80,6 @@ const Contact = () => {
                 <div className="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
                   <Phone className="text-primary" size={24} />
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
-                  <p className="text-gray-400">{settings?.contactPhone || '+61 432 683 730'}</p>
-                </div>
               </div>
             </div>
           </div>
