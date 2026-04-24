@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Linkedin, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Linkedin, Instagram, Youtube, Mail, MapPin } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../services/api';
 import logo from '../../assets/logo.png';
@@ -76,10 +76,6 @@ const Footer = () => {
                 <span className="text-gray-400 text-sm">
                   The Third Place, TRACE Expert City, Colombo 10
                 </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={18} className="text-primary flex-shrink-0" />
-                <span className="text-gray-400 text-sm">+61 432 683 730</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-primary flex-shrink-0" />

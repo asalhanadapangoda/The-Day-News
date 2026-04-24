@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import localApi from '../services/api';
 import globalApi from '../../services/api';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, MapPin, Send } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 
 const contactSchema = z.object({
@@ -78,15 +78,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-6 bg-[#1a1a1a] p-6 rounded-xl border border-white/5">
-                <div className="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="text-primary" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
-                  <p className="text-gray-400">{settings?.contactPhone || '+880 1728 729054'}</p>
-                </div>
-              </div>
             </div>
           </div>
 
