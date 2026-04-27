@@ -46,7 +46,7 @@ const getEventBySlug = async (req, res) => {
 // @access  Private (Admin)
 const createEvent = async (req, res) => {
   try {
-    const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl } = req.body;
+    const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl, articleLink } = req.body;
 
     if (!title || !eventDate || !location || !heroImages || !galleryImages) {
       return res.status(400).json({ message: 'Please provide all required fields (Hero images, title, date...)' });
@@ -67,6 +67,7 @@ const createEvent = async (req, res) => {
       galleryImages,
       status: status || 'draft',
       albumUrl,
+      articleLink,
     });
 
     const createdEvent = await event.save();
@@ -82,7 +83,7 @@ const createEvent = async (req, res) => {
 // @access  Private (Admin)
 const updateEvent = async (req, res) => {
   try {
-    const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl } = req.body;
+    const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl, articleLink } = req.body;
 
     const event = await Event.findById(req.params.id);
 
@@ -102,6 +103,7 @@ const updateEvent = async (req, res) => {
       if (galleryImages) event.galleryImages = galleryImages;
       if (status) event.status = status;
       if (albumUrl !== undefined) event.albumUrl = albumUrl;
+      if (articleLink !== undefined) event.articleLink = articleLink;
 
       const updatedEvent = await event.save();
       res.json(updatedEvent);

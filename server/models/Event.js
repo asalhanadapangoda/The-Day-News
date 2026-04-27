@@ -44,6 +44,9 @@ const eventSchema = new mongoose.Schema(
     albumUrl: {
       type: String,
     },
+    articleLink: {
+      type: String,
+    },
   },
   {
     timestamps: true,

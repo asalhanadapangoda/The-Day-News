@@ -178,6 +178,30 @@ const EventDetail = () => {
            )}
         </div>
       </section>
+      
+      {/* Read Event Article Button */}
+      {event.articleLink && (
+        <div className="max-w-7xl mx-auto px-6 -mt-8 mb-16 flex justify-center">
+          {event.articleLink.startsWith('http') ? (
+            <a 
+              href={event.articleLink} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center gap-3 px-10 py-5 bg-primary hover:bg-primary-hover text-white font-bold uppercase tracking-widest rounded-full transition-all hover:gap-5 shadow-2xl"
+            >
+               Read Event Article <ArrowRight size={20} />
+            </a>
+          ) : (
+            <Link 
+              to={event.articleLink} 
+              className="inline-flex items-center gap-3 px-10 py-5 bg-primary hover:bg-primary-hover text-white font-bold uppercase tracking-widest rounded-full transition-all hover:gap-5 shadow-2xl"
+            >
+               Read Event Article <ArrowRight size={20} />
+            </Link>
+          )}
+        </div>
+      )}
+
 
       {/* 3. Photo Gallery Section */}
       <section className="bg-white/5 backdrop-blur-sm py-20 md:py-24 border-y border-white/5">

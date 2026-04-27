@@ -18,7 +18,8 @@ const ManageEvents = () => {
     videoUrl: '',
     galleryImages: Array(12).fill(''),
     status: 'draft',
-    albumUrl: ''
+    albumUrl: '',
+    articleLink: ''
   });
 
   useEffect(() => {
@@ -46,7 +47,8 @@ const ManageEvents = () => {
       videoUrl: '',
       galleryImages: Array(12).fill(''),
       status: 'draft',
-      albumUrl: ''
+      albumUrl: '',
+      articleLink: ''
     });
     setEditingEvent(null);
   };
@@ -63,7 +65,8 @@ const ManageEvents = () => {
         videoUrl: event.videoUrl,
         galleryImages: [...event.galleryImages, ...Array(12).fill('')].slice(0, 12),
         status: event.status,
-        albumUrl: event.albumUrl || ''
+        albumUrl: event.albumUrl || '',
+        articleLink: event.articleLink || ''
       });
     } else {
       resetForm();
@@ -425,6 +428,17 @@ const ManageEvents = () => {
                      value={formData.albumUrl}
                      placeholder="External Link (Google Photos, iCloud, etc.)"
                      onChange={(e) => setFormData({ ...formData, albumUrl: e.target.value })}
+                  />
+
+                  <h3 className="text-xs font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2 mb-4 mt-6">
+                     <Type size={14} /> Read Event Article Link (Optional) - "Read Event Article" Button
+                  </h3>
+                  <input 
+                     type="text" 
+                     className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-primary transition-all text-sm"
+                     value={formData.articleLink}
+                     placeholder="Link to the event article (e.g., /articles/event-summary or external link)"
+                     onChange={(e) => setFormData({ ...formData, articleLink: e.target.value })}
                   />
                </div>
 
