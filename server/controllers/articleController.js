@@ -53,7 +53,7 @@ const getArticleByIdOrSlug = async (req, res) => {
 // @access  Private (Admin)
 const createArticle = async (req, res) => {
   try {
-    const { title, excerpt, content, featuredImage, category, tags, author, status, publishDate } = req.body;
+    const { title, excerpt, content, featuredImage, category, tags, author, status, publishDate, country } = req.body;
 
     if (!title || !content || !featuredImage || !category) {
       return res.status(400).json({ message: 'Title, content, featured image, and category are required.' });
@@ -81,6 +81,7 @@ const createArticle = async (req, res) => {
       author: author || 'The Day News Global',
       status: status || 'published',
       publishDate: publishDate || Date.now(),
+      country: country || null,
     });
 
     const createdArticle = await article.save();
@@ -95,7 +96,7 @@ const createArticle = async (req, res) => {
 // @access  Private (Admin)
 const updateArticle = async (req, res) => {
   try {
-    const { title, excerpt, content, featuredImage, category, tags, author, status, publishDate } = req.body;
+    const { title, excerpt, content, featuredImage, category, tags, author, status, publishDate, country } = req.body;
 
     const article = await Article.findById(req.params.id);
 
@@ -118,6 +119,7 @@ const updateArticle = async (req, res) => {
       if (author) article.author = author;
       if (status) article.status = status;
       if (publishDate) article.publishDate = publishDate;
+      if (country !== undefined) article.country = country;
 
       const updatedArticle = await article.save();
       res.json(updatedArticle);

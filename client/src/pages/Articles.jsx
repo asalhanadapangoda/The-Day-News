@@ -97,6 +97,9 @@ const Articles = () => {
               <div className="p-5 flex flex-col flex-grow">
                 <div className="text-xs text-gray-500 mb-2 flex justify-between items-center">
                   <span>{format(new Date(article.publishDate), 'MMM dd, yyyy')}</span>
+                  {article.country && (
+                    <span className="text-gray-500 uppercase tracking-tighter">{article.country}</span>
+                  )}
                 </div>
                 <h2 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">{article.title}</h2>
                 <p className="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">{article.excerpt}</p>

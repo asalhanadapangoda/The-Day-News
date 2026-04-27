@@ -6,6 +6,20 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { format } from 'date-fns';
 
+const COUNTRIES = [
+  'Sri Lanka',
+  'Japan',
+  'Australia',
+  'Bangladesh',
+  'Thailand',
+  'India',
+  'USA',
+  'Denmark',
+  'South Africa',
+  'New Zealand',
+  'Samoa',
+];
+
 const ManageArticles = () => {
   const [articles, setArticles] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -52,6 +66,7 @@ const ManageArticles = () => {
       featuredImage: '',
       author: 'Admin',
       tags: '',
+      country: '',
       category: filterCategory || (categories.length > 0 ? categories[0]._id : '')
     });
     setEditorContent('');
@@ -66,6 +81,7 @@ const ManageArticles = () => {
       featuredImage: art.featuredImage,
       author: art.author,
       tags: art.tags ? art.tags.join(', ') : '',
+      country: art.country || '',
       category: art.category?._id || ''
     });
     setEditorContent(art.content);
@@ -273,6 +289,17 @@ const ManageArticles = () => {
                       {...register("author")}
                       className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">Article Country</label>
+                    <select
+                      {...register("country")}
+                      className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none [&>option]:bg-[#1a1a1a]"
+                    >
+                      <option value="">Global / No Country</option>
+                      {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
                   </div>
 
                   <div>

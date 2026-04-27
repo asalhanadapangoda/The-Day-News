@@ -51,6 +51,23 @@ const articleSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    country: {
+      type: String,
+      enum: [
+        'Sri Lanka',
+        'Japan',
+        'Australia',
+        'Bangladesh',
+        'Thailand',
+        'India',
+        'USA',
+        'Denmark',
+        'South Africa',
+        'New Zealand',
+        'Samoa',
+      ],
+      default: null,
+    },
   },
   {
     timestamps: true,
