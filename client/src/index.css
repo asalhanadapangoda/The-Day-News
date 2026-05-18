@@ -12,6 +12,8 @@
   --color-border-subtle: #333333;
   --animate-shimmer: shimmer 2s linear infinite;
   --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 12s linear infinite;
+  --animate-bounce-subtle: bounce-subtle 3s ease-in-out infinite;
 
   @keyframes shimmer {
     from { transform: translateX(-100%); }
@@ -21,6 +23,16 @@
   @keyframes pulse-slow {
     0%, 100% { opacity: 0.3; transform: scale(1); }
     50% { opacity: 0.6; transform: scale(1.1); }
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes bounce-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
   }
 }
 
