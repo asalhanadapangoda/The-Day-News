@@ -52,7 +52,7 @@ const Product = () => {
       tagline: "Dedicated audio-visual recording and interview production",
       features: [
         "Podcast Interview (20-30 minutes)",
-        "2 Podcast highlight videos",
+        "2 mid range videos",
         "2 Social media promotional posts",
         "Web Article"
       ]
