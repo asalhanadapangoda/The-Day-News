@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Search, Menu, X } from 'lucide-react';
-import logo from '../assets/logo.png';
+import logo from '../../../Global/assets/logo.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,19 +11,17 @@ const Navbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      navigate(`/Denmark/search?q=${encodeURIComponent(searchQuery)}`);
       setSearchQuery('');
       setIsMenuOpen(false);
     }
   };
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Programs', path: '/programs' },
-    { name: 'Articles', path: '/articles' },
-    { name: 'Events', path: '/events' },
-    { name: 'About Us', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', path: '/Denmark' },
+    { name: 'Articles', path: '/Denmark/articles' },
+    { name: 'About Us', path: '/Denmark/about' },
+    { name: 'Contact', path: '/Denmark/contact' },
   ];
 
   return (
@@ -33,14 +31,14 @@ const Navbar = () => {
 
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/" className="flex items-center">
-              <img
-                src={logo}
-                alt="The Day News Global"
-                className="h-[75px] w-auto py-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] object-contain"
+            <Link to="/Denmark" className="flex items-center">
+              <img 
+                src={logo} 
+                alt="The Day News Global" 
+                className="h-[75px] w-auto py-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] object-contain" 
                 width={180}
                 height={75}
-                loading="eager"
+                              loading="eager"
                 fetchpriority="high"
                 decoding="sync"
               />
@@ -53,6 +51,7 @@ const Navbar = () => {
               <NavLink
                 key={link.name}
                 to={link.path}
+                end={link.path === '/Denmark'}
                 className={({ isActive }) =>
                   `text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary ${isActive ? 'text-primary text-glow' : 'text-gray-300'
                   }`
@@ -102,6 +101,7 @@ const Navbar = () => {
               <NavLink
                 key={link.name}
                 to={link.path}
+                end={link.path === '/Denmark'}
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) =>
                   `block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wider ${isActive ? 'bg-primary/20 text-primary' : 'text-gray-300 hover:bg-white/5 hover:text-white'
@@ -111,7 +111,7 @@ const Navbar = () => {
                 {link.name}
               </NavLink>
             ))}
-
+ 
             <form onSubmit={handleSearch} className="relative mt-4 px-3">
               <input
                 type="text"

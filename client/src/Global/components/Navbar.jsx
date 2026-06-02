@@ -34,10 +34,10 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center">
-              <img
-                src={logo}
-                alt="The Day News Global"
-                className="h-[75px] w-auto py-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] object-contain"
+              <img 
+                src={logo} 
+                alt="The Day News Global" 
+                className="h-[75px] w-auto py-1 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] object-contain" 
                 width={180}
                 height={75}
                 loading="eager"
