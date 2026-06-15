@@ -48,7 +48,7 @@ const Product = () => {
     {
       name: "Podcast Package",
       originalPrice: 60000,
-      discount: 50, // 50% off
+      discount: 30, // 30% off
       tagline: "Dedicated audio-visual recording and interview production",
       features: [
         "Podcast Interview (20-30 minutes)",
