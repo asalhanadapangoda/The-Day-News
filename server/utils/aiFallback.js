@@ -7,7 +7,7 @@ export const getFallbackResponse = (userMessage, countryContext = '') => {
   }
 
   // Products / Pricing
-  if (msg.includes('product') || msg.includes('package') || msg.includes('price') || msg.includes('pricing') || msg.includes('cost') || msg.includes('buy') || msg.includes('book') || msg.includes('fee') || msg.includes('charge')) {
+  if (msg.includes('product') || msg.includes('package') || msg.includes('price') || msg.includes('pricing') || msg.includes('cost') || msg.includes('buy') || msg.includes('book') || msg.includes('fee') || msg.includes('charge') || msg.includes('service') || msg.includes('offer')) {
     return `We offer several media packages tailored to amplify your brand's digital presence.
 
 OUR PACKAGES
@@ -59,7 +59,7 @@ To watch or listen to our shows, please navigate to the Programs section of our 
   }
 
   // About
-  if (msg.includes('about') || msg.includes('who are you') || msg.includes('what is this') || msg.includes('company') || msg.includes('mission') || msg.includes('purpose')) {
+  if (msg.includes('about') || msg.includes('who are you') || msg.includes('what is this') || msg.includes('company') || msg.includes('mission') || msg.includes('purpose') || msg.includes('who are') || msg.includes('what is the day news')) {
     return `The Day News Global is a premier, interactive media platform dedicated to the pursuit of knowledge.
 
 OUR MISSION
