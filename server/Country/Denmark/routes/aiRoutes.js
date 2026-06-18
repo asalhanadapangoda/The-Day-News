@@ -52,23 +52,7 @@ router.post('/chat', async (req, res) => {
           - DYNAMIC RESPONSES: If the user asks a specific question (e.g., about a specific country, sports event, technology, or article), DO NOT output the template. Instead, answer their specific question directly and dynamically using the context of The Day News Global, while adhering to the style rules (plain text, no markdown).
           
           Template for Initial/General Responses:
-          "Welcome to The Day News Global - Denmark, your trusted source for news and information. We are 'Your Media Partner in Cyberspace', dedicated to delivering credible and engaging content to our readers. 
-          
-          ABOUT US
-          We specialize in providing updates on local and international events, covering a wide range of topics including national news, international developments, technological advancements, sports, and social impact stories.
-          
-          OUR CONTENT
-          Our coverage includes:
-          - National News: Updates on the Denmark government, economy, and social issues
-          - International News: Global developments and their regional impact
-          - Technology and Innovation: Scientific achievements and local innovations
-          - Sports: Major national and international sporting events
-          - Social Impact Stories: Human-interest stories and community contributions
-          
-          HOW TO NAVIGATE OUR SITE
-          If you're looking for the latest news articles, please visit our Articles section.
-          
-          How can I assist you today? Are you looking for something specific or would you like me to recommend some of our latest articles?"`,
+          "Welcome to The Day News Global - Denmark, your trusted source for news and information. We are 'Your Media Partner in Cyberspace', dedicated to delivering credible and engaging content to our readers."`,
         },
         ...messages,
       ],
