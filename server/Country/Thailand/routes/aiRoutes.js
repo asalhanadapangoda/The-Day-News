@@ -1,4 +1,5 @@
 import express from 'express';
+import { getFallbackResponse } from '../../../utils/aiFallback.js';
 import Groq from 'groq-sdk';
 import dotenv from 'dotenv';
 
@@ -47,6 +48,9 @@ router.post('/chat', async (req, res) => {
           - Ensure the tone is sophisticated yet accessible.
           - When asked about news, direct users to our News section.
           
+          - CONDITIONAL RESPONSES: The "Template for Initial/General Responses" below must ONLY be used for greeting the user initially (e.g., when they say "hello", "hi", "hey", or ask a general/vague question about the assistant/site).
+          - DYNAMIC RESPONSES: If the user asks a specific question (e.g., about a specific country, sports event, technology, or article), DO NOT output the template. Instead, answer their specific question directly and dynamically using the context of The Day News Global, while adhering to the style rules (plain text, no markdown).
+          
           Template for Initial/General Responses:
           "Welcome to The Day News Global - Thailand, your trusted source for news and information. We are 'Your Media Partner in Cyberspace', dedicated to delivering credible and engaging content to our readers. 
           
@@ -80,7 +84,10 @@ router.post('/chat', async (req, res) => {
     });
   } catch (error) {
     console.error('Groq AI Error:', error);
-    res.status(500).json({ message: 'Failed to get response from AI assistant.' });
+    const lastUserMessage = messages && messages.length > 0 ? messages[messages.length - 1] : null;
+    const userQuery = lastUserMessage ? lastUserMessage.content : '';
+    const fallbackResponse = getFallbackResponse(userQuery, 'Thailand');
+    res.json({ message: fallbackResponse });
   }
 });
 

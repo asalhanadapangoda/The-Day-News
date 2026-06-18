@@ -2,6 +2,81 @@ import { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Send, X, Bot, User, Loader2, Sparkles } from 'lucide-react';
 import api from '../services/api';
 
+const formatMessageContent = (content) => {
+  if (!content) return null;
+  
+  const lines = content.split('\n');
+  const formattedElements = [];
+  let inList = false;
+  let listItems = [];
+
+  const flushList = (key) => {
+    if (listItems.length > 0) {
+      formattedElements.push(
+        <ul key={`list-${key}`} className="space-y-1.5 my-2 pl-1 list-none">
+          {listItems.map((item, idx) => (
+            <li key={idx} className="flex items-start gap-2 text-gray-300">
+              <span className="text-primary mt-1 flex-shrink-0">•</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      );
+      listItems = [];
+      inList = false;
+    }
+  };
+
+  lines.forEach((line, index) => {
+    const trimmedLine = line.trim();
+
+    // Check if it's a list item
+    if (trimmedLine.startsWith('- ')) {
+      inList = true;
+      listItems.push(trimmedLine.substring(2));
+      return;
+    }
+
+    // If we were in a list and this is not a list item, flush the list
+    if (inList && !trimmedLine.startsWith('- ')) {
+      flushList(index);
+    }
+
+    // Check if it's an empty line
+    if (trimmedLine === '') {
+      formattedElements.push(<div key={`space-${index}`} className="h-2" />);
+      return;
+    }
+
+    // Check if it's an ALL CAPS section header (e.g., ABOUT US, OUR CONTENT)
+    const isHeader = trimmedLine.length >= 3 && 
+                     /^[A-Z\s&]+$/.test(trimmedLine) && 
+                     !trimmedLine.includes('LKR'); // Avoid treating price text as headers
+
+    if (isHeader) {
+      formattedElements.push(
+        <h4 key={`header-${index}`} className="text-xs font-black uppercase tracking-widest text-primary mt-4 mb-2 border-b border-white/10 pb-1">
+          {trimmedLine}
+        </h4>
+      );
+    } else {
+      // Normal paragraph
+      formattedElements.push(
+        <p key={`p-${index}`} className="text-gray-300 text-sm leading-relaxed mb-2">
+          {trimmedLine}
+        </p>
+      );
+    }
+  });
+
+  // Flush any remaining list items at the end
+  if (inList) {
+    flushList(lines.length);
+  }
+
+  return formattedElements;
+};
+
 const AIChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -88,11 +163,11 @@ const AIChatBot = () => {
                   <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center border border-white/10 ${m.role === 'user' ? 'bg-primary' : 'bg-white/5'}`}>
                     {m.role === 'user' ? <User size={16} className="text-white" /> : <Sparkles size={16} className="text-primary" />}
                   </div>
-                  <div className={`p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${m.role === 'user'
-                    ? 'bg-primary/20 text-white border border-primary/30 rounded-tr-none'
+                  <div className={`p-3 rounded-2xl text-sm leading-relaxed ${m.role === 'user'
+                    ? 'bg-primary/20 text-white border border-primary/30 rounded-tr-none whitespace-pre-wrap'
                     : 'bg-white/5 text-gray-300 border border-white/5 rounded-tl-none'
                     }`}>
-                    {m.content}
+                    {m.role === 'user' ? m.content : formatMessageContent(m.content)}
                   </div>
                 </div>
               </div>
