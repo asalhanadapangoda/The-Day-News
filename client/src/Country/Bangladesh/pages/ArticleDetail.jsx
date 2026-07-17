@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
-import { Calendar, User, Eye, Facebook, Linkedin, LinkIcon, Share2 } from 'lucide-react';
+import { Calendar, User, Facebook, Linkedin, LinkIcon, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
@@ -95,10 +95,7 @@ const ArticleDetail = () => {
               <Calendar size={16} className="text-primary" />
               <span>{format(new Date(article.publishDate), 'MMMM dd, yyyy')}</span>
             </div>
-            <div className="flex items-center gap-2 hidden sm:flex">
-              <Eye size={16} className="text-primary" />
-              <span>{article.viewCount} views</span>
-            </div>
+
           </div>
         </div>
       </div>
