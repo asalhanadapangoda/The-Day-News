@@ -56,6 +56,16 @@ const Packages = () => {
         "2 Social media promotional posts",
         "Web Article"
       ]
+    },
+    {
+      name: "Article Package",
+      originalPrice: 12500,
+      discount: 0,
+      tagline: "Essential digital presence boost",
+      features: [
+        "2 Social media promotional posts",
+        "Web Article"
+      ]
     }
   ];
 
@@ -115,32 +125,40 @@ const Packages = () => {
                   <div className="flex flex-col gap-2 p-4 rounded-2xl bg-white/5 border border-white/5 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl -z-10"></div>
 
-                    <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <div className="flex flex-col">
-                        <span className="text-xs text-gray-400 uppercase tracking-widest font-semibold">Normal Price</span>
-                        <span className="text-lg font-bold text-gray-500 line-through decoration-red-500/80 decoration-2">
-                          LKR {pkg.originalPrice.toLocaleString()}
-                        </span>
-                      </div>
+                    {pkg.discount > 0 ? (
+                      <>
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
+                          <div className="flex flex-col">
+                            <span className="text-xs text-gray-400 uppercase tracking-widest font-semibold">Normal Price</span>
+                            <span className="text-lg font-bold text-gray-500 line-through decoration-red-500/80 decoration-2">
+                              LKR {pkg.originalPrice.toLocaleString()}
+                            </span>
+                          </div>
 
-                      <div className="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider animate-bounce-subtle">
-                        <Tag size={12} />
-                        Save {pkg.discount}%
-                      </div>
-                    </div>
+                          <div className="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider animate-bounce-subtle">
+                            <Tag size={12} />
+                            Save {pkg.discount}%
+                          </div>
+                        </div>
 
-                    <div className="border-t border-white/5 my-2"></div>
+                        <div className="border-t border-white/5 my-2"></div>
+                      </>
+                    ) : null}
 
                     <div className="flex flex-col">
-                      <span className="text-xs text-primary font-semibold uppercase tracking-wider">Special Promotional Price</span>
+                      <span className="text-xs text-primary font-semibold uppercase tracking-wider">
+                        {pkg.discount > 0 ? 'Special Promotional Price' : 'Price'}
+                      </span>
                       <div className="flex items-baseline gap-2 mt-1">
                         <span className="text-3xl md:text-4xl font-black text-white text-glow">
                           LKR {discountedPrice.toLocaleString()}
                         </span>
                       </div>
-                      <span className="text-[10px] text-emerald-400/90 font-medium mt-1">
-                        Instant savings of LKR {savings.toLocaleString()}
-                      </span>
+                      {pkg.discount > 0 && (
+                        <span className="text-[10px] text-emerald-400/90 font-medium mt-1">
+                          Instant savings of LKR {savings.toLocaleString()}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
