@@ -22,6 +22,7 @@ const Navbar = () => {
     { name: 'Programs', path: '/programs' },
     { name: 'Articles', path: '/articles' },
     { name: 'Events', path: '/events' },
+    { name: 'Packages', path: 'https://thedaynewsglobal.lk/Products' },
     { name: 'About Us', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -47,20 +48,30 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                className={({ isActive }) =>
-                  `text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary ${isActive ? 'text-primary text-glow' : 'text-gray-300'
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
+            {navLinks.map((link) => {
+              const isExternal = link.path.startsWith('http');
+              return isExternal ? (
+                <a
+                  key={link.name}
+                  href={link.path}
+                  className="text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary text-gray-300"
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <NavLink
+                  key={link.name}
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary ${isActive ? 'text-primary text-glow' : 'text-gray-300'
+                    }`
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              );
+            })}
           </nav>
 
           {/* Desktop Search */}
@@ -98,19 +109,31 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-[#121212] border-b border-white/10">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsMenuOpen(false)}
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wider ${isActive ? 'bg-primary/20 text-primary' : 'text-gray-300 hover:bg-white/5 hover:text-white'
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
+            {navLinks.map((link) => {
+              const isExternal = link.path.startsWith('http');
+              return isExternal ? (
+                <a
+                  key={link.name}
+                  href={link.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wider text-gray-300 hover:bg-white/5 hover:text-white"
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <NavLink
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-3 py-2 rounded-md text-base font-medium uppercase tracking-wider ${isActive ? 'bg-primary/20 text-primary' : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                    }`
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              );
+            })}
 
             <form onSubmit={handleSearch} className="relative mt-4 px-3">
               <input
