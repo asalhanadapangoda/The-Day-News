@@ -48,7 +48,7 @@ const EventDetail = lazy(() => import('./Global/pages/EventDetail'));
 const About = lazy(() => import('./Global/pages/About'));
 const Contact = lazy(() => import('./Global/pages/Contact'));
 const Search = lazy(() => import('./Global/pages/Search'));
-const Products = lazy(() => import('./Global/pages/Products'));
+const Packages = lazy(() => import('./Global/pages/Packages'));
 
 // Global Admin Pages (Lazy)
 const AdminLogin = lazy(() => import('./Global/pages/admin/AdminLogin'));
@@ -231,7 +231,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/Products" element={<Products />} />
+          <Route path="/Packages" element={<Packages />} />
         </Route>
 
         {/* ── Global Admin Routes ── */}

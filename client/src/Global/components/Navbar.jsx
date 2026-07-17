@@ -17,12 +17,15 @@ const Navbar = () => {
     }
   };
 
+  const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const globalDomain = isDev ? window.location.origin : 'https://thedaynewsglobal.lk';
+
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Programs', path: '/programs' },
     { name: 'Articles', path: '/articles' },
     { name: 'Events', path: '/events' },
-    { name: 'Packages', path: 'https://thedaynewsglobal.lk/Products' },
+    { name: 'Packages', path: `${globalDomain}/Packages` },
     { name: 'About Us', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];

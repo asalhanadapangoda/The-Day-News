@@ -46,24 +46,24 @@ const About = () => {
           </div>
         </div>
         
-        {/* Our Products Section */}
+        {/* Our Packages Section */}
         <div className="glass-card p-8 md:p-12 mb-20 relative overflow-hidden group">
           <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all duration-500"></div>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div className="flex-grow">
               <h2 className="text-3xl font-bold text-white mb-6 border-l-4 border-primary pl-4 flex items-center gap-3">
-                Our Media Products
+                Our Media Packages
               </h2>
               <p className="text-gray-300 text-lg leading-relaxed mb-4">
-                We offer premium and platinum media packages tailored to amplify your brand&apos;s digital presence. From high-quality podcast production to comprehensive social media strategy, our products are designed for impact.
+                We offer premium and platinum media packages tailored to amplify your brand&apos;s digital presence. From high-quality podcast production to comprehensive social media strategy, our packages are designed for impact.
               </p>
             </div>
             <div className="flex-shrink-0">
               <Link 
-                to="/Products" 
+                to="/Packages" 
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-8 py-4 rounded-full font-bold transition-all duration-300 hover:gap-4 shadow-xl shadow-primary/20 whitespace-nowrap"
               >
-                View Our Products
+                View Our Packages
                 <ArrowRight size={20} />
               </Link>
             </div>

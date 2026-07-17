@@ -17,12 +17,15 @@ const Navbar = () => {
     }
   };
 
+  const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const globalDomain = isDev ? window.location.origin : 'https://thedaynewsglobal.lk';
+
   const navLinks = [
     { name: 'Home', path: '/Bangladesh' },
     { name: 'Programs', path: '/Bangladesh/programs' },
     { name: 'Articles', path: '/Bangladesh/articles' },
     { name: 'Events', path: '/Bangladesh/events' },
-    { name: 'Packages', path: 'https://thedaynewsglobal.lk/Products' },
+    { name: 'Packages', path: `${globalDomain}/Packages` },
     { name: 'About Us', path: '/Bangladesh/about' },
     { name: 'Contact', path: '/Bangladesh/contact' },
   ];

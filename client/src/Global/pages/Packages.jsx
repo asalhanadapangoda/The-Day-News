@@ -1,7 +1,7 @@
 import { CheckCircle, Tag, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const Product = () => {
+const Packages = () => {
   const packages = [
     {
       name: "Premium Package",
@@ -71,7 +71,7 @@ const Product = () => {
             Exclusive Digital Media Offer
           </span>
           <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 text-glow tracking-wider uppercase">
-            Our Products & Packages
+            Our Packages
           </h1>
           <p className="text-lg md:text-xl text-primary font-semibold max-w-2xl mx-auto">
             Elevate Your Presence with The Day News Global. Choose a premium plan customized for your brand or event.
@@ -214,4 +214,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Packages;
