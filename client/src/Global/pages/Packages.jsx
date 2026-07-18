@@ -59,8 +59,8 @@ const Packages = () => {
     },
     {
       name: "Article Package",
-      originalPrice: 12500,
-      discount: 0,
+      originalPrice: 25000,
+      discount: 50,
       tagline: "Essential digital presence boost",
       features: [
         "2 Social media promotional posts",
