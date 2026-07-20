@@ -19,4 +19,3 @@ Disallow: /api/
 
 # Sitemaps
 Sitemap: https://thedaynewsglobal.lk/sitemap.xml
-Sitemap: https://thedaynewsglobal.lk/api/sitemap.xml

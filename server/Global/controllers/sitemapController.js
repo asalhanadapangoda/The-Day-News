@@ -18,6 +18,22 @@ import UsArticle from '../../Country/USA/models/Article.js';
 
 const BASE_URL = 'https://thedaynewsglobal.lk';
 
+const STATIC_ROUTES = [
+  '',
+  '/articles',
+  '/programs',
+  '/events',
+  '/packages',
+  '/about',
+  '/contact',
+  '/search',
+];
+
+const COUNTRIES = [
+  'Bangladesh', 'Australia', 'NewZealand', 'Japan', 
+  'India', 'USA', 'Thailand', 'Denmark', 'Samoa', 'SouthAfrica'
+];
+
 // Helper to format date as YYYY-MM-DD
 const formatDate = (date) => {
   if (!date) return new Date().toISOString().split('T')[0];
@@ -30,7 +46,7 @@ const escapeXml = (str) => {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 };
 
-// @desc    Generate dynamic sitemap.xml with all published content
+// @desc    Generate dynamic sitemap.xml with all content (static and dynamic)
 // @route   GET /api/sitemap.xml
 // @access  Public
 const generateSitemap = async (req, res) => {
@@ -86,62 +102,52 @@ const generateSitemap = async (req, res) => {
     // Build XML
     let urls = '';
 
-    // Global Articles
+    const addUrl = (url, priority, changefreq, lastmodDate = null) => {
+      const lastmod = lastmodDate ? formatDate(lastmodDate) : new Date().toISOString().split('T')[0];
+      urls += `
+  <url>
+    <loc>${BASE_URL}${url}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+    };
+
+    // 1. Add Global Static Routes (High Priority)
+    STATIC_ROUTES.forEach(route => {
+      addUrl(route, route === '' ? '1.0' : '0.9', 'daily');
+    });
+
+    // 2. Add Country Static Routes (Lower Priority)
+    COUNTRIES.forEach(country => {
+      addUrl(`/${country}`, '0.6', 'weekly');
+      addUrl(`/${country}/articles`, '0.5', 'weekly');
+      addUrl(`/${country}/programs`, '0.5', 'weekly');
+    });
+
+    // 3. Add Global Dynamic Content (High Priority)
     for (const article of globalArticles) {
-      urls += `
-  <url>
-    <loc>${BASE_URL}/articles/${escapeXml(article.slug)}</loc>
-    <lastmod>${formatDate(article.updatedAt || article.publishDate)}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>`;
+      addUrl(`/article/${escapeXml(article.slug)}`, '0.9', 'daily', article.updatedAt || article.publishDate);
     }
 
-    // Global Programs
     for (const program of globalPrograms) {
-      urls += `
-  <url>
-    <loc>${BASE_URL}/programs/${escapeXml(program.slug)}</loc>
-    <lastmod>${formatDate(program.updatedAt)}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>`;
+      addUrl(`/programs/${escapeXml(program.slug)}`, '0.9', 'daily', program.updatedAt);
     }
 
-    // Global Events
     for (const event of globalEvents) {
-      urls += `
-  <url>
-    <loc>${BASE_URL}/events/${escapeXml(event.slug)}</loc>
-    <lastmod>${formatDate(event.updatedAt || event.eventDate)}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>`;
+      addUrl(`/events/${escapeXml(event.slug)}`, '0.9', 'daily', event.updatedAt || event.eventDate);
     }
 
-    // Country Articles
+    // 4. Add Country Dynamic Content (Lower Priority)
     for (const countryArticles of countryArticleResults) {
       for (const article of countryArticles) {
-        urls += `
-  <url>
-    <loc>${BASE_URL}/${article.countryPrefix}/articles/${escapeXml(article.slug)}</loc>
-    <lastmod>${formatDate(article.updatedAt || article.publishDate)}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>`;
+        addUrl(`/${article.countryPrefix}/article/${escapeXml(article.slug)}`, '0.5', 'monthly', article.updatedAt || article.publishDate);
       }
     }
 
-    // Country Programs
     for (const countryPrograms of countryProgramResults) {
       for (const program of countryPrograms) {
-        urls += `
-  <url>
-    <loc>${BASE_URL}/${program.countryPrefix}/programs/${escapeXml(program.slug)}</loc>
-    <lastmod>${formatDate(program.updatedAt)}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>`;
+        addUrl(`/${program.countryPrefix}/programs/${escapeXml(program.slug)}`, '0.5', 'monthly', program.updatedAt);
       }
     }
 
