@@ -59,7 +59,7 @@
 
   /* Admin Sidebar layout specific */
   .admin-sidebar {
-    @apply bg-dark-purple text-text-primary border-r border-white/5;
+    @apply bg-dark-purple text-text-primary border-r border-white/5 h-screen sticky top-0 shrink-0 overflow-y-auto;
   }
 
   /* Global Select styling for visibility */

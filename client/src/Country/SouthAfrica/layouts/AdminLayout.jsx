@@ -66,9 +66,9 @@ const AdminLayout = () => {
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
+    <div className="flex h-screen overflow-hidden bg-gray-900 text-white">
       {/* Sidebar */}
-      <aside className="w-64 admin-sidebar flex flex-col">
+      <aside className="w-64 admin-sidebar flex flex-col h-screen sticky top-0 shrink-0 overflow-y-auto">
         <div className="p-6 border-b border-white/5">
           <Link to="/SouthAfrica/TDNG_Admin/dashboard" className="block text-center flex flex-col items-center justify-center">
             <img src={logo} alt="The Day News Admin" className="h-[75px] w-auto mx-auto object-contain" />
@@ -105,7 +105,7 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto bg-[#1a1a1a]">
+      <main className="flex-1 h-screen overflow-y-auto bg-[#1a1a1a]">
         <div className="p-8">
           <Outlet />
         </div>
