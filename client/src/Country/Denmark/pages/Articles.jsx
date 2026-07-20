@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import { format } from 'date-fns';
-import Skeleton from '../components/Skeleton';
+import Skeleton from '../../../Global/components/Skeleton';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
 import { useQuery } from '@tanstack/react-query';
+import SEO from '../../../components/SEO';
 
 const Articles = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -32,6 +33,11 @@ const Articles = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
+      <SEO 
+        title="Danish Articles & Coverage | THE DAY NEWS DENMARK" 
+        description="Explore the latest articles, analysis, and breaking stories from Denmark."
+        keywords="denmark articles, danish reporting, copenhagen news, the day news denmark"
+      />
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-4 text-glow transition-all duration-300">Latest Articles</h1>
         <p className="text-gray-400 max-w-2xl mx-auto">

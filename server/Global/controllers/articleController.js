@@ -53,7 +53,7 @@ const getArticleByIdOrSlug = async (req, res) => {
 // @access  Private (Admin)
 const createArticle = async (req, res) => {
   try {
-    const { title, excerpt, content, featuredImage, category, tags, author, status, publishDate, country } = req.body;
+    const { title, excerpt, content, featuredImage, category, tags, author, status, publishDate, country, metaTitle, metaDescription, metaKeywords, metaImage } = req.body;
 
     if (!title || !content || !featuredImage || !category) {
       return res.status(400).json({ message: 'Title, content, featured image, and category are required.' });
@@ -82,6 +82,10 @@ const createArticle = async (req, res) => {
       status: status || 'published',
       publishDate: publishDate || Date.now(),
       country: country || null,
+      metaTitle: metaTitle || '',
+      metaDescription: metaDescription || '',
+      metaKeywords: metaKeywords || '',
+      metaImage: metaImage || '',
     });
 
     const createdArticle = await article.save();
@@ -96,7 +100,7 @@ const createArticle = async (req, res) => {
 // @access  Private (Admin)
 const updateArticle = async (req, res) => {
   try {
-    const { title, excerpt, content, featuredImage, category, tags, author, status, publishDate, country } = req.body;
+    const { title, excerpt, content, featuredImage, category, tags, author, status, publishDate, country, metaTitle, metaDescription, metaKeywords, metaImage } = req.body;
 
     const article = await Article.findById(req.params.id);
 
@@ -108,7 +112,7 @@ const updateArticle = async (req, res) => {
         const existing = await Article.findOne({ slug: baseSlug, _id: { $ne: article._id } });
         article.slug = existing ? `${baseSlug}-${Date.now()}` : baseSlug;
       }
-      if (excerpt) article.excerpt = excerpt;
+      if (excerpt !== undefined) article.excerpt = excerpt;
       if (content) {
         article.content = content;
         if (!excerpt) article.excerpt = content.replace(/<[^>]+>/g, '').substring(0, 200).trim();
@@ -120,6 +124,10 @@ const updateArticle = async (req, res) => {
       if (status) article.status = status;
       if (publishDate) article.publishDate = publishDate;
       if (country !== undefined) article.country = country;
+      if (metaTitle !== undefined) article.metaTitle = metaTitle;
+      if (metaDescription !== undefined) article.metaDescription = metaDescription;
+      if (metaKeywords !== undefined) article.metaKeywords = metaKeywords;
+      if (metaImage !== undefined) article.metaImage = metaImage;
 
       const updatedArticle = await article.save();
       res.json(updatedArticle);

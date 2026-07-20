@@ -1,6 +1,7 @@
 import { Globe, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import WorldMap from '../components/WorldMap';
+import SEO from '../../components/SEO';
 
 const OPERATING_COUNTRIES = [
   'Australia',
@@ -19,6 +20,11 @@ const OPERATING_COUNTRIES = [
 const About = () => {
   return (
     <div className="w-full">
+      <SEO 
+        title="About Us | THE DAY NEWS" 
+        description="Learn about The Day News Global mission, international journalism network, and local news coverage spanning 10+ countries."
+        keywords="about us, the day news, global media, international journalism, news network, mission"
+      />
       {/* Hero */}
       <div className="relative w-full h-[40vh] min-h-[300px] flex items-center justify-center bg-[#0c0014] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-[#0c0014] opacity-50"></div>

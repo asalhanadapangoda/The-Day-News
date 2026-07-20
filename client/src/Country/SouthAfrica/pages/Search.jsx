@@ -3,23 +3,29 @@ import api from '../services/api';
 import { Search as SearchIcon, FileText } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
+import SEO from '../../../components/SEO';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
 
-  const { data: results = { articles: [] }, isLoading: loading } = useQuery({
-    queryKey: ['nz-search', query],
+  const { data: results = { articles: [], episodes: [], programs: [] }, isLoading: loading } = useQuery({
+    queryKey: ['search', query],
     queryFn: async () => {
-      if (!query) return { articles: [] };
-      const articlesRes = await api.get('/articles');
+      if (!query) return { articles: [], episodes: [], programs: [] };
+      const [articlesRes, episodesRes, programsRes] = await Promise.all([
+        api.get('/articles'),
+        api.get('/episodes'),
+        api.get('/programs')
+      ]);
       const q = query.toLowerCase();
       return {
         articles: articlesRes.data.filter(a => a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q)),
+        episodes: episodesRes.data.filter(e => e.title.toLowerCase().includes(q) || e.description.toLowerCase().includes(q)),
+        programs: programsRes.data.filter(p => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
       };
     },
-    enabled: !!query,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    enabled: !!query
   });
 
   const handleSearch = (e) => {
@@ -29,10 +35,15 @@ const Search = () => {
     if (q) setSearchParams({ q });
   };
 
-  const totalResults = results.articles.length;
+  const totalResults = results.articles.length + results.episodes.length + results.programs.length;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 min-h-[70vh]">
+      <SEO 
+        title={query ? `Search: "${query}" | THE DAY NEWS SOUTH AFRICA` : 'Search News | THE DAY NEWS SOUTH AFRICA'}
+        description={query ? `Search results for "${query}" on The Day News South Africa.` : 'Search for news articles and stories in South Africa.'}
+        keywords={`search, ${query ? query + ', ' : ''}south africa news search, articles, the day news south africa`}
+      />
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-6">Search Results</h1>
         <form onSubmit={handleSearch} className="max-w-2xl mx-auto relative">

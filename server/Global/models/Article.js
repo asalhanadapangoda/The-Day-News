@@ -68,6 +68,22 @@ const articleSchema = new mongoose.Schema(
       ],
       default: null,
     },
+    metaTitle: {
+      type: String,
+      default: '',
+    },
+    metaDescription: {
+      type: String,
+      default: '',
+    },
+    metaKeywords: {
+      type: String,
+      default: '',
+    },
+    metaImage: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,

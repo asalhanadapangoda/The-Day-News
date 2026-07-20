@@ -1,5 +1,6 @@
 import { CheckCircle, Tag, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../../components/SEO';
 
 const Packages = () => {
   const packages = [
@@ -60,7 +61,7 @@ const Packages = () => {
     {
       name: "Article Package",
       originalPrice: 25000,
-      discount: 50,
+      discount: 50, // 50% off
       tagline: "Essential digital presence boost",
       features: [
         "2 Social media promotional posts",
@@ -71,6 +72,11 @@ const Packages = () => {
 
   return (
     <div className="w-full pb-20 animate-fade-in">
+      <SEO 
+        title="Media Packages & Advertising | THE DAY NEWS" 
+        description="Explore our media coverage packages, sponsorship tiers, video production, and advertising opportunities with The Day News."
+        keywords="media packages, advertising, sponsorships, video coverage, article publishing, podcast coverage, the day news"
+      />
       {/* Hero Section */}
       <div className="relative w-full h-[45vh] min-h-[350px] flex items-center justify-center bg-[#0c0014] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-[#0c0014] opacity-50"></div>

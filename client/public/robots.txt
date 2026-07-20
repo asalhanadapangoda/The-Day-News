@@ -1,6 +1,22 @@
 User-agent: *
 Allow: /
+
+# Block all admin areas
 Disallow: /admin/
+Disallow: /Bangladesh/TDNG_Admin/
+Disallow: /Australia/TDNG_Admin/
+Disallow: /NewZealand/TDNG_Admin/
+Disallow: /Japan/TDNG_Admin/
+Disallow: /India/TDNG_Admin/
+Disallow: /USA/TDNG_Admin/
+Disallow: /Thailand/TDNG_Admin/
+Disallow: /Denmark/TDNG_Admin/
+Disallow: /Samoa/TDNG_Admin/
+Disallow: /SouthAfrica/TDNG_Admin/
+
+# Block API endpoints from indexing
 Disallow: /api/
 
+# Sitemaps
 Sitemap: https://thedaynewsglobal.lk/sitemap.xml
+Sitemap: https://thedaynewsglobal.lk/api/sitemap.xml

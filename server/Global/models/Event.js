@@ -47,6 +47,22 @@ const eventSchema = new mongoose.Schema(
     articleLink: {
       type: String,
     },
+    metaTitle: {
+      type: String,
+      default: '',
+    },
+    metaDescription: {
+      type: String,
+      default: '',
+    },
+    metaKeywords: {
+      type: String,
+      default: '',
+    },
+    metaImage: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,

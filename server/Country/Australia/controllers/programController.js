@@ -37,7 +37,7 @@ const getProgramByIdOrSlug = async (req, res) => {
 // @access  Private (Admin)
 const createProgram = async (req, res) => {
   try {
-    const { title, slug, description, coverImage, logoImage, posterImage, isFeatured } = req.body;
+    const { title, slug, description, coverImage, logoImage, posterImage, isFeatured , metaTitle, metaDescription, metaKeywords, metaImage} = req.body;
 
     // Auto-generate slug from title if not provided
     const generateSlug = (str) =>
@@ -62,6 +62,10 @@ const createProgram = async (req, res) => {
       logoImage,
       posterImage,
       isFeatured,
+      metaTitle: metaTitle || '',
+      metaDescription: metaDescription || '',
+      metaKeywords: metaKeywords || '',
+      metaImage: metaImage || '',
     });
 
     const createdProgram = await program.save();
@@ -76,7 +80,7 @@ const createProgram = async (req, res) => {
 // @access  Private (Admin)
 const updateProgram = async (req, res) => {
   try {
-    const { title, slug, description, coverImage, logoImage, posterImage, isFeatured } = req.body;
+    const { title, slug, description, coverImage, logoImage, posterImage, isFeatured , metaTitle, metaDescription, metaKeywords, metaImage} = req.body;
 
     const program = await Program.findById(req.params.id);
 
@@ -88,6 +92,11 @@ const updateProgram = async (req, res) => {
       program.logoImage = logoImage || program.logoImage;
       program.posterImage = posterImage !== undefined ? posterImage : program.posterImage;
       program.isFeatured = isFeatured !== undefined ? isFeatured : program.isFeatured;
+
+      if (metaTitle !== undefined) program.metaTitle = metaTitle;
+      if (metaDescription !== undefined) program.metaDescription = metaDescription;
+      if (metaKeywords !== undefined) program.metaKeywords = metaKeywords;
+      if (metaImage !== undefined) program.metaImage = metaImage;
 
       const updatedProgram = await program.save();
       res.json(updatedProgram);

@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import api from '../services/api';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+import SEO from '../../components/SEO';
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -30,11 +31,11 @@ const Contact = () => {
       setSubmitStatus({ state: 'loading', message: '' });
       await api.post('/messages', data);
 
-      setSubmitStatus({ state: 'success', message: 'Thank you! Your message has been sent successfully.' });
+      setSubmitStatus({
+        state: 'success',
+        message: 'Thank you for contacting us! Your message has been sent successfully.'
+      });
       reset();
-
-      // Clear success message after 5 seconds
-      setTimeout(() => setSubmitStatus({ state: 'idle', message: '' }), 5000);
     } catch (error) {
       setSubmitStatus({
         state: 'error',
@@ -45,6 +46,11 @@ const Contact = () => {
 
   return (
     <div className="w-full">
+      <SEO 
+        title="Contact Us | THE DAY NEWS" 
+        description="Get in touch with The Day News Global newsroom, editorial team, and media inquiries."
+        keywords="contact us, the day news, newsroom contact, media inquiries, press contact, feedback"
+      />
       <div className="bg-[#0c0014] py-16 border-b border-white/10 relative overflow-hidden">
         <div className="absolute right-0 top-0 w-64 h-64 bg-primary/20 blur-[80px] rounded-full"></div>
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">

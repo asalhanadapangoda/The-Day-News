@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { Search as SearchIcon, Video, FileText } from 'lucide-react';
 import OptimizedImage from '../components/OptimizedImage';
 import { useQuery } from '@tanstack/react-query';
+import SEO from '../../components/SEO';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,7 +51,12 @@ const Search = () => {
   const totalResults = results.articles.length + results.episodes.length + results.programs.length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 min-h-[70vh]">
+    <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
+      <SEO 
+        title={query ? `Search: "${query}" | THE DAY NEWS` : 'Search News & Programs | THE DAY NEWS'}
+        description={query ? `Search results for "${query}" on The Day News.` : 'Search for breaking news articles, video programs, and media coverage across The Day News.'}
+        keywords={`search, ${query ? query + ', ' : ''}news search, articles, video programs, the day news`}
+      />
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-6">Search Results</h1>
         <form onSubmit={handleSearch} className="max-w-2xl mx-auto relative">

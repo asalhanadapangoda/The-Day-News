@@ -5,6 +5,7 @@ import api from '../services/api';
 import { Calendar, User, Facebook, Linkedin, Share2, Globe } from 'lucide-react';
 import { format } from 'date-fns';
 import OptimizedImage from '../components/OptimizedImage';
+import SEO from '../../components/SEO';
 
 const ArticleDetail = () => {
   const { slug } = useParams();
@@ -69,6 +70,16 @@ const ArticleDetail = () => {
 
   return (
     <div className="pb-20">
+      <SEO 
+        title={article.metaTitle || article.title}
+        description={article.metaDescription || article.excerpt || (article.content ? article.content.replace(/<[^>]+>/g, '').slice(0, 160) : '')}
+        keywords={article.metaKeywords || `news, ${article.category?.name || 'article'}, ${article.country || 'world'}, breaking news`}
+        ogTitle={article.metaTitle || article.title}
+        ogDescription={article.metaDescription || article.excerpt}
+        ogImage={article.metaImage || article.featuredImage}
+        ogType="article"
+        author={article.author?.name || 'The Day News Team'}
+      />
       {/* Header Banner */}
       <div className="w-full relative min-h-[40vh] md:min-h-[60vh] flex items-end">
         <div className="absolute inset-0">

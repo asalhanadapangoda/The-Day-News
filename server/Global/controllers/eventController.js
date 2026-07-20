@@ -46,7 +46,7 @@ const getEventBySlug = async (req, res) => {
 // @access  Private (Admin)
 const createEvent = async (req, res) => {
   try {
-    const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl, articleLink } = req.body;
+    const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl, articleLink, metaTitle, metaDescription, metaKeywords, metaImage } = req.body;
 
     if (!title || !eventDate || !location || !heroImages || !galleryImages) {
       return res.status(400).json({ message: 'Please provide all required fields (Hero images, title, date...)' });
@@ -68,6 +68,10 @@ const createEvent = async (req, res) => {
       status: status || 'draft',
       albumUrl,
       articleLink,
+      metaTitle: metaTitle || '',
+      metaDescription: metaDescription || '',
+      metaKeywords: metaKeywords || '',
+      metaImage: metaImage || '',
     });
 
     const createdEvent = await event.save();
@@ -83,7 +87,7 @@ const createEvent = async (req, res) => {
 // @access  Private (Admin)
 const updateEvent = async (req, res) => {
   try {
-    const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl, articleLink } = req.body;
+    const { title, tagline, eventDate, location, heroImages, videoUrl, galleryImages, status, albumUrl, articleLink, metaTitle, metaDescription, metaKeywords, metaImage } = req.body;
 
     const event = await Event.findById(req.params.id);
 
@@ -104,6 +108,10 @@ const updateEvent = async (req, res) => {
       if (status) event.status = status;
       if (albumUrl !== undefined) event.albumUrl = albumUrl;
       if (articleLink !== undefined) event.articleLink = articleLink;
+      if (metaTitle !== undefined) event.metaTitle = metaTitle;
+      if (metaDescription !== undefined) event.metaDescription = metaDescription;
+      if (metaKeywords !== undefined) event.metaKeywords = metaKeywords;
+      if (metaImage !== undefined) event.metaImage = metaImage;
 
       const updatedEvent = await event.save();
       res.json(updatedEvent);

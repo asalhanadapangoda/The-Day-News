@@ -48,7 +48,11 @@ const ManageEvents = () => {
       galleryImages: Array(12).fill(''),
       status: 'draft',
       albumUrl: '',
-      articleLink: ''
+      articleLink: '',
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: '',
+      metaImage: ''
     });
     setEditingEvent(null);
   };
@@ -66,7 +70,11 @@ const ManageEvents = () => {
         galleryImages: [...event.galleryImages, ...Array(12).fill('')].slice(0, 12),
         status: event.status,
         albumUrl: event.albumUrl || '',
-        articleLink: event.articleLink || ''
+        articleLink: event.articleLink || '',
+        metaTitle: event.metaTitle || '',
+        metaDescription: event.metaDescription || '',
+        metaKeywords: event.metaKeywords || '',
+        metaImage: event.metaImage || ''
       });
     } else {
       resetForm();
@@ -435,11 +443,60 @@ const ManageEvents = () => {
                   </h3>
                   <input 
                      type="text" 
-                     className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-primary transition-all text-sm"
+                     className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-primary transition-all text-sm mb-6"
                      value={formData.articleLink}
                      placeholder="Link to the event article (e.g., /articles/event-summary or external link)"
                      onChange={(e) => setFormData({ ...formData, articleLink: e.target.value })}
                   />
+
+                  {/* SEO Custom Meta Overrides (Optional) */}
+                  <div className="border-t border-white/10 pt-6 mt-6 space-y-4">
+                    <h3 className="text-xs font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
+                      <Type size={14} /> SEO & Social Meta (Optional Overrides)
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[10px] uppercase tracking-wide text-gray-500 mb-1 font-bold">Custom Meta Title</label>
+                        <input
+                          type="text"
+                          value={formData.metaTitle}
+                          onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+                          placeholder="Default: Uses Event Title"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-primary text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] uppercase tracking-wide text-gray-500 mb-1 font-bold">Custom Meta Keywords</label>
+                        <input
+                          type="text"
+                          value={formData.metaKeywords}
+                          onChange={(e) => setFormData({ ...formData, metaKeywords: e.target.value })}
+                          placeholder="event, summit, conference"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-primary text-xs"
+                        />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-[10px] uppercase tracking-wide text-gray-500 mb-1 font-bold">Custom Meta Description</label>
+                        <textarea
+                          rows="2"
+                          value={formData.metaDescription}
+                          onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
+                          placeholder="Default: Uses Tagline/Description"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-primary text-xs resize-none"
+                        ></textarea>
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-[10px] uppercase tracking-wide text-gray-500 mb-1 font-bold">Custom Social Meta Image URL</label>
+                        <input
+                          type="text"
+                          value={formData.metaImage}
+                          onChange={(e) => setFormData({ ...formData, metaImage: e.target.value })}
+                          placeholder="Default: Uses First Hero Image"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-primary text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
                </div>
 
               <div className="space-y-6">

@@ -6,6 +6,7 @@ import { PlayCircle, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 import Skeleton from '../../../Global/components/Skeleton';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
+import SEO from '../../../components/SEO';
 
 // Lazy load non-critical components
 const AIChatBot = lazy(() => import('../components/AIChatBot'));
@@ -73,6 +74,11 @@ const Home = () => {
 
   return (
     <div className="w-full">
+      <SEO 
+        title="Thailand News & Headlines | THE DAY NEWS THAILAND" 
+        description="Latest breaking news, business, tourism, and national affairs from Thailand."
+        keywords="thailand news, bangkok news, thai breaking news, Southeast Asia coverage, the day news thailand"
+      />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
         {heroes.length > 0 ? (

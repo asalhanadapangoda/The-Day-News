@@ -4,6 +4,7 @@ import { Calendar, User, Facebook, Linkedin, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
+import SEO from '../../../components/SEO';
 import Skeleton from '../components/Skeleton';
 
 const ArticleDetail = () => {
@@ -60,6 +61,15 @@ const ArticleDetail = () => {
 
   return (
     <div className="pb-20">
+      <SEO 
+        title={article.metaTitle ? article.metaTitle : `${article.title} | THE DAY NEWS THAILAND`}
+        description={article.metaDescription || article.excerpt || (article.content ? article.content.replace(/<[^>]+>/g, '').slice(0, 160) : '')}
+        keywords={article.metaKeywords || `thailand news, ${article.category?.name || 'article'}, breaking news`}
+        ogTitle={article.metaTitle || article.title}
+        ogDescription={article.metaDescription || article.excerpt}
+        ogImage={article.metaImage || article.featuredImage}
+        ogType="article"
+      />
       {/* Header Banner */}
       <div className="w-full relative min-h-[40vh] md:min-h-[60vh] flex items-end">
         <div className="absolute inset-0">

@@ -2,24 +2,23 @@ import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import { format } from 'date-fns';
-import Skeleton from '../components/Skeleton';
+import Skeleton from '../../../Global/components/Skeleton';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
 import { useQuery } from '@tanstack/react-query';
+import SEO from '../../../components/SEO';
 
 const Articles = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentCategory = searchParams.get('category') || '';
 
   const { data: categories = [] } = useQuery({ 
-    queryKey: ['nz-categories'], 
-    queryFn: () => api.get('/categories').then(res => res.data),
-    staleTime: 1000 * 60 * 60, // 1 hour
+    queryKey: ['categories'], 
+    queryFn: () => api.get('/categories').then(res => res.data) 
   });
 
   const { data: articles = [], isLoading: loading } = useQuery({ 
-    queryKey: ['nz-articles', currentCategory], 
-    queryFn: () => api.get(currentCategory ? `/articles?category=${currentCategory}` : '/articles').then(res => res.data),
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    queryKey: ['articles', currentCategory], 
+    queryFn: () => api.get(currentCategory ? `/articles?category=${currentCategory}` : '/articles').then(res => res.data) 
   });
 
   const handleCategoryChange = (slug) => {
@@ -32,6 +31,11 @@ const Articles = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
+      <SEO 
+        title="New Zealand News Articles | THE DAY NEWS NEW ZEALAND" 
+        description="Explore in-depth articles and reports from New Zealand."
+        keywords="new zealand articles, nz news, auckland news, the day news new zealand"
+      />
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-4 text-glow transition-all duration-300">Latest Articles</h1>
         <p className="text-gray-400 max-w-2xl mx-auto">

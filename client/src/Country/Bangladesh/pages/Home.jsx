@@ -6,6 +6,7 @@ import { PlayCircle, ArrowRight, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import Skeleton from '../components/Skeleton';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
+import SEO from '../../../components/SEO';
 
 // Lazy load non-critical components
 const AIChatBot = lazy(() => import('../components/AIChatBot'));
@@ -80,6 +81,11 @@ const Home = () => {
 
   return (
     <div className="w-full">
+      <SEO 
+        title="Bangladesh News & Updates | THE DAY NEWS BANGLADESH" 
+        description="Latest breaking news, politics, business, entertainment, and video programs from Bangladesh."
+        keywords="bangladesh news, dhaka news, bangladesh breaking news, bd news, the day news bangladesh"
+      />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
         {heroes.length > 0 ? (

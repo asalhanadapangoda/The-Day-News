@@ -6,6 +6,7 @@ import localApi from '../services/api';
 import globalApi from '../../../Global/services/api';
 import { Mail, Send } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+import SEO from '../../../components/SEO';
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -47,6 +48,11 @@ const Contact = () => {
 
   return (
     <div className="w-full">
+      <SEO 
+        title="Contact Us | THE DAY NEWS SAMOA" 
+        description="Contact The Day News Samoa newsroom and editorial team."
+        keywords="contact us, Samoa newsroom, the day news samoa, press contact, feedback"
+      />
       <div className="bg-[#0c0014] py-16 border-b border-white/10 relative overflow-hidden">
         <div className="absolute right-0 top-0 w-64 h-64 bg-primary/20 blur-[80px] rounded-full"></div>
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">

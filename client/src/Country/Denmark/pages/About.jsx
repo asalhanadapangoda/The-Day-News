@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Globe } from 'lucide-react';
+import SEO from '../../../components/SEO';
 const WorldMap = lazy(() => import('../components/WorldMap'));
 
 const OPERATING_COUNTRIES = [
@@ -12,13 +13,18 @@ const OPERATING_COUNTRIES = [
   'Thailand',
   'Denmark',
   'South Africa',
-  'Denmark',
+  'New Zealand',
   'Samoa',
 ];
 
 const About = () => {
   return (
     <div className="w-full">
+      <SEO 
+        title="About Us | THE DAY NEWS DENMARK" 
+        description="Learn about The Day News Denmark portal, our local journalism network, and mission."
+        keywords="about us, Denmark news, the day news denmark, copenhagen newsroom, mission"
+      />
       {/* Hero */}
       <div className="relative w-full h-[40vh] min-h-[300px] flex items-center justify-center bg-[#0c0014] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-[#0c0014] opacity-50"></div>

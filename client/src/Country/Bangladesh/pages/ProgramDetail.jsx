@@ -5,6 +5,7 @@ import { PlayCircle, Calendar, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
+import SEO from '../../../components/SEO';
 
 const ProgramDetail = () => {
   const { slug } = useParams();
@@ -73,6 +74,14 @@ const ProgramDetail = () => {
 
   return (
     <div className="w-full pb-20">
+      <SEO 
+        title={`${program.title} | THE DAY NEWS BANGLADESH`}
+        description={program.description || `Watch episodes of ${program.title} on The Day News Bangladesh.`}
+        keywords={`program, ${program.title}, video episodes, bangladesh shows, broadcasting, the day news bangladesh`}
+        ogTitle={program.title}
+        ogDescription={program.description}
+        ogImage={program.posterImage || program.coverImage}
+      />
       {/* Dynamic Header */}
       <div className="relative w-full h-[50vh] min-h-[400px]">
         <OptimizedImage 

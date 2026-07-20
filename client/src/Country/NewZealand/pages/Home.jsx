@@ -6,6 +6,7 @@ import { PlayCircle, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 import Skeleton from '../../../Global/components/Skeleton';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
+import SEO from '../../../components/SEO';
 
 // Lazy load non-critical components
 const AIChatBot = lazy(() => import('../components/AIChatBot'));
@@ -73,6 +74,11 @@ const Home = () => {
 
   return (
     <div className="w-full">
+      <SEO 
+        title="New Zealand Breaking News & Stories | THE DAY NEWS NEW ZEALAND" 
+        description="Stay updated with breaking news, current events, and media stories from New Zealand."
+        keywords="new zealand news, auckland news, wellington news, nz breaking news, the day news new zealand"
+      />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
         {heroes.length > 0 ? (

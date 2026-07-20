@@ -5,6 +5,7 @@ import { PlayCircle } from 'lucide-react';
 import Skeleton from '../components/Skeleton';
 import OptimizedImage from '../components/OptimizedImage';
 import { useQuery } from '@tanstack/react-query';
+import SEO from '../../components/SEO';
 
 const Programs = () => {
   const { data: programs = [], isLoading: loading } = useQuery({
@@ -15,6 +16,7 @@ const Programs = () => {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
+        <SEO title="Featured Programs | THE DAY NEWS" description="Explore video programs and specialized media broadcasting from The Day News." />
         <div className="text-center mb-16 opacity-50">
           <div className="h-10 bg-white/10 rounded-lg w-64 mx-auto mb-4 animate-pulse"></div>
           <div className="h-4 bg-white/5 rounded-lg w-96 mx-auto animate-pulse"></div>
@@ -30,6 +32,11 @@ const Programs = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
+      <SEO 
+        title="Featured Programs | THE DAY NEWS" 
+        description="Explore our wide range of award-winning video journalism, special broadcasts, and media programs."
+        keywords="programs, video news, shows, episodes, broadcasts, journalism, media"
+      />
       <div className="text-center mb-16">
         <h1 className="text-4xl font-bold text-white mb-4 text-glow">All Programs</h1>
         <p className="text-gray-400 max-w-2xl mx-auto">

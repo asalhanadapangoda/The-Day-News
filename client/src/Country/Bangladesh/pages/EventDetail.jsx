@@ -5,6 +5,7 @@ import { Calendar, MapPin, PlayCircle, X, ChevronLeft, ChevronRight, Image as Im
 import { format } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
+import SEO from '../../../components/SEO';
 
 const EventDetail = () => {
   const { slug } = useParams();
@@ -91,6 +92,14 @@ const EventDetail = () => {
 
   return (
     <div className="w-full pb-20 bg-gradient-to-b from-[#0c0014] to-[#121212]">
+      <SEO 
+        title={`${event.title} | THE DAY NEWS BANGLADESH`}
+        description={event.tagline || event.description?.slice(0, 160) || `Learn more about ${event.title} in Bangladesh.`}
+        keywords={`event, ${event.title}, bangladesh event, forum, ${event.location || 'bangladesh'}, the day news bangladesh`}
+        ogTitle={event.title}
+        ogDescription={event.tagline || event.description?.slice(0, 160)}
+        ogImage={event.heroImages?.[0]}
+      />
       {/* 1. Hero Section (3-Image Rotation) */}
       <section className="relative w-full h-[60vh] md:h-[85vh] min-h-[400px] overflow-hidden bg-black">
         {event.heroImages.map((image, index) => (

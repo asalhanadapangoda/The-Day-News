@@ -6,6 +6,7 @@ import { PlayCircle, ArrowRight, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import Skeleton from '../components/Skeleton';
 import OptimizedImage from '../components/OptimizedImage';
+import SEO from '../../components/SEO';
 
 // Lazy load non-critical components
 const AIChatBot = lazy(() => import('../components/AIChatBot'));
@@ -91,6 +92,11 @@ const Home = () => {
 
   return (
     <div className="w-full">
+      <SEO 
+        title="THE DAY NEWS | Global & Local Breaking News" 
+        description="The Day News Global - Stay updated with breaking stories, in-depth reports, featured video programs, and local news from around the world." 
+        keywords="news, breaking news, world news, global stories, video programs, articles, current affairs, local news" 
+      />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
         {heroes.length > 0 ? (

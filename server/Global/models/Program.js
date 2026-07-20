@@ -27,6 +27,22 @@ const programSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    metaTitle: {
+      type: String,
+      default: '',
+    },
+    metaDescription: {
+      type: String,
+      default: '',
+    },
+    metaKeywords: {
+      type: String,
+      default: '',
+    },
+    metaImage: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,
