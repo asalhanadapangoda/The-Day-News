@@ -127,7 +127,7 @@ const generateSitemap = async (req, res) => {
 
     // 3. Add Global Dynamic Content (High Priority)
     for (const article of globalArticles) {
-      addUrl(`/article/${escapeXml(article.slug)}`, '0.9', 'daily', article.updatedAt || article.publishDate);
+      addUrl(`/articles/${escapeXml(article.slug)}`, '0.9', 'daily', article.updatedAt || article.publishDate);
     }
 
     for (const program of globalPrograms) {
@@ -141,7 +141,7 @@ const generateSitemap = async (req, res) => {
     // 4. Add Country Dynamic Content (Lower Priority)
     for (const countryArticles of countryArticleResults) {
       for (const article of countryArticles) {
-        addUrl(`/${article.countryPrefix}/article/${escapeXml(article.slug)}`, '0.5', 'monthly', article.updatedAt || article.publishDate);
+        addUrl(`/${article.countryPrefix}/articles/${escapeXml(article.slug)}`, '0.5', 'monthly', article.updatedAt || article.publishDate);
       }
     }
 

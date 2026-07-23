@@ -64,7 +64,7 @@ async function generateSitemap() {
   const Event = (await import('./Global/models/Event.js')).default;
 
   const globalArticles = await Article.find({ isPublished: true }).select('_id');
-  globalArticles.forEach(article => addUrl(`/article/${article._id}`, '0.9', 'daily'));
+  globalArticles.forEach(article => addUrl(`/articles/${article._id}`, '0.9', 'daily'));
 
   const globalPrograms = await Program.find().select('_id');
   globalPrograms.forEach(program => addUrl(`/programs/${program._id}`, '0.9', 'daily'));
@@ -77,7 +77,7 @@ async function generateSitemap() {
       if (fs.existsSync(path.join(__dirname, `./Country/${country}/models/Article.js`))) {
         const CArticle = (await import(`./Country/${country}/models/Article.js`)).default;
         const articles = await CArticle.find({ isPublished: true }).select('_id');
-        articles.forEach(a => addUrl(`/${country}/article/${a._id}`, '0.5', 'monthly'));
+        articles.forEach(a => addUrl(`/${country}/articles/${a._id}`, '0.5', 'monthly'));
       }
     } catch(e) { console.log(`Skipping articles for ${country}`); }
 
