@@ -49,6 +49,9 @@ const About = lazy(() => import('./Global/pages/About'));
 const Contact = lazy(() => import('./Global/pages/Contact'));
 const Search = lazy(() => import('./Global/pages/Search'));
 const Packages = lazy(() => import('./Global/pages/Packages'));
+const PrivacyPolicy = lazy(() => import('./Global/pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./Global/pages/TermsOfService'));
+const CookiePolicy = lazy(() => import('./Global/pages/CookiePolicy'));
 
 // Global Admin Pages (Lazy)
 const AdminLogin = lazy(() => import('./Global/pages/admin/AdminLogin'));
@@ -231,7 +234,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/Packages" element={<Packages />} />
+          <Route path="/packages" element={<Packages />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
         </Route>
 
         {/* ── Global Admin Routes ── */}
