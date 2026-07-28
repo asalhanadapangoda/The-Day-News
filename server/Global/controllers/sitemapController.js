@@ -35,6 +35,11 @@ const COUNTRIES = [
   'India', 'USA', 'Thailand', 'Denmark', 'Samoa', 'SouthAfrica'
 ];
 
+const toSeoFriendly = (c) => {
+  const map = { 'NewZealand': 'new-zealand', 'SouthAfrica': 'south-africa' };
+  return map[c] || c.toLowerCase();
+};
+
 // Helper to format date as YYYY-MM-DD
 const formatDate = (date) => {
   if (!date) return new Date().toISOString().split('T')[0];
@@ -135,10 +140,14 @@ const generateSitemap = async (req, res) => {
     });
 
     // 2. Add Country Static Routes (Lower Priority)
+    const PROGRAM_COUNTRIES = ['Bangladesh', 'Australia'];
     COUNTRIES.forEach(country => {
-      addUrl(`/${country}`, '0.6', 'weekly');
-      addUrl(`/${country}/articles`, '0.5', 'weekly');
-      addUrl(`/${country}/programs`, '0.5', 'weekly');
+      const seoCountry = toSeoFriendly(country);
+      addUrl(`/${seoCountry}`, '0.6', 'weekly');
+      addUrl(`/${seoCountry}/articles`, '0.5', 'weekly');
+      if (PROGRAM_COUNTRIES.includes(country)) {
+        addUrl(`/${seoCountry}/programs`, '0.5', 'weekly');
+      }
     });
 
     // 3. Add Global Dynamic Content (High Priority)
@@ -157,19 +166,22 @@ const generateSitemap = async (req, res) => {
     // 4. Add Country Dynamic Content (Lower Priority)
     for (const countryArticles of countryArticleResults) {
       for (const article of countryArticles) {
-        addUrl(`/${article.countryPrefix}/articles/${escapeXml(article.slug)}`, '0.5', 'monthly', article.updatedAt || article.publishDate);
+        const seoCountry = toSeoFriendly(article.countryPrefix);
+        addUrl(`/${seoCountry}/articles/${escapeXml(article.slug)}`, '0.5', 'monthly', article.updatedAt || article.publishDate);
       }
     }
 
     for (const countryPrograms of countryProgramResults) {
       for (const program of countryPrograms) {
-        addUrl(`/${program.countryPrefix}/programs/${escapeXml(program.slug)}`, '0.5', 'monthly', program.updatedAt);
+        const seoCountry = toSeoFriendly(program.countryPrefix);
+        addUrl(`/${seoCountry}/programs/${escapeXml(program.slug)}`, '0.5', 'monthly', program.updatedAt);
       }
     }
 
     for (const countryEvents of countryEventResults) {
       for (const event of countryEvents) {
-        addUrl(`/${event.countryPrefix}/events/${escapeXml(event.slug)}`, '0.5', 'monthly', event.updatedAt || event.eventDate);
+        const seoCountry = toSeoFriendly(event.countryPrefix);
+        addUrl(`/${seoCountry}/events/${escapeXml(event.slug)}`, '0.5', 'monthly', event.updatedAt || event.eventDate);
       }
     }
 

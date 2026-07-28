@@ -3,16 +3,16 @@ Allow: /
 
 # Block all admin areas
 Disallow: /admin/
-Disallow: /Bangladesh/TDNG_Admin/
-Disallow: /Australia/TDNG_Admin/
-Disallow: /NewZealand/TDNG_Admin/
-Disallow: /Japan/TDNG_Admin/
-Disallow: /India/TDNG_Admin/
-Disallow: /USA/TDNG_Admin/
-Disallow: /Thailand/TDNG_Admin/
-Disallow: /Denmark/TDNG_Admin/
-Disallow: /Samoa/TDNG_Admin/
-Disallow: /SouthAfrica/TDNG_Admin/
+Disallow: /bangladesh/TDNG_Admin/
+Disallow: /australia/TDNG_Admin/
+Disallow: /new-zealand/TDNG_Admin/
+Disallow: /japan/TDNG_Admin/
+Disallow: /india/TDNG_Admin/
+Disallow: /usa/TDNG_Admin/
+Disallow: /thailand/TDNG_Admin/
+Disallow: /denmark/TDNG_Admin/
+Disallow: /samoa/TDNG_Admin/
+Disallow: /south-africa/TDNG_Admin/
 
 # Block API endpoints from indexing
 Disallow: /api/

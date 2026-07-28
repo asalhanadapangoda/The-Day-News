@@ -164,26 +164,26 @@ const parseContentFromPath = (urlPath) => {
   if (m) return { type: 'events', slug: m[1], country: null };
 
   // ── Bangladesh (articles + programs + events) ─────────────────────────
-  m = urlPath.match(/^\/Bangladesh\/articles\/([^/?#]+)/);
-  if (m) return { type: 'articles', slug: m[1], country: 'Bangladesh' };
+  m = urlPath.match(/^\/bangladesh\/articles\/([^/?#]+)/);
+  if (m) return { type: 'articles', slug: m[1], country: 'bangladesh' };
 
-  m = urlPath.match(/^\/Bangladesh\/programs\/([^/?#]+)/);
-  if (m) return { type: 'programs', slug: m[1], country: 'Bangladesh' };
+  m = urlPath.match(/^\/bangladesh\/programs\/([^/?#]+)/);
+  if (m) return { type: 'programs', slug: m[1], country: 'bangladesh' };
 
-  m = urlPath.match(/^\/Bangladesh\/events\/([^/?#]+)/);
-  if (m) return { type: 'events', slug: m[1], country: 'Bangladesh' };
+  m = urlPath.match(/^\/bangladesh\/events\/([^/?#]+)/);
+  if (m) return { type: 'events', slug: m[1], country: 'bangladesh' };
 
   // ── Australia (articles + programs) ──────────────────────────────────
-  m = urlPath.match(/^\/Australia\/articles\/([^/?#]+)/);
-  if (m) return { type: 'articles', slug: m[1], country: 'Australia' };
+  m = urlPath.match(/^\/australia\/articles\/([^/?#]+)/);
+  if (m) return { type: 'articles', slug: m[1], country: 'australia' };
 
-  m = urlPath.match(/^\/Australia\/programs\/([^/?#]+)/);
-  if (m) return { type: 'programs', slug: m[1], country: 'Australia' };
+  m = urlPath.match(/^\/australia\/programs\/([^/?#]+)/);
+  if (m) return { type: 'programs', slug: m[1], country: 'australia' };
 
   // ── Remaining countries (articles only) ──────────────────────────────
   const ARTICLE_ONLY_COUNTRIES = [
-    'NewZealand', 'Japan', 'India', 'USA',
-    'Thailand', 'Denmark', 'Samoa', 'SouthAfrica',
+    'new-zealand', 'japan', 'india', 'usa',
+    'thailand', 'denmark', 'samoa', 'south-africa',
   ];
   for (const country of ARTICLE_ONLY_COUNTRIES) {
     m = urlPath.match(new RegExp(`^\\/${country}\\/articles\\/([^/?#]+)`));

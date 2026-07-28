@@ -53,11 +53,17 @@ async function generateSitemap() {
 
   const PROGRAM_COUNTRIES = ['Bangladesh', 'Australia'];
 
+  const toSeoFriendly = (c) => {
+    const map = { 'NewZealand': 'new-zealand', 'SouthAfrica': 'south-africa' };
+    return map[c] || c.toLowerCase();
+  };
+
   COUNTRIES.forEach(country => {
-    addUrl(`/${country}`, '0.6', 'daily');
-    addUrl(`/${country}/articles`, '0.5', 'weekly');
+    const seoCountry = toSeoFriendly(country);
+    addUrl(`/${seoCountry}`, '0.6', 'daily');
+    addUrl(`/${seoCountry}/articles`, '0.5', 'weekly');
     if (PROGRAM_COUNTRIES.includes(country)) {
-      addUrl(`/${country}/programs`, '0.5', 'weekly');
+      addUrl(`/${seoCountry}/programs`, '0.5', 'weekly');
     }
   });
 
@@ -78,11 +84,12 @@ async function generateSitemap() {
   globalEvents.forEach(event => addUrl(`/events/${event.slug}`, '0.9', 'daily'));
 
   for (const country of COUNTRIES) {
+    const seoCountry = toSeoFriendly(country);
     try {
       if (fs.existsSync(path.join(__dirname, `./Country/${country}/models/Article.js`))) {
         const CArticle = (await import(`./Country/${country}/models/Article.js`)).default;
         const articles = await CArticle.find({ status: 'published' }).select('slug');
-        articles.forEach(a => addUrl(`/${country}/articles/${a.slug}`, '0.5', 'monthly'));
+        articles.forEach(a => addUrl(`/${seoCountry}/articles/${a.slug}`, '0.5', 'monthly'));
       }
     } catch(e) { console.log(`Skipping articles for ${country}`); }
 
@@ -90,7 +97,7 @@ async function generateSitemap() {
       if (fs.existsSync(path.join(__dirname, `./Country/${country}/models/Program.js`))) {
         const CProgram = (await import(`./Country/${country}/models/Program.js`)).default;
         const programs = await CProgram.find().select('slug');
-        programs.forEach(p => addUrl(`/${country}/programs/${p.slug}`, '0.5', 'monthly'));
+        programs.forEach(p => addUrl(`/${seoCountry}/programs/${p.slug}`, '0.5', 'monthly'));
       }
     } catch(e) { console.log(`Skipping programs for ${country}`); }
   }

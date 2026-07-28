@@ -252,7 +252,7 @@ function App() {
         </Route>
 
         {/* ── Bangladesh Public Routes ── */}
-        <Route path="/Bangladesh" element={<BdAuthProvider><BdPublicLayout /></BdAuthProvider>}>
+        <Route path="/bangladesh" element={<BdAuthProvider><BdPublicLayout /></BdAuthProvider>}>
           <Route index element={<BdHome />} />
           <Route path="programs" element={<BdPrograms />} />
           <Route path="programs/:slug" element={<BdProgramDetail />} />
@@ -266,8 +266,8 @@ function App() {
         </Route>
 
         {/* ── Bangladesh Admin Routes ── */}
-        <Route path="/Bangladesh/TDNG_Admin/login" element={<BdAuthProvider><BdAdminLogin /></BdAuthProvider>} />
-        <Route path="/Bangladesh/TDNG_Admin" element={<BdAuthProvider><BdAdminLayout /></BdAuthProvider>}>
+        <Route path="/bangladesh/TDNG_Admin/login" element={<BdAuthProvider><BdAdminLogin /></BdAuthProvider>} />
+        <Route path="/bangladesh/TDNG_Admin" element={<BdAuthProvider><BdAdminLayout /></BdAuthProvider>}>
           <Route index element={<BdDashboard />} />
           <Route path="dashboard" element={<BdDashboard />} />
           <Route path="programs" element={<BdManagePrograms />} />
@@ -282,7 +282,7 @@ function App() {
         </Route>
 
         {/* ── Australia Public Routes ── */}
-        <Route path="/Australia" element={<AuAuthProvider><AuPublicLayout /></AuAuthProvider>}>
+        <Route path="/australia" element={<AuAuthProvider><AuPublicLayout /></AuAuthProvider>}>
           <Route index element={<AuHome />} />
           <Route path="programs" element={<AuPrograms />} />
           <Route path="programs/:slug" element={<AuProgramDetail />} />
@@ -294,8 +294,8 @@ function App() {
         </Route>
 
         {/* ── Australia Admin Routes ── */}
-        <Route path="/Australia/TDNG_Admin/login" element={<AuAuthProvider><AuAdminLogin /></AuAuthProvider>} />
-        <Route path="/Australia/TDNG_Admin" element={<AuAuthProvider><AuAdminLayout /></AuAuthProvider>}>
+        <Route path="/australia/TDNG_Admin/login" element={<AuAuthProvider><AuAdminLogin /></AuAuthProvider>} />
+        <Route path="/australia/TDNG_Admin" element={<AuAuthProvider><AuAdminLayout /></AuAuthProvider>}>
           <Route index element={<AuDashboard />} />
           <Route path="dashboard" element={<AuDashboard />} />
           <Route path="programs" element={<AuManagePrograms />} />
@@ -306,7 +306,7 @@ function App() {
         </Route>
 
         {/* ── New Zealand Public Routes ── */}
-        <Route path="/NewZealand" element={<NzAuthProvider><NzPublicLayout /></NzAuthProvider>}>
+        <Route path="/new-zealand" element={<NzAuthProvider><NzPublicLayout /></NzAuthProvider>}>
           <Route index element={<NzHome />} />
           <Route path="articles" element={<NzArticles />} />
           <Route path="articles/:slug" element={<NzArticleDetail />} />
@@ -316,8 +316,8 @@ function App() {
         </Route>
 
         {/* ── New Zealand Admin Routes ── */}
-        <Route path="/NewZealand/TDNG_Admin/login" element={<NzAuthProvider><NzAdminLogin /></NzAuthProvider>} />
-        <Route path="/NewZealand/TDNG_Admin" element={<NzAuthProvider><NzAdminLayout /></NzAuthProvider>}>
+        <Route path="/new-zealand/TDNG_Admin/login" element={<NzAuthProvider><NzAdminLogin /></NzAuthProvider>} />
+        <Route path="/new-zealand/TDNG_Admin" element={<NzAuthProvider><NzAdminLayout /></NzAuthProvider>}>
           <Route index element={<NzDashboard />} />
           <Route path="dashboard" element={<NzDashboard />} />
           <Route path="articles" element={<NzManageArticles />} />
@@ -326,7 +326,7 @@ function App() {
         </Route>
 
         {/* ── Japan Routes ── */}
-        <Route path="/Japan" element={<JpAuthProvider><JpPublicLayout /></JpAuthProvider>}>
+        <Route path="/japan" element={<JpAuthProvider><JpPublicLayout /></JpAuthProvider>}>
           <Route index element={<JpHome />} />
           <Route path="articles" element={<JpArticles />} />
           <Route path="articles/:slug" element={<JpArticleDetail />} />
@@ -334,8 +334,8 @@ function App() {
           <Route path="contact" element={<JpContact />} />
           <Route path="search" element={<JpSearch />} />
         </Route>
-        <Route path="/Japan/TDNG_Admin/login" element={<JpAuthProvider><JpAdminLogin /></JpAuthProvider>} />
-        <Route path="/Japan/TDNG_Admin" element={<JpAuthProvider><JpAdminLayout /></JpAuthProvider>}>
+        <Route path="/japan/TDNG_Admin/login" element={<JpAuthProvider><JpAdminLogin /></JpAuthProvider>} />
+        <Route path="/japan/TDNG_Admin" element={<JpAuthProvider><JpAdminLayout /></JpAuthProvider>}>
           <Route index element={<JpDashboard />} />
           <Route path="dashboard" element={<JpDashboard />} />
           <Route path="articles" element={<JpManageArticles />} />
@@ -344,7 +344,7 @@ function App() {
         </Route>
 
         {/* ── India Routes ── */}
-        <Route path="/India" element={<InAuthProvider><InPublicLayout /></InAuthProvider>}>
+        <Route path="/india" element={<InAuthProvider><InPublicLayout /></InAuthProvider>}>
           <Route index element={<InHome />} />
           <Route path="articles" element={<InArticles />} />
           <Route path="articles/:slug" element={<InArticleDetail />} />
@@ -352,8 +352,8 @@ function App() {
           <Route path="contact" element={<InContact />} />
           <Route path="search" element={<InSearch />} />
         </Route>
-        <Route path="/India/TDNG_Admin/login" element={<InAuthProvider><InAdminLogin /></InAuthProvider>} />
-        <Route path="/India/TDNG_Admin" element={<InAuthProvider><InAdminLayout /></InAuthProvider>}>
+        <Route path="/india/TDNG_Admin/login" element={<InAuthProvider><InAdminLogin /></InAuthProvider>} />
+        <Route path="/india/TDNG_Admin" element={<InAuthProvider><InAdminLayout /></InAuthProvider>}>
           <Route index element={<InDashboard />} />
           <Route path="dashboard" element={<InDashboard />} />
           <Route path="articles" element={<InManageArticles />} />
@@ -362,7 +362,7 @@ function App() {
         </Route>
 
         {/* ── USA Routes ── */}
-        <Route path="/USA" element={<UsAuthProvider><UsPublicLayout /></UsAuthProvider>}>
+        <Route path="/usa" element={<UsAuthProvider><UsPublicLayout /></UsAuthProvider>}>
           <Route index element={<UsHome />} />
           <Route path="articles" element={<UsArticles />} />
           <Route path="articles/:slug" element={<UsArticleDetail />} />
@@ -370,8 +370,8 @@ function App() {
           <Route path="contact" element={<UsContact />} />
           <Route path="search" element={<UsSearch />} />
         </Route>
-        <Route path="/USA/TDNG_Admin/login" element={<UsAuthProvider><UsAdminLogin /></UsAuthProvider>} />
-        <Route path="/USA/TDNG_Admin" element={<UsAuthProvider><UsAdminLayout /></UsAuthProvider>}>
+        <Route path="/usa/TDNG_Admin/login" element={<UsAuthProvider><UsAdminLogin /></UsAuthProvider>} />
+        <Route path="/usa/TDNG_Admin" element={<UsAuthProvider><UsAdminLayout /></UsAuthProvider>}>
           <Route index element={<UsDashboard />} />
           <Route path="dashboard" element={<UsDashboard />} />
           <Route path="articles" element={<UsManageArticles />} />
@@ -380,7 +380,7 @@ function App() {
         </Route>
 
         {/* ── Thailand Routes ── */}
-        <Route path="/Thailand" element={<ThAuthProvider><ThPublicLayout /></ThAuthProvider>}>
+        <Route path="/thailand" element={<ThAuthProvider><ThPublicLayout /></ThAuthProvider>}>
           <Route index element={<ThHome />} />
           <Route path="articles" element={<ThArticles />} />
           <Route path="articles/:slug" element={<ThArticleDetail />} />
@@ -388,8 +388,8 @@ function App() {
           <Route path="contact" element={<ThContact />} />
           <Route path="search" element={<ThSearch />} />
         </Route>
-        <Route path="/Thailand/TDNG_Admin/login" element={<ThAuthProvider><ThAdminLogin /></ThAuthProvider>} />
-        <Route path="/Thailand/TDNG_Admin" element={<ThAuthProvider><ThAdminLayout /></ThAuthProvider>}>
+        <Route path="/thailand/TDNG_Admin/login" element={<ThAuthProvider><ThAdminLogin /></ThAuthProvider>} />
+        <Route path="/thailand/TDNG_Admin" element={<ThAuthProvider><ThAdminLayout /></ThAuthProvider>}>
           <Route index element={<ThDashboard />} />
           <Route path="dashboard" element={<ThDashboard />} />
           <Route path="articles" element={<ThManageArticles />} />
@@ -398,7 +398,7 @@ function App() {
         </Route>
 
         {/* ── Denmark Routes ── */}
-        <Route path="/Denmark" element={<DkAuthProvider><DkPublicLayout /></DkAuthProvider>}>
+        <Route path="/denmark" element={<DkAuthProvider><DkPublicLayout /></DkAuthProvider>}>
           <Route index element={<DkHome />} />
           <Route path="articles" element={<DkArticles />} />
           <Route path="articles/:slug" element={<DkArticleDetail />} />
@@ -406,8 +406,8 @@ function App() {
           <Route path="contact" element={<DkContact />} />
           <Route path="search" element={<DkSearch />} />
         </Route>
-        <Route path="/Denmark/TDNG_Admin/login" element={<DkAuthProvider><DkAdminLogin /></DkAuthProvider>} />
-        <Route path="/Denmark/TDNG_Admin" element={<DkAuthProvider><DkAdminLayout /></DkAuthProvider>}>
+        <Route path="/denmark/TDNG_Admin/login" element={<DkAuthProvider><DkAdminLogin /></DkAuthProvider>} />
+        <Route path="/denmark/TDNG_Admin" element={<DkAuthProvider><DkAdminLayout /></DkAuthProvider>}>
           <Route index element={<DkDashboard />} />
           <Route path="dashboard" element={<DkDashboard />} />
           <Route path="articles" element={<DkManageArticles />} />
@@ -416,7 +416,7 @@ function App() {
         </Route>
 
         {/* ── Samoa Routes ── */}
-        <Route path="/Samoa" element={<SmAuthProvider><SmPublicLayout /></SmAuthProvider>}>
+        <Route path="/samoa" element={<SmAuthProvider><SmPublicLayout /></SmAuthProvider>}>
           <Route index element={<SmHome />} />
           <Route path="articles" element={<SmArticles />} />
           <Route path="articles/:slug" element={<SmArticleDetail />} />
@@ -424,8 +424,8 @@ function App() {
           <Route path="contact" element={<SmContact />} />
           <Route path="search" element={<SmSearch />} />
         </Route>
-        <Route path="/Samoa/TDNG_Admin/login" element={<SmAuthProvider><SmAdminLogin /></SmAuthProvider>} />
-        <Route path="/Samoa/TDNG_Admin" element={<SmAuthProvider><SmAdminLayout /></SmAuthProvider>}>
+        <Route path="/samoa/TDNG_Admin/login" element={<SmAuthProvider><SmAdminLogin /></SmAuthProvider>} />
+        <Route path="/samoa/TDNG_Admin" element={<SmAuthProvider><SmAdminLayout /></SmAuthProvider>}>
           <Route index element={<SmDashboard />} />
           <Route path="dashboard" element={<SmDashboard />} />
           <Route path="articles" element={<SmManageArticles />} />
@@ -434,7 +434,7 @@ function App() {
         </Route>
 
         {/* ── South Africa Routes ── */}
-        <Route path="/SouthAfrica" element={<ZaAuthProvider><ZaPublicLayout /></ZaAuthProvider>}>
+        <Route path="/south-africa" element={<ZaAuthProvider><ZaPublicLayout /></ZaAuthProvider>}>
           <Route index element={<ZaHome />} />
           <Route path="articles" element={<ZaArticles />} />
           <Route path="articles/:slug" element={<ZaArticleDetail />} />
@@ -442,8 +442,8 @@ function App() {
           <Route path="contact" element={<ZaContact />} />
           <Route path="search" element={<ZaSearch />} />
         </Route>
-        <Route path="/SouthAfrica/TDNG_Admin/login" element={<ZaAuthProvider><ZaAdminLogin /></ZaAuthProvider>} />
-        <Route path="/SouthAfrica/TDNG_Admin" element={<ZaAuthProvider><ZaAdminLayout /></ZaAuthProvider>}>
+        <Route path="/south-africa/TDNG_Admin/login" element={<ZaAuthProvider><ZaAdminLogin /></ZaAuthProvider>} />
+        <Route path="/south-africa/TDNG_Admin" element={<ZaAuthProvider><ZaAdminLayout /></ZaAuthProvider>}>
           <Route index element={<ZaDashboard />} />
           <Route path="dashboard" element={<ZaDashboard />} />
           <Route path="articles" element={<ZaManageArticles />} />

@@ -46,6 +46,20 @@ const COUNTRY_EVENT_MODELS = {
   Bangladesh: BdEvent,
 };
 
+// Maps lowercase SEO-friendly URL segment → capitalized model key
+const COUNTRY_URL_TO_KEY = {
+  'australia':    'Australia',
+  'bangladesh':   'Bangladesh',
+  'denmark':      'Denmark',
+  'india':        'India',
+  'japan':        'Japan',
+  'new-zealand':  'NewZealand',
+  'samoa':        'Samoa',
+  'south-africa': 'SouthAfrica',
+  'thailand':     'Thailand',
+  'usa':          'USA',
+};
+
 // @desc    Get lightweight metadata for SSR (articles, programs, events)
 // @route   GET /api/meta/articles/:slug
 // @route   GET /api/meta/programs/:slug
@@ -96,7 +110,8 @@ const getArticleMeta = async (req, res) => {
 const getCountryArticleMeta = async (req, res) => {
   try {
     const { country, slug } = req.params;
-    const Model = COUNTRY_ARTICLE_MODELS[country];
+    const countryKey = COUNTRY_URL_TO_KEY[country] || country;
+    const Model = COUNTRY_ARTICLE_MODELS[countryKey];
 
     if (!Model) {
       return res.status(404).json({ message: 'Country not found' });
@@ -113,7 +128,7 @@ const getCountryArticleMeta = async (req, res) => {
     const title = article.metaTitle || article.title;
     const description = article.metaDescription || article.excerpt || '';
     const image = article.metaImage || article.featuredImage || LOGO_URL;
-    const keywords = article.metaKeywords || `news, ${country}, local news`;
+    const keywords = article.metaKeywords || `news, ${countryKey}, local news`;
     const url = `${BASE_URL}/${country}/articles/${slug}`;
     // Strip HTML tags to give crawlers plain text body content
     const bodyText = (article.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -128,7 +143,7 @@ const getCountryArticleMeta = async (req, res) => {
       author: article.author || 'The Day News Team',
       publishDate: article.publishDate,
       updatedAt: article.updatedAt,
-      category: country,
+      category: countryKey,
       url,
       type: 'article',
     });
@@ -213,7 +228,8 @@ const getEventMeta = async (req, res) => {
 const getCountryProgramMeta = async (req, res) => {
   try {
     const { country, slug } = req.params;
-    const Model = COUNTRY_PROGRAM_MODELS[country];
+    const countryKey = COUNTRY_URL_TO_KEY[country] || country;
+    const Model = COUNTRY_PROGRAM_MODELS[countryKey];
 
     if (!Model) {
       return res.status(404).json({ message: 'Country programs not found' });
@@ -236,7 +252,7 @@ const getCountryProgramMeta = async (req, res) => {
     res.json({
       title,
       description,
-      keywords: program.metaKeywords || `program, ${program.title}, ${country}, The Day News`,
+      keywords: program.metaKeywords || `program, ${program.title}, ${countryKey}, The Day News`,
       image,
       author:   'The Day News Team',
       updatedAt: program.updatedAt,
@@ -252,7 +268,8 @@ const getCountryProgramMeta = async (req, res) => {
 const getCountryEventMeta = async (req, res) => {
   try {
     const { country, slug } = req.params;
-    const Model = COUNTRY_EVENT_MODELS[country];
+    const countryKey = COUNTRY_URL_TO_KEY[country] || country;
+    const Model = COUNTRY_EVENT_MODELS[countryKey];
 
     if (!Model) {
       return res.status(404).json({ message: 'Country events not found' });
@@ -277,7 +294,7 @@ const getCountryEventMeta = async (req, res) => {
     res.json({
       title,
       description,
-      keywords:  event.metaKeywords || `event, ${event.title}, ${country}, The Day News`,
+      keywords:  event.metaKeywords || `event, ${event.title}, ${countryKey}, The Day News`,
       image,
       author:    'The Day News Team',
       eventDate: event.eventDate,

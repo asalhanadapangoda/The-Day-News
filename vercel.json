@@ -10,78 +10,41 @@
       "includeFiles": "client/dist/index.html"
     }
   },
+  "redirects": [
+    { "source": "/Bangladesh/:path*",  "destination": "/bangladesh/:path*",   "permanent": true },
+    { "source": "/Australia/:path*",   "destination": "/australia/:path*",    "permanent": true },
+    { "source": "/NewZealand/:path*",  "destination": "/new-zealand/:path*",  "permanent": true },
+    { "source": "/Japan/:path*",       "destination": "/japan/:path*",        "permanent": true },
+    { "source": "/India/:path*",       "destination": "/india/:path*",        "permanent": true },
+    { "source": "/USA/:path*",         "destination": "/usa/:path*",          "permanent": true },
+    { "source": "/Thailand/:path*",    "destination": "/thailand/:path*",     "permanent": true },
+    { "source": "/Denmark/:path*",     "destination": "/denmark/:path*",      "permanent": true },
+    { "source": "/Samoa/:path*",       "destination": "/samoa/:path*",        "permanent": true },
+    { "source": "/SouthAfrica/:path*", "destination": "/south-africa/:path*", "permanent": true }
+  ],
   "rewrites": [
-    {
-      "source": "/sitemap.xml",
-      "destination": "https://the-day-news.onrender.com/api/sitemap.xml"
-    },
-    {
-      "source": "/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/programs/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/events/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Bangladesh/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Bangladesh/programs/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Bangladesh/events/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Australia/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Australia/programs/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/NewZealand/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Japan/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/India/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/USA/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Thailand/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Denmark/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/Samoa/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/SouthAfrica/articles/:slug",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/sitemap.xml", "destination": "https://the-day-news.onrender.com/api/sitemap.xml" },
+
+    { "source": "/articles/:slug",  "destination": "/api/render" },
+    { "source": "/programs/:slug",  "destination": "/api/render" },
+    { "source": "/events/:slug",    "destination": "/api/render" },
+
+    { "source": "/bangladesh/articles/:slug",  "destination": "/api/render" },
+    { "source": "/bangladesh/programs/:slug",  "destination": "/api/render" },
+    { "source": "/bangladesh/events/:slug",    "destination": "/api/render" },
+
+    { "source": "/australia/articles/:slug",   "destination": "/api/render" },
+    { "source": "/australia/programs/:slug",   "destination": "/api/render" },
+
+    { "source": "/new-zealand/articles/:slug", "destination": "/api/render" },
+    { "source": "/japan/articles/:slug",       "destination": "/api/render" },
+    { "source": "/india/articles/:slug",       "destination": "/api/render" },
+    { "source": "/usa/articles/:slug",         "destination": "/api/render" },
+    { "source": "/thailand/articles/:slug",    "destination": "/api/render" },
+    { "source": "/denmark/articles/:slug",     "destination": "/api/render" },
+    { "source": "/samoa/articles/:slug",       "destination": "/api/render" },
+    { "source": "/south-africa/articles/:slug","destination": "/api/render" },
+
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
