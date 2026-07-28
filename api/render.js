@@ -130,16 +130,23 @@ const injectMeta = (html, meta, url) => {
     <meta name="twitter:image" content="${image}" />
     <script type="application/ld+json">${jsonLd}</script>`;
 
+  // Build the crawler-visible body content block (noscript for non-JS crawlers)
+  const bodyContent = meta.bodyText
+    ? `<noscript><article style="display:none"><h1>${title}</h1><p>${escapeHtml(meta.description || '')}</p><div>${escapeHtml(meta.bodyText)}</div></article></noscript>`
+    : '';
+
   // Strip all existing head SEO tags then inject the page-specific ones right after <head>
+  // Use /g flag to remove ALL instances (not just first) in case index.html has multiple
   return html
-    .replace(/<title>[^<]*<\/title>/, '')
+    .replace(/<title>[^<]*<\/title>/g, '')
     .replace(/<meta\s+name="description"[^>]*\/?>/, '')
     .replace(/<meta\s+name="keywords"[^>]*\/?>/, '')
     .replace(/<meta\s+name="author"[^>]*\/?>/, '')
     .replace(/<link\s+rel="canonical"[^>]*\/?>/, '')
-    .replace(/<meta\s+property="og:[^"]*"[^>]*\/?>/, '')
-    .replace(/<meta\s+name="twitter:[^"]*"[^>]*\/?>/, '')
-    .replace('<head>', `<head>${metaTags}`);
+    .replace(/<meta\s+property="og:[^"]*"[^>]*\/?>/g, '')
+    .replace(/<meta\s+name="twitter:[^"]*"[^>]*\/?>/g, '')
+    .replace('<head>', `<head>${metaTags}`)
+    .replace('<div id="root"></div>', `<div id="root"></div>${bodyContent}`);
 };
 
 /** Derive content type and slug from the URL path */

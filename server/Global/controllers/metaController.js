@@ -57,7 +57,7 @@ const getArticleMeta = async (req, res) => {
   try {
     const { slug } = req.params;
     const article = await Article.findOne({ slug, status: 'published' })
-      .select('title excerpt metaTitle metaDescription metaKeywords metaImage featuredImage author publishDate updatedAt category')
+      .select('title excerpt content metaTitle metaDescription metaKeywords metaImage featuredImage author publishDate updatedAt category')
       .populate('category', 'name')
       .lean();
 
@@ -70,6 +70,8 @@ const getArticleMeta = async (req, res) => {
     const image = article.metaImage || article.featuredImage || LOGO_URL;
     const keywords = article.metaKeywords || `news, ${article.category?.name || 'article'}, global, breaking news`;
     const url = `${BASE_URL}/articles/${slug}`;
+    // Strip HTML tags to give crawlers plain text body content
+    const bodyText = (article.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
     res.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     res.json({
@@ -77,6 +79,7 @@ const getArticleMeta = async (req, res) => {
       description,
       keywords,
       image,
+      bodyText,
       author: article.author || 'The Day News Team',
       publishDate: article.publishDate,
       updatedAt: article.updatedAt,
@@ -100,7 +103,7 @@ const getCountryArticleMeta = async (req, res) => {
     }
 
     const article = await Model.findOne({ slug, status: 'published' })
-      .select('title excerpt metaTitle metaDescription metaKeywords metaImage featuredImage author publishDate updatedAt')
+      .select('title excerpt content metaTitle metaDescription metaKeywords metaImage featuredImage author publishDate updatedAt')
       .lean();
 
     if (!article) {
@@ -112,6 +115,8 @@ const getCountryArticleMeta = async (req, res) => {
     const image = article.metaImage || article.featuredImage || LOGO_URL;
     const keywords = article.metaKeywords || `news, ${country}, local news`;
     const url = `${BASE_URL}/${country}/articles/${slug}`;
+    // Strip HTML tags to give crawlers plain text body content
+    const bodyText = (article.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
     res.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     res.json({
@@ -119,6 +124,7 @@ const getCountryArticleMeta = async (req, res) => {
       description,
       keywords,
       image,
+      bodyText,
       author: article.author || 'The Day News Team',
       publishDate: article.publishDate,
       updatedAt: article.updatedAt,
