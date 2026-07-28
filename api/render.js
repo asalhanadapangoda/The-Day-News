@@ -42,8 +42,9 @@ const fetchJson = (url) => {
   });
 };
 
-/** Build JSON-LD NewsArticle / Event structured data */
+/** Build JSON-LD structured data — NewsArticle, TVSeries, or Event */
 const buildJsonLd = (meta, url) => {
+  // Event schema
   if (meta.type === 'event') {
     return JSON.stringify({
       '@context': 'https://schema.org',
@@ -58,6 +59,20 @@ const buildJsonLd = (meta, url) => {
     });
   }
 
+  // Program/TVSeries schema
+  if (meta.type === 'website') {
+    return JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'TVSeries',
+      name: meta.title,
+      description: meta.description,
+      image: meta.image,
+      url,
+      publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+    });
+  }
+
+  // Default: NewsArticle schema
   return JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
@@ -97,9 +112,11 @@ const injectMeta = (html, meta, url) => {
     <meta name="description" content="${desc}" />
     <meta name="keywords" content="${keywords}" />
     <meta name="author" content="${author}" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="${canonical}" />
     <meta property="og:type" content="${ogType}" />
     <meta property="og:site_name" content="${SITE_NAME}" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="${title}" />
     <meta property="og:description" content="${desc}" />
     <meta property="og:image" content="${image}" />
@@ -107,15 +124,21 @@ const injectMeta = (html, meta, url) => {
     <meta property="og:image:height" content="630" />
     <meta property="og:url" content="${canonical}" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@TheDayNewsGlobal" />
     <meta name="twitter:title" content="${title}" />
     <meta name="twitter:description" content="${desc}" />
     <meta name="twitter:image" content="${image}" />
     <script type="application/ld+json">${jsonLd}</script>`;
 
-  // Remove the existing generic title & description, then inject ours right after <head>
+  // Strip all existing head SEO tags then inject the page-specific ones right after <head>
   return html
     .replace(/<title>[^<]*<\/title>/, '')
     .replace(/<meta\s+name="description"[^>]*\/?>/, '')
+    .replace(/<meta\s+name="keywords"[^>]*\/?>/, '')
+    .replace(/<meta\s+name="author"[^>]*\/?>/, '')
+    .replace(/<link\s+rel="canonical"[^>]*\/?>/, '')
+    .replace(/<meta\s+property="og:[^"]*"[^>]*\/?>/, '')
+    .replace(/<meta\s+name="twitter:[^"]*"[^>]*\/?>/, '')
     .replace('<head>', `<head>${metaTags}`);
 };
 

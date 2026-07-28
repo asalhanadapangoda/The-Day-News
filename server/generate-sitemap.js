@@ -37,9 +37,10 @@ async function generateSitemap() {
   xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n\n`;
 
   const addUrl = (url, priority, changefreq) => {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
     xml += `  <url>\n`;
     xml += `    <loc>${DOMAIN}${url}</loc>\n`;
-    xml += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
+    xml += `    <lastmod>${today}</lastmod>\n`;
     xml += `    <changefreq>${changefreq}</changefreq>\n`;
     xml += `    <priority>${priority}</priority>\n`;
     xml += `  </url>\n`;
@@ -50,10 +51,14 @@ async function generateSitemap() {
     addUrl(route, route === '' ? '1.0' : '0.9', 'daily');
   });
 
+  const PROGRAM_COUNTRIES = ['Bangladesh', 'Australia'];
+
   COUNTRIES.forEach(country => {
-    addUrl(`/${country}`, '0.6', 'weekly');
+    addUrl(`/${country}`, '0.6', 'daily');
     addUrl(`/${country}/articles`, '0.5', 'weekly');
-    addUrl(`/${country}/programs`, '0.5', 'weekly');
+    if (PROGRAM_COUNTRIES.includes(country)) {
+      addUrl(`/${country}/programs`, '0.5', 'weekly');
+    }
   });
 
   console.log('Fetching dynamic content...');
