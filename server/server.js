@@ -23,6 +23,7 @@ import aiRoutes from './Global/routes/aiRoutes.js';
 import partnerRoutes from './Global/routes/partnerRoutes.js';
 import eventRoutes from './Global/routes/eventRoutes.js';
 import sitemapRoutes from './Global/routes/sitemapRoutes.js';
+import metaRoutes from './Global/routes/metaRoutes.js';
 import bdRoutes from './Country/Bangladesh/routes/index.js';
 import auRoutes from './Country/Australia/routes/index.js';
 import nzRoutes from './Country/NewZealand/routes/index.js';
@@ -99,6 +100,7 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/partners', partnerRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/sitemap.xml', sitemapRoutes);
+app.use('/api/meta', metaRoutes);
 
 // Mount Bangladesh Routes
 app.use('/api/bangladesh', bdRoutes);

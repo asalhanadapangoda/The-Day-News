@@ -63,29 +63,29 @@ async function generateSitemap() {
   const Program = (await import('./Global/models/Program.js')).default;
   const Event = (await import('./Global/models/Event.js')).default;
 
-  const globalArticles = await Article.find({ isPublished: true }).select('_id');
-  globalArticles.forEach(article => addUrl(`/articles/${article._id}`, '0.9', 'daily'));
+  const globalArticles = await Article.find({ status: 'published' }).select('slug');
+  globalArticles.forEach(article => addUrl(`/articles/${article.slug}`, '0.9', 'daily'));
 
-  const globalPrograms = await Program.find().select('_id');
-  globalPrograms.forEach(program => addUrl(`/programs/${program._id}`, '0.9', 'daily'));
+  const globalPrograms = await Program.find().select('slug');
+  globalPrograms.forEach(program => addUrl(`/programs/${program.slug}`, '0.9', 'daily'));
 
-  const globalEvents = await Event.find().select('_id');
-  globalEvents.forEach(event => addUrl(`/events/${event._id}`, '0.9', 'daily'));
+  const globalEvents = await Event.find({ status: 'published' }).select('slug');
+  globalEvents.forEach(event => addUrl(`/events/${event.slug}`, '0.9', 'daily'));
 
   for (const country of COUNTRIES) {
     try {
       if (fs.existsSync(path.join(__dirname, `./Country/${country}/models/Article.js`))) {
         const CArticle = (await import(`./Country/${country}/models/Article.js`)).default;
-        const articles = await CArticle.find({ isPublished: true }).select('_id');
-        articles.forEach(a => addUrl(`/${country}/articles/${a._id}`, '0.5', 'monthly'));
+        const articles = await CArticle.find({ status: 'published' }).select('slug');
+        articles.forEach(a => addUrl(`/${country}/articles/${a.slug}`, '0.5', 'monthly'));
       }
     } catch(e) { console.log(`Skipping articles for ${country}`); }
 
     try {
       if (fs.existsSync(path.join(__dirname, `./Country/${country}/models/Program.js`))) {
         const CProgram = (await import(`./Country/${country}/models/Program.js`)).default;
-        const programs = await CProgram.find().select('_id');
-        programs.forEach(p => addUrl(`/${country}/programs/${p._id}`, '0.5', 'monthly'));
+        const programs = await CProgram.find().select('slug');
+        programs.forEach(p => addUrl(`/${country}/programs/${p.slug}`, '0.5', 'monthly'));
       }
     } catch(e) { console.log(`Skipping programs for ${country}`); }
   }

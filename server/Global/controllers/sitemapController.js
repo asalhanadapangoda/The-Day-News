@@ -7,6 +7,7 @@ import AuArticle from '../../Country/Australia/models/Article.js';
 import AuProgram from '../../Country/Australia/models/Program.js';
 import BdArticle from '../../Country/Bangladesh/models/Article.js';
 import BdProgram from '../../Country/Bangladesh/models/Program.js';
+import BdEvent from '../../Country/Bangladesh/models/Event.js';
 import DkArticle from '../../Country/Denmark/models/Article.js';
 import InArticle from '../../Country/India/models/Article.js';
 import JpArticle from '../../Country/Japan/models/Article.js';
@@ -77,6 +78,10 @@ const generateSitemap = async (req, res) => {
       { model: BdProgram, prefix: 'Bangladesh' },
     ];
 
+    const countryEventQueries = [
+      { model: BdEvent, prefix: 'Bangladesh' },
+    ];
+
     const countryArticleResults = await Promise.all(
       countryArticleQueries.map(async ({ model, prefix }) => {
         try {
@@ -93,6 +98,17 @@ const generateSitemap = async (req, res) => {
         try {
           const programs = await model.find({}).select('slug updatedAt').lean();
           return programs.map(p => ({ ...p, countryPrefix: prefix }));
+        } catch {
+          return [];
+        }
+      })
+    );
+
+    const countryEventResults = await Promise.all(
+      countryEventQueries.map(async ({ model, prefix }) => {
+        try {
+          const events = await model.find({ status: 'published' }).select('slug updatedAt eventDate').lean();
+          return events.map(e => ({ ...e, countryPrefix: prefix }));
         } catch {
           return [];
         }
@@ -148,6 +164,12 @@ const generateSitemap = async (req, res) => {
     for (const countryPrograms of countryProgramResults) {
       for (const program of countryPrograms) {
         addUrl(`/${program.countryPrefix}/programs/${escapeXml(program.slug)}`, '0.5', 'monthly', program.updatedAt);
+      }
+    }
+
+    for (const countryEvents of countryEventResults) {
+      for (const event of countryEvents) {
+        addUrl(`/${event.countryPrefix}/events/${escapeXml(event.slug)}`, '0.5', 'monthly', event.updatedAt || event.eventDate);
       }
     }
 

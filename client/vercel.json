@@ -4,13 +4,28 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    {
-      "source": "/sitemap.xml",
-      "destination": "https://the-day-news.onrender.com/api/sitemap.xml"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/sitemap.xml", "destination": "https://the-day-news.onrender.com/api/sitemap.xml" },
+
+    { "source": "/articles/:slug",  "destination": "/api/render" },
+    { "source": "/programs/:slug",  "destination": "/api/render" },
+    { "source": "/events/:slug",    "destination": "/api/render" },
+
+    { "source": "/Bangladesh/articles/:slug",  "destination": "/api/render" },
+    { "source": "/Bangladesh/programs/:slug",  "destination": "/api/render" },
+    { "source": "/Bangladesh/events/:slug",    "destination": "/api/render" },
+
+    { "source": "/Australia/articles/:slug",   "destination": "/api/render" },
+    { "source": "/Australia/programs/:slug",   "destination": "/api/render" },
+
+    { "source": "/NewZealand/articles/:slug",  "destination": "/api/render" },
+    { "source": "/Japan/articles/:slug",       "destination": "/api/render" },
+    { "source": "/India/articles/:slug",       "destination": "/api/render" },
+    { "source": "/USA/articles/:slug",         "destination": "/api/render" },
+    { "source": "/Thailand/articles/:slug",    "destination": "/api/render" },
+    { "source": "/Denmark/articles/:slug",     "destination": "/api/render" },
+    { "source": "/Samoa/articles/:slug",       "destination": "/api/render" },
+    { "source": "/SouthAfrica/articles/:slug", "destination": "/api/render" },
+
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

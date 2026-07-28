@@ -1,12 +1,43 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm install",
+  "installCommand": "npm install && npm --prefix client install",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
+  "outputDirectory": "client/dist",
+  "functions": {
+    "api/render.js": {
+      "memory": 256,
+      "maxDuration": 10,
+      "includeFiles": "client/dist/index.html"
     }
+  },
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "https://the-day-news.onrender.com/api/sitemap.xml" },
+
+    // ── Global dynamic pages ──────────────────────────────────────────
+    { "source": "/articles/:slug",  "destination": "/api/render" },
+    { "source": "/programs/:slug",  "destination": "/api/render" },
+    { "source": "/events/:slug",    "destination": "/api/render" },
+
+    // ── Bangladesh (has articles + programs + events) ─────────────────
+    { "source": "/Bangladesh/articles/:slug",  "destination": "/api/render" },
+    { "source": "/Bangladesh/programs/:slug",  "destination": "/api/render" },
+    { "source": "/Bangladesh/events/:slug",    "destination": "/api/render" },
+
+    // ── Australia (has articles + programs) ───────────────────────────
+    { "source": "/Australia/articles/:slug",   "destination": "/api/render" },
+    { "source": "/Australia/programs/:slug",   "destination": "/api/render" },
+
+    // ── All other countries (articles only) ───────────────────────────
+    { "source": "/NewZealand/articles/:slug",   "destination": "/api/render" },
+    { "source": "/Japan/articles/:slug",        "destination": "/api/render" },
+    { "source": "/India/articles/:slug",        "destination": "/api/render" },
+    { "source": "/USA/articles/:slug",          "destination": "/api/render" },
+    { "source": "/Thailand/articles/:slug",     "destination": "/api/render" },
+    { "source": "/Denmark/articles/:slug",      "destination": "/api/render" },
+    { "source": "/Samoa/articles/:slug",        "destination": "/api/render" },
+    { "source": "/SouthAfrica/articles/:slug",  "destination": "/api/render" },
+
+    // ── SPA catch-all ─────────────────────────────────────────────────
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
