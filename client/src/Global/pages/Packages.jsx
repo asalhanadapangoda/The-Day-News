@@ -59,6 +59,18 @@ const Packages = () => {
       ]
     },
     {
+      name: "On Camera Package",
+      originalPrice: 25000,
+      discount: 50, // 50% off
+      tagline: "Quick-format on-camera interview & media coverage",
+      features: [
+        "On Camera Interview (5-7 minutes)",
+        "2 mid range videos",
+        "2 Social media promotional posts",
+        "Web Article"
+      ]
+    },
+    {
       name: "Article Package",
       originalPrice: 25000,
       discount: 50, // 50% off
