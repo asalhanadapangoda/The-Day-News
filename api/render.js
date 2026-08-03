@@ -98,14 +98,14 @@ const buildJsonLd = (meta, url) => {
 
 /** Inject all SEO meta tags into the index.html template */
 const injectMeta = (html, meta, url) => {
-  const title     = escapeHtml(meta.title ? `${meta.title} | ${SITE_NAME}` : SITE_NAME);
-  const desc      = escapeHtml(meta.description || DEFAULT_DESCRIPTION);
-  const image     = escapeHtml(meta.image       || DEFAULT_IMAGE);
-  const canonical = escapeHtml(url              || SITE_URL);
-  const keywords  = escapeHtml(meta.keywords    || 'news, global news, breaking news, The Day News');
-  const author    = escapeHtml(meta.author       || 'The Day News Team');
-  const ogType    = meta.type === 'event' ? 'website' : 'article';
-  const jsonLd    = buildJsonLd(meta, url);
+  const title = escapeHtml(meta.title ? `${meta.title} | ${SITE_NAME}` : SITE_NAME);
+  const desc = escapeHtml(meta.description || DEFAULT_DESCRIPTION);
+  const image = escapeHtml(meta.image || DEFAULT_IMAGE);
+  const canonical = escapeHtml(url || SITE_URL);
+  const keywords = escapeHtml(meta.keywords || 'news, global news, breaking news, The Day News');
+  const author = escapeHtml(meta.author || 'The Day News Team');
+  const ogType = meta.type === 'event' ? 'website' : 'article';
+  const jsonLd = buildJsonLd(meta, url);
 
   const metaTags = `
     <title>${title}</title>
@@ -211,10 +211,10 @@ const loadIndexHtml = () => {
 // ─── Main Handler ────────────────────────────────────────────────────────────
 module.exports = async function handler(req, res) {
   try {
-    const urlPath  = req.url || '/';
-    const pageUrl  = `${SITE_URL}${urlPath.split('?')[0]}`;
-    const html     = loadIndexHtml();
-    const parsed   = parseContentFromPath(urlPath);
+    const urlPath = req.url || '/';
+    const pageUrl = `${SITE_URL}${urlPath.split('?')[0]}`;
+    const html = loadIndexHtml();
+    const parsed = parseContentFromPath(urlPath);
 
     // Pages we don't handle — just serve plain index.html (SPA takes over)
     if (!parsed) {
