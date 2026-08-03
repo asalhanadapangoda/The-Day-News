@@ -92,10 +92,10 @@ const Home = () => {
 
   return (
     <div className="w-full">
-      <SEO 
-        title="THE DAY NEWS | Global & Local Breaking News" 
-        description="The Day News Global - Stay updated with breaking stories, in-depth reports, featured video programs, and local news from around the world." 
-        keywords="news, breaking news, world news, global stories, video programs, articles, current affairs, local news" 
+      <SEO
+        title="THE DAY NEWS | Global & Local Breaking Stories"
+        description="The Day News Global - Stay updated with breaking stories, in-depth reports, featured video programs, and local news from around the world."
+        keywords="news, breaking news, world news, global stories, video programs, articles, current affairs, local news"
       />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
@@ -106,8 +106,8 @@ const Home = () => {
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentHeroIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 } bg-black`}
             >
-              <OptimizedImage 
-                src={hero.imageUrl} 
+              <OptimizedImage
+                src={hero.imageUrl}
                 alt={hero.title}
                 className="w-full h-full"
                 loading={index === 0 ? "eager" : "lazy"}
@@ -200,10 +200,10 @@ const Home = () => {
           {recentArticles.map(article => (
             <Link key={article._id} to={`/articles/${article.slug}`} className="group bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg border border-white/5 hover:border-primary/50 transition-colors flex flex-col h-full">
               <div className="relative h-48 overflow-hidden">
-                <OptimizedImage 
-                  src={article.featuredImage} 
-                  alt={article.title} 
-                  className="w-full h-full" 
+                <OptimizedImage
+                  src={article.featuredImage}
+                  alt={article.title}
+                  className="w-full h-full"
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   width={400}
@@ -234,10 +234,10 @@ const Home = () => {
             {homeTopAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
                 <div className="relative overflow-hidden rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm shadow-2xl transition-all group-hover:border-primary/30">
-                  <OptimizedImage 
-                    src={ad.imageUrl} 
-                    alt={ad.title} 
-                    className="w-full h-auto" 
+                  <OptimizedImage
+                    src={ad.imageUrl}
+                    alt={ad.title}
+                    className="w-full h-auto"
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     objectFit="contain"
@@ -271,10 +271,10 @@ const Home = () => {
             {recentEpisodes.map(episode => (
               <Link key={episode._id} to={`/programs/${episode.program?.slug}`} className="group glass-card overflow-hidden block">
                 <div className="relative aspect-video overflow-hidden">
-                  <OptimizedImage 
-                    src={episode.thumbnailImage} 
-                    alt={episode.title} 
-                    className="w-full h-full" 
+                  <OptimizedImage
+                    src={episode.thumbnailImage}
+                    alt={episode.title}
+                    className="w-full h-full"
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     width={480}
@@ -350,10 +350,10 @@ const Home = () => {
             {homeMiddleAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
                 <div className="h-40 md:h-48 rounded-2xl overflow-hidden shadow-2xl border border-white/5 bg-black/20 backdrop-blur-sm relative group-hover:border-primary/30 transition-all">
-                  <OptimizedImage 
-                    src={ad.imageUrl} 
-                    alt={ad.title} 
-                    className="w-full h-full" 
+                  <OptimizedImage
+                    src={ad.imageUrl}
+                    alt={ad.title}
+                    className="w-full h-full"
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     width={600}

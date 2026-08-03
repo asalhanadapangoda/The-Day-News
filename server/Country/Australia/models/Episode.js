@@ -35,6 +35,22 @@ const episodeSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    metaTitle: {
+      type: String,
+      default: '',
+    },
+    metaDescription: {
+      type: String,
+      default: '',
+    },
+    metaKeywords: {
+      type: String,
+      default: '',
+    },
+    metaImage: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,

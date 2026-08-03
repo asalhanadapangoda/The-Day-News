@@ -52,7 +52,11 @@ const ManageArticles = () => {
       featuredImage: '',
       author: 'Admin',
       tags: '',
-      category: filterCategory || (categories.length > 0 ? categories[0]._id : '')
+      category: filterCategory || (categories.length > 0 ? categories[0]._id : ''),
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: '',
+      metaImage: ''
     });
     setEditorContent('');
     setIsModalOpen(true);
@@ -66,7 +70,11 @@ const ManageArticles = () => {
       featuredImage: art.featuredImage,
       author: art.author,
       tags: art.tags ? art.tags.join(', ') : '',
-      category: art.category?._id || ''
+      category: art.category?._id || '',
+      metaTitle: art.metaTitle || '',
+      metaDescription: art.metaDescription || '',
+      metaKeywords: art.metaKeywords || '',
+      metaImage: art.metaImage || ''
     });
     setEditorContent(art.content);
     setIsModalOpen(true);
@@ -304,6 +312,44 @@ const ManageArticles = () => {
                       placeholder="news, global, politics"
                       className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                     />
+                  </div>
+
+                  {/* SEO Custom Meta Overrides (Optional) */}
+                  <div className="border-t border-white/10 pt-4 mt-4 space-y-4">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-primary">SEO & Social Meta (Optional Overrides)</h3>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Title</label>
+                      <input
+                        {...register("metaTitle")}
+                        placeholder="Default: Uses Article Title"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Description</label>
+                      <textarea
+                        {...register("metaDescription")}
+                        placeholder="Default: Uses Excerpt summary"
+                        rows="2"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none resize-none"
+                      ></textarea>
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Keywords</label>
+                      <input
+                        {...register("metaKeywords")}
+                        placeholder="news, politics, world"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Custom Social Meta Image URL</label>
+                      <input
+                        {...register("metaImage")}
+                        placeholder="Default: Uses Featured Image URL"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none"
+                      />
+                    </div>
                   </div>
                 </div>
 

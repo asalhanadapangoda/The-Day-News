@@ -46,7 +46,11 @@ const ManageEpisodes = () => {
       description: '',
       thumbnailImage: '',
       videoUrl: '',
-      program: filterProgram || (programs.length > 0 ? programs[0]._id : '')
+      program: filterProgram || (programs.length > 0 ? programs[0]._id : ''),
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: '',
+      metaImage: ''
     });
     setIsModalOpen(true);
   };
@@ -58,7 +62,11 @@ const ManageEpisodes = () => {
       description: ep.description,
       thumbnailImage: ep.thumbnailImage,
       videoUrl: ep.videoUrl,
-      program: ep.program?._id || ''
+      program: ep.program?._id || '',
+      metaTitle: ep.metaTitle || '',
+      metaDescription: ep.metaDescription || '',
+      metaKeywords: ep.metaKeywords || '',
+      metaImage: ep.metaImage || ''
     });
     setIsModalOpen(true);
   };
@@ -267,6 +275,46 @@ const ManageEpisodes = () => {
                     </div>
                   )}
                   {errors.thumbnailImage && <p className="text-red-400 text-xs mt-1">{errors.thumbnailImage.message}</p>}
+                </div>
+
+                {/* SEO Custom Meta Overrides (Optional) */}
+                <div className="md:col-span-2 border-t border-white/10 pt-4 mt-2 space-y-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-primary">SEO & Social Meta (Optional Overrides)</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Title</label>
+                      <input
+                        {...register('metaTitle')}
+                        placeholder="Default: Uses Episode Title"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Keywords</label>
+                      <input
+                        {...register('metaKeywords')}
+                        placeholder="episode, video, news"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Description</label>
+                      <textarea
+                        {...register('metaDescription')}
+                        placeholder="Default: Uses Episode Description"
+                        rows="2"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none resize-none"
+                      ></textarea>
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-xs text-gray-400 mb-1">Custom Social Meta Image URL</label>
+                      <input
+                        {...register('metaImage')}
+                        placeholder="Default: Uses Thumbnail/Cover Image"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 

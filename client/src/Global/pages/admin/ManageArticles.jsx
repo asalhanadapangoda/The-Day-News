@@ -67,7 +67,11 @@ const ManageArticles = () => {
       author: 'Admin',
       tags: '',
       country: '',
-      category: filterCategory || (categories.length > 0 ? categories[0]._id : '')
+      category: filterCategory || (categories.length > 0 ? categories[0]._id : ''),
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: '',
+      metaImage: ''
     });
     setEditorContent('');
     setIsModalOpen(true);
@@ -82,7 +86,11 @@ const ManageArticles = () => {
       author: art.author,
       tags: art.tags ? art.tags.join(', ') : '',
       country: art.country || '',
-      category: art.category?._id || ''
+      category: art.category?._id || '',
+      metaTitle: art.metaTitle || '',
+      metaDescription: art.metaDescription || '',
+      metaKeywords: art.metaKeywords || '',
+      metaImage: art.metaImage || ''
     });
     setEditorContent(art.content);
     setIsModalOpen(true);

@@ -47,7 +47,7 @@ const getEpisodeByIdOrSlug = async (req, res) => {
 // @access  Private (Admin)
 const createEpisode = async (req, res) => {
   try {
-    const { title, slug, description, program, thumbnailImage, videoUrl, status, publishDate } = req.body;
+    const { title, slug, description, program, thumbnailImage, videoUrl, status, publishDate, metaTitle, metaDescription, metaKeywords, metaImage } = req.body;
 
     const programExists = await Program.findById(program);
     if (!programExists) {
@@ -78,6 +78,10 @@ const createEpisode = async (req, res) => {
       videoUrl,
       status,
       publishDate,
+      metaTitle: metaTitle || '',
+      metaDescription: metaDescription || '',
+      metaKeywords: metaKeywords || '',
+      metaImage: metaImage || '',
     });
 
     const createdEpisode = await episode.save();
@@ -92,7 +96,7 @@ const createEpisode = async (req, res) => {
 // @access  Private (Admin)
 const updateEpisode = async (req, res) => {
   try {
-    const { title, slug, description, program, thumbnailImage, videoUrl, status, publishDate } = req.body;
+    const { title, slug, description, program, thumbnailImage, videoUrl, status, publishDate, metaTitle, metaDescription, metaKeywords, metaImage } = req.body;
 
     const episode = await Episode.findById(req.params.id);
 
@@ -105,6 +109,10 @@ const updateEpisode = async (req, res) => {
       episode.videoUrl = videoUrl || episode.videoUrl;
       episode.status = status || episode.status;
       episode.publishDate = publishDate || episode.publishDate;
+      if (metaTitle !== undefined) episode.metaTitle = metaTitle;
+      if (metaDescription !== undefined) episode.metaDescription = metaDescription;
+      if (metaKeywords !== undefined) episode.metaKeywords = metaKeywords;
+      if (metaImage !== undefined) episode.metaImage = metaImage;
 
       const updatedEpisode = await episode.save();
       res.json(updatedEpisode);
