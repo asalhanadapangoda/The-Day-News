@@ -208,12 +208,68 @@ const loadIndexHtml = () => {
   return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head><body><div id="root"></div></body></html>';
 };
 
+// ─── Static page meta for listing / info pages ──────────────────────────────
+const STATIC_PAGES = {
+  '/': {
+    title: 'Home',
+    description: 'The Day News Global - Stay updated with the latest breaking news, in-depth reports, featured video programs, and local stories from Sri Lanka and around the world.',
+    keywords: 'news, breaking news, world news, global stories, video programs, articles, current affairs',
+  },
+  '/about': {
+    title: 'About Us',
+    description: 'Learn about The Day News Global mission, international journalism network, and local news coverage spanning 10+ countries.',
+    keywords: 'about us, the day news, global media, international journalism, news network, mission',
+  },
+  '/contact': {
+    title: 'Contact Us',
+    description: 'Get in touch with The Day News Global newsroom, editorial team, and media inquiries.',
+    keywords: 'contact us, the day news, newsroom contact, media inquiries, press contact, feedback',
+  },
+  '/articles': {
+    title: 'World & Local Articles',
+    description: 'Explore in-depth articles, breaking news reports, current affairs analysis, and global coverage from The Day News correspondents.',
+    keywords: 'articles, news articles, world news, local news, breaking reports, analysis',
+  },
+  '/programs': {
+    title: 'Featured Programs & Broadcasts',
+    description: 'Explore our wide range of award-winning video journalism, special broadcasts, and media programs from The Day News Global.',
+    keywords: 'programs, video news, shows, episodes, broadcasts, journalism, media',
+  },
+  '/events': {
+    title: 'Global Events & Summits',
+    description: 'Join us at international forums, media summits, and global gatherings hosted by The Day News Global.',
+    keywords: 'events, summits, forums, media events, gatherings, the day news',
+  },
+  '/privacy-policy': {
+    title: 'Privacy Policy',
+    description: 'Read The Day News Global privacy policy — how we collect, use, and protect your data.',
+    keywords: 'privacy policy, data protection, the day news, user privacy',
+  },
+  '/terms-of-service': {
+    title: 'Terms of Service',
+    description: 'Read The Day News Global terms of service and usage conditions.',
+    keywords: 'terms of service, terms and conditions, the day news, usage policy',
+  },
+};
+
 // ─── Main Handler ────────────────────────────────────────────────────────────
 module.exports = async function handler(req, res) {
   try {
     const urlPath = req.url || '/';
-    const pageUrl = `${SITE_URL}${urlPath.split('?')[0]}`;
+    const cleanPath = urlPath.split('?')[0].replace(/\/$/, '') || '/';
+    const pageUrl = `${SITE_URL}${cleanPath}`;
     const html = loadIndexHtml();
+
+    // ── Static pages (about, contact, articles listing, etc.) ──────────
+    const staticMeta = STATIC_PAGES[cleanPath];
+    if (staticMeta) {
+      const finalHtml = injectMeta(html, staticMeta, pageUrl);
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+      return res.status(200).send(finalHtml);
+    }
+
+    // ── Dynamic content pages (individual article/program/event) ───────
     const parsed = parseContentFromPath(urlPath);
 
     // Pages we don't handle — just serve plain index.html (SPA takes over)
