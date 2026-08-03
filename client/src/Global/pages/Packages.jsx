@@ -60,7 +60,7 @@ const Packages = () => {
     },
     {
       name: "On Camera Package",
-      originalPrice: 25000,
+      originalPrice: 50000,
       discount: 50, // 50% off
       tagline: "Quick-format on-camera interview & media coverage",
       features: [
@@ -84,8 +84,8 @@ const Packages = () => {
 
   return (
     <div className="w-full pb-20 animate-fade-in">
-      <SEO 
-        title="Media Packages & Advertising | THE DAY NEWS" 
+      <SEO
+        title="Media Packages & Advertising | THE DAY NEWS"
         description="Explore our media coverage packages, sponsorship tiers, video production, and advertising opportunities with The Day News."
         keywords="media packages, advertising, sponsorships, video coverage, article publishing, podcast coverage, the day news"
       />
