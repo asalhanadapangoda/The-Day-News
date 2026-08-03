@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Linkedin, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Linkedin, Instagram, Youtube, Mail, Phone, MapPin, Twitter } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../services/api';
 import logo from '../assets/logo.png';
@@ -24,7 +24,7 @@ const Footer = () => {
             <p className="text-gray-400 text-sm leading-relaxed mt-4">
               {settings?.aboutUsText
                 ? settings.aboutUsText.replace(/<[^>]+>/g, '').substring(0, 150) + '...'
-                : 'The Day News Global serves as a premier, interactive media platform dedicated to the pursuit of knowledge and meaningful insights.'}
+                : 'Your Media Partner In Cyberspace...'}
             </p>
             <div className="flex space-x-4 pt-2">
               <a href={settings?.socialLinks?.facebook || '#'} className="text-gray-400 hover:text-primary transition-colors">
@@ -38,6 +38,11 @@ const Footer = () => {
               </a>
               <a href={settings?.socialLinks?.youtube || '#'} className="text-gray-400 hover:text-primary transition-colors">
                 <Youtube size={20} />
+              </a>
+              <a href="https://x.com/daynewsglobal" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
               </a>
             </div>
           </div>
