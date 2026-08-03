@@ -64,8 +64,8 @@ const Packages = () => {
       discount: 50, // 50% off
       tagline: "Quick-format on-camera interview & media coverage",
       features: [
-        "On Camera Interview (5-7 minutes)",
-        "2 mid range videos",
+        "On Camera Interview (7-12 minutes)",
+        "Highlight/Promo video (60-90 seconds)",
         "2 Social media promotional posts",
         "Web Article"
       ]
