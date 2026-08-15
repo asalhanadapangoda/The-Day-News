@@ -5,7 +5,29 @@ import Program from '../models/Program.js';
 // @access  Public
 const getPrograms = async (req, res) => {
   try {
-    const programs = await Program.find({});
+    const { page = 1, limit = 50, search } = req.query;
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    let query = {};
+    if (search) {
+      query.title = { $regex: search, $options: 'i' };
+    }
+
+    const total = await Program.countDocuments(query);
+    const totalPages = Math.ceil(total / limitNumber);
+
+    const programs = await Program.find(query)
+      .skip(skip)
+      .limit(limitNumber);
+
+    res.set({
+      'X-Total-Count': total,
+      'X-Total-Pages': totalPages,
+      'X-Current-Page': pageNumber
+    });
+
     res.json(programs);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

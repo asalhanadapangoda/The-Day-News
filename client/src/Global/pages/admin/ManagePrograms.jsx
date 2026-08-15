@@ -9,6 +9,8 @@ const ManagePrograms = () => {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
 
@@ -17,8 +19,10 @@ const ManagePrograms = () => {
 
   const fetchPrograms = async () => {
     try {
-      const { data } = await api.get('/programs');
+      setLoading(true);
+      const { data, headers } = await api.get(`/programs?page=${page}&limit=12`);
       setPrograms(data);
+      setTotalPages(parseInt(headers['x-total-pages'], 10) || 1);
     } catch (error) {
       alert('Error fetching programs');
     } finally {
@@ -28,7 +32,7 @@ const ManagePrograms = () => {
 
   useEffect(() => {
     fetchPrograms();
-  }, []);
+  }, [page]);
 
   const openAddModal = () => {
     setEditingId(null);
@@ -159,6 +163,26 @@ const ManagePrograms = () => {
       {programs.length === 0 && (
         <div className="text-center py-20 bg-[#121212] rounded-xl border border-white/5 text-gray-500">
           No programs found. Click 'Add Program' to create one.
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="flex justify-between items-center mt-6 text-sm">
+          <button 
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="px-4 py-2 bg-[#1a1a1a] border border-white/10 rounded text-white disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="text-gray-400">Page {page} of {totalPages}</span>
+          <button 
+            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="px-4 py-2 bg-[#1a1a1a] border border-white/10 rounded text-white disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
       )}
 

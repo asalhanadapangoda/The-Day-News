@@ -7,8 +7,12 @@ import { pingGoogleIndexing } from '../utils/googleIndexing.js';
 // @access  Public
 const getArticles = async (req, res) => {
   try {
-    const { category } = req.query;
+    const { category, page = 1, limit = 50, search } = req.query;
     let query = {};
+
+    if (search) {
+      query.title = { $regex: search, $options: 'i' };
+    }
 
     if (category) {
       const categoryObj = await ArticleCategory.findOne({ slug: category });
@@ -17,9 +21,24 @@ const getArticles = async (req, res) => {
       }
     }
 
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    const total = await Article.countDocuments(query);
+    const totalPages = Math.ceil(total / limitNumber);
+
     const articles = await Article.find(query)
       .populate('category', 'name slug')
-      .sort({ publishDate: -1 });
+      .sort({ publishDate: -1 })
+      .skip(skip)
+      .limit(limitNumber);
+
+    res.set({
+      'X-Total-Count': total,
+      'X-Total-Pages': totalPages,
+      'X-Current-Page': pageNumber
+    });
 
     res.json(articles);
   } catch (error) {

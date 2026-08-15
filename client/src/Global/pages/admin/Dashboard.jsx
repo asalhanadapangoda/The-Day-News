@@ -44,9 +44,9 @@ const Dashboard = () => {
         ]);
 
         setStats({
-          programs: programs.data.length || 0,
+          programs: programs.headers['x-total-count'] ? parseInt(programs.headers['x-total-count'], 10) : programs.data.length || 0,
           episodes: episodes.data.length || 0,
-          articles: articles.data.length || 0,
+          articles: articles.headers['x-total-count'] ? parseInt(articles.headers['x-total-count'], 10) : articles.data.length || 0,
           categories: categories.data.length || 0,
           ads: ads.data.length || 0,
           messages: messages.data.length || 0,

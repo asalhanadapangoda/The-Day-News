@@ -34,6 +34,8 @@ const ManageArticles = () => {
   // Filters
   const [filterCategory, setFilterCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
 
@@ -41,11 +43,17 @@ const ManageArticles = () => {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
+      let queryParams = `?page=${page}&limit=20`;
+      if (filterCategory) queryParams += `&category=${filterCategory}`;
+      if (searchQuery) queryParams += `&search=${encodeURIComponent(searchQuery)}`;
+
       const [articlesRes, catsRes] = await Promise.all([
-        api.get('/articles'),
+        api.get(`/articles${queryParams}`),
         api.get('/categories')
       ]);
       setArticles(articlesRes.data);
+      setTotalPages(parseInt(articlesRes.headers['x-total-pages'], 10) || 1);
       setCategories(catsRes.data);
     } catch (error) {
       alert("Error fetching data");
@@ -55,8 +63,11 @@ const ManageArticles = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [page, filterCategory, searchQuery]);
 
   const openAddModal = () => {
     setEditingId(null);
@@ -159,11 +170,7 @@ const ManageArticles = () => {
     }
   };
 
-  const filteredArticles = articles.filter(art => {
-    const matchCategory = filterCategory ? art.category?._id === filterCategory : true;
-    const matchSearch = art.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchCategory && matchSearch;
-  });
+  // Search and filter is now handled by the backend
 
   const modules = {
     toolbar: [
@@ -194,7 +201,10 @@ const ManageArticles = () => {
         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
           <select
             value={filterCategory}
-            onChange={(e) => setFilterCategory(e.target.value)}
+            onChange={(e) => {
+              setFilterCategory(e.target.value);
+              setPage(1);
+            }}
             className="bg-[#1a1a1a] border border-white/10 text-white text-sm rounded-lg px-4 py-2 focus:outline-none focus:border-primary [&>option]:bg-[#1a1a1a]"
           >
             <option value="">All Categories</option>
@@ -209,7 +219,10 @@ const ManageArticles = () => {
             type="text"
             placeholder="Search titles..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setPage(1);
+            }}
             className="w-full bg-[#1a1a1a] border border-white/10 text-white text-sm rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-primary"
           />
           <Search size={16} className="absolute left-3 top-2.5 text-gray-500" />
@@ -229,7 +242,7 @@ const ManageArticles = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
-            {filteredArticles.map(art => (
+            {articles.map(art => (
               <tr key={art._id} className="hover:bg-white/5 transition-colors">
                 <td className="px-6 py-4">
                   <img src={art.featuredImage} className="w-16 h-12 object-cover rounded" alt="thumb" />
@@ -255,7 +268,7 @@ const ManageArticles = () => {
                 </td>
               </tr>
             ))}
-            {filteredArticles.length === 0 && (
+            {articles.length === 0 && (
               <tr>
                 <td colSpan="6" className="px-6 py-8 text-center text-gray-500">No articles found matching your criteria.</td>
               </tr>
@@ -263,6 +276,26 @@ const ManageArticles = () => {
           </tbody>
         </table>
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex justify-between items-center mt-6 text-sm">
+          <button 
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="px-4 py-2 bg-[#1a1a1a] border border-white/10 rounded text-white disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="text-gray-400">Page {page} of {totalPages}</span>
+          <button 
+            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="px-4 py-2 bg-[#1a1a1a] border border-white/10 rounded text-white disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {/* Editor Modal */}
       {isModalOpen && (
