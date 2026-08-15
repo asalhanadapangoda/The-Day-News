@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import '../../../Global/components/leaflet-custom.css';
 
 const OPERATING_COUNTRIES = [
   { name: 'Australia', lat: -25.2744, lng: 133.7751 },

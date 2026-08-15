@@ -1,0 +1,22 @@
+@reference "../../index.css";
+
+/* Overriding React Quill styles to match dark theme */
+.ql-toolbar {
+  @apply !bg-dark-card !border-border-subtle !rounded-t-lg;
+}
+.ql-container {
+  @apply !bg-dark-surface !border-border-subtle !rounded-b-lg !text-white !font-sans !text-base;
+  min-height: 200px;
+}
+.ql-stroke {
+  @apply !stroke-white;
+}
+.ql-fill {
+  @apply !fill-white;
+}
+.ql-picker-label {
+  @apply !text-white;
+}
+.ql-picker-options {
+  @apply !bg-dark-card !border-border-subtle;
+}

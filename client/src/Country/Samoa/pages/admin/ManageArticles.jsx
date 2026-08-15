@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../../services/api';
 import { Pencil, Trash2, Plus, X, UploadCloud, Search } from 'lucide-react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import { format } from 'date-fns';
+import ReactQuill from '../../../../Global/components/LazyQuill';
 
 const ManageArticles = () => {
   const [articles, setArticles] = useState([]);
