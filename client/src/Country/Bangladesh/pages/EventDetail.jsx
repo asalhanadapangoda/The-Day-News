@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { Calendar, MapPin, PlayCircle, X, ChevronLeft, ChevronRight, Image as ImageIcon, ArrowRight } from 'lucide-react';
@@ -39,6 +39,32 @@ const EventDetail = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isLightboxOpen]);
+
+  // Video Auto-Pause when scrolling out of view
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting && videoRef.current) {
+            videoRef.current.pause();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        observer.unobserve(videoRef.current);
+      }
+    };
+  }, [event?.videoUrl]);
 
   const getEmbedUrl = (url) => {
     if (!url) return '';
@@ -170,14 +196,23 @@ const EventDetail = () => {
 
         <div className="relative aspect-video w-full rounded-2xl overflow-hidden glass-card shadow-[0_0_50px_rgba(0,0,0,0.5)] border-white/10 group flex items-center justify-center bg-white/5">
            {event.videoUrl ? (
-              <iframe 
-                 src={getEmbedUrl(event.videoUrl)} 
-                 className="w-full h-full absolute inset-0"
-                 frameBorder="0" 
-                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                 allowFullScreen
-                 title="Highlight Reel Video"
-              ></iframe>
+              event.videoUrl.match(/\.(mp4|webm|mov|mkv|avi)$/i) || event.videoUrl.includes('res.cloudinary.com') ? (
+                <video
+                  ref={videoRef}
+                  src={event.videoUrl}
+                  controls
+                  className="w-full h-full absolute inset-0 bg-black"
+                />
+              ) : (
+                <iframe 
+                   src={getEmbedUrl(event.videoUrl)} 
+                   className="w-full h-full absolute inset-0"
+                   frameBorder="0" 
+                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                   allowFullScreen
+                   title="Highlight Reel Video"
+                ></iframe>
+              )
            ) : (
               <div className="text-center p-10 animate-pulse">
                  <PlayCircle size={64} className="text-primary/30 mx-auto mb-4" />
