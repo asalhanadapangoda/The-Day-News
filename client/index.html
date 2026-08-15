@@ -53,9 +53,23 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
   </noscript>
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298385276307317"
-    crossorigin="anonymous"></script>
+  <!-- Google AdSense (Delayed for Performance) -->
+  <script>
+    let adsenseLoaded = false;
+    function loadAdSense() {
+      if (adsenseLoaded) return;
+      adsenseLoaded = true;
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298385276307317";
+      script.crossOrigin = "anonymous";
+      document.head.appendChild(script);
+    }
+    setTimeout(loadAdSense, 3500);
+    window.addEventListener('scroll', loadAdSense, { once: true, passive: true });
+    window.addEventListener('mousemove', loadAdSense, { once: true, passive: true });
+    window.addEventListener('touchstart', loadAdSense, { once: true, passive: true });
+  </script>
 
   <!-- Site Navigation Schema for Google Sitelinks -->
   <script type="application/ld+json">

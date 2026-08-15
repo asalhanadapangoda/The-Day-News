@@ -317,7 +317,7 @@ const Home = () => {
                 Our Programs
               </h2>
               <Link to="/Bangladesh/programs" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold">
-                View All size={16} />
+                View All <ArrowRight size={16} />
               </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -398,7 +398,7 @@ const Home = () => {
                     to={`/programs/${prog.slug}`}
                     className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold whitespace-nowrap"
                   >
-                    View All size={16} />
+                    View All {prog.title} <ArrowRight size={16} />
                   </Link>
                 </div>
 

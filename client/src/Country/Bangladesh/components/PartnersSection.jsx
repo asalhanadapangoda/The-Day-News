@@ -36,6 +36,8 @@ const PartnersSection = ({ partners }) => {
                 
                 <img
                   src={cloudinaryOptimize(partner.logoUrl, 300)}
+                  width={300}
+                  height={150}
                   alt={partner.name}
                   className="h-12 md:h-20 w-auto object-contain grayscale brightness-125 opacity-40 group-hover/logo:grayscale-0 group-hover/logo:opacity-100 group-hover/logo:brightness-100 transition-all duration-700 relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]"
                   title={partner.name}
