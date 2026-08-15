@@ -107,6 +107,34 @@ const ManageEvents = () => {
     }
   };
 
+  const handleVideoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Check size on client side (100MB)
+    if (file.size > 100 * 1024 * 1024) {
+      alert('Video file is too large. Maximum size is 100MB.');
+      return;
+    }
+
+    const fileFormData = new FormData();
+    fileFormData.append('file', file);
+
+    setIsUploading('video');
+    try {
+      const { data } = await api.post('/upload/video', fileFormData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      
+      setFormData({ ...formData, videoUrl: data.url });
+    } catch (error) {
+      console.error('Video upload failed:', error);
+      alert('Video upload failed. ' + (error.response?.data?.message || 'Please try again.'));
+    } finally {
+      setIsUploading(null);
+    }
+  };
+
   const handleBulkUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
@@ -417,15 +445,40 @@ const ManageEvents = () => {
 
               <div className="space-y-6">
                  <h3 className="text-xs font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
-                    <Video size={14} /> Highlight Reel (Video URL)
+                    <Video size={14} /> Highlight Reel (Video URL or Upload)
                  </h3>
-                   <input 
-                      type="text" 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-primary transition-all text-sm mb-6"
-                      value={formData.videoUrl}
-                      placeholder="YouTube or Video Direct URL (Optional)"
-                      onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
-                   />
+                 <div className="flex gap-2 mb-6">
+                    <div className="flex-1 relative">
+                       <input 
+                          type="text" 
+                          className="w-full bg-white/5 border border-white/10 rounded-xl p-4 pr-10 text-white focus:outline-none focus:border-primary transition-all text-sm"
+                          value={formData.videoUrl}
+                          placeholder="YouTube or Video Direct URL (Optional)"
+                          onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                       />
+                       {isUploading === 'video' && (
+                         <div className="absolute right-4 top-4 text-primary animate-spin">
+                           <Loader2 size={20} />
+                         </div>
+                       )}
+                    </div>
+                    <label className={`cursor-pointer p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex items-center justify-center ${isUploading === 'video' ? 'opacity-50 pointer-events-none' : ''}`} title="Upload Video (Max 100MB)">
+                       <UploadCloud size={20} className="text-gray-400" />
+                       <input 
+                         type="file" 
+                         className="hidden" 
+                         accept="video/*"
+                         onChange={handleVideoUpload}
+                         disabled={!!isUploading}
+                       />
+                    </label>
+                 </div>
+                 {formData.videoUrl && formData.videoUrl.includes('cloudinary') && (
+                   <div className="mt-2 text-xs text-green-500 flex items-center gap-2 mb-6">
+                     <span className="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse"></span>
+                     Video uploaded successfully
+                   </div>
+                 )}
 
                   <h3 className="text-xs font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2 mb-4">
                      <Plus size={14} /> Full Album Link (Optional) - "View All Photos" Button

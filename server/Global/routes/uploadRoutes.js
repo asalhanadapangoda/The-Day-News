@@ -1,7 +1,10 @@
 import express from 'express';
 import upload from '../middleware/uploadMiddleware.js';
+import uploadVideo from '../middleware/uploadVideoMiddleware.js';
 import cloudinary from '../config/cloudinary.js';
 import { protect } from '../middleware/authMiddleware.js';
+
+import fs from 'fs';
 
 const router = express.Router();
 
@@ -29,6 +32,37 @@ router.post('/', protect, upload.single('file'), async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error during upload' });
+  }
+});
+
+router.post('/video', protect, uploadVideo.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No video provided' });
+    }
+
+    // Upload from disk directly to Cloudinary using upload_large for better performance on large files
+    const result = await cloudinary.uploader.upload_large(req.file.path, {
+      folder: 'thedaynewsglobal_videos',
+      resource_type: 'video'
+    });
+
+    // Delete the temp file after successful upload
+    if (fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+
+    res.json({
+      message: 'Video Uploaded successfully',
+      url: result.secure_url,
+    });
+  } catch (error) {
+    console.error(error);
+    // Ensure temp file is deleted even if upload fails
+    if (req.file && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+    res.status(500).json({ message: 'Server error during video upload' });
   }
 });
 
