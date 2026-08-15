@@ -162,12 +162,12 @@ const Home = () => {
 
       {/* 2. Recent Articles */}
       <section className="max-w-7xl mx-auto px-4 py-16">
-        <div className="flex justify-between items-end mb-10 border-b border-white/10 pb-4">
+        <div className="flex flex-wrap justify-between items-end gap-4 mb-10 border-b border-white/10 pb-4">
           <h2 className="text-3xl font-bold text-white flex items-center gap-3">
             <span className="w-2 h-8 bg-primary rounded-full"></span>
             Featured Articles
           </h2>
-          <Link to="/India/articles" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold">
+          <Link to="/India/articles" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold whitespace-nowrap">
             View All <ArrowRight size={16} />
           </Link>
         </div>

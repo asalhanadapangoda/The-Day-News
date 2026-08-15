@@ -189,12 +189,12 @@ const Home = () => {
 
       {/* 4. Recent Articles (Slot 3) */}
       <section className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex justify-between items-end mb-10 border-b border-white/10 pb-4">
+        <div className="flex flex-wrap justify-between items-end gap-4 mb-10 border-b border-white/10 pb-4">
           <h2 className="text-3xl font-bold text-white flex items-center gap-3">
             <span className="w-2 h-8 bg-primary rounded-full"></span>
             Latest News & Stories
           </h2>
-          <Link to="/articles" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold">
+          <Link to="/articles" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold whitespace-nowrap">
             View All Articles <ArrowRight size={16} />
           </Link>
         </div>
@@ -260,12 +260,12 @@ const Home = () => {
       {/* 3. Recent Episodes (Slot 4) */}
       <section className="bg-black/20 backdrop-blur-sm py-16 border-y border-white/5 mt-12">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-end mb-8 border-b border-white/10 pb-4">
+          <div className="flex flex-wrap justify-between items-end gap-4 mb-8 border-b border-white/10 pb-4">
             <h2 className="text-3xl font-bold text-white flex items-center gap-3">
               <span className="w-2 h-8 bg-primary rounded-full"></span>
               Recent Releases
             </h2>
-            <Link to="/programs" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold">
+            <Link to="/programs" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold whitespace-nowrap">
               View All Programs <ArrowRight size={16} />
             </Link>
           </div>
@@ -304,12 +304,12 @@ const Home = () => {
       {programs && programs.filter(p => p.posterImage).length > 0 && (
         <section className="py-16 border-y border-white/5 bg-gradient-to-b from-[#0c0014] to-[#0a0012]">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="flex justify-between items-end mb-10 border-b border-white/10 pb-4">
+            <div className="flex flex-wrap justify-between items-end gap-4 mb-10 border-b border-white/10 pb-4">
               <h2 className="text-3xl font-bold text-white flex items-center gap-3">
                 <span className="w-2 h-8 bg-primary rounded-full"></span>
                 Our Programs
               </h2>
-              <Link to="/programs" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold">
+              <Link to="/programs" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold whitespace-nowrap">
                 View All Programs <ArrowRight size={16} />
               </Link>
             </div>
@@ -383,7 +383,7 @@ const Home = () => {
             return (
               <div key={prog._id}>
                 {/* Program header */}
-                <div className="flex justify-between items-center mb-6 pb-3 border-b border-white/10">
+                <div className="flex flex-wrap justify-between items-center gap-4 mb-6 pb-3 border-b border-white/10">
                   <div className="flex items-center gap-3">
                     <h2 className="text-xl md:text-2xl font-bold text-white">{prog.title}</h2>
                   </div>
@@ -391,7 +391,7 @@ const Home = () => {
                     to={`/programs/${prog.slug}`}
                     className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold whitespace-nowrap"
                   >
-                    View All {prog.title} <ArrowRight size={16} />
+                    View All Episodes <ArrowRight size={16} />
                   </Link>
                 </div>
 
