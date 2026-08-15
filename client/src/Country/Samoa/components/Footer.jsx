@@ -31,19 +31,19 @@ const Footer = () => {
               Your Media Partner In Cyberspace...
             </p>
             <div className="flex space-x-4 pt-2">
-              <a href="https://www.facebook.com/thedaynewsglobal/" className="text-gray-400 hover:text-primary transition-colors">
+              <a aria-label="Visit our Facebook page" href="https://www.facebook.com/thedaynewsglobal/" className="text-gray-400 hover:text-primary transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="https://www.bing.com/ck/a?!&&p=06585dbc01d391738d57c0aaf90af8118e3e8c4cff1d50e580e724811af96d1fJmltdHM9MTc3MzcwNTYwMA&ptn=3&ver=2&hsh=4&fclid=1d3c2763-6e69-6665-1396-327d6f2c67d2&psq=thedaynewsglobal+&u=a1aHR0cHM6Ly9say5saW5rZWRpbi5jb20vY29tcGFueS90aGUtZGF5LW5ld3MtZ2xvYmFs" className="text-gray-400 hover:text-primary transition-colors">
+              <a aria-label="Visit our LinkedIn page" href="https://www.bing.com/ck/a?!&&p=06585dbc01d391738d57c0aaf90af8118e3e8c4cff1d50e580e724811af96d1fJmltdHM9MTc3MzcwNTYwMA&ptn=3&ver=2&hsh=4&fclid=1d3c2763-6e69-6665-1396-327d6f2c67d2&psq=thedaynewsglobal+&u=a1aHR0cHM6Ly9say5saW5rZWRpbi5jb20vY29tcGFueS90aGUtZGF5LW5ld3MtZ2xvYmFs" className="text-gray-400 hover:text-primary transition-colors">
                 <Linkedin size={20} />
               </a>
-              <a href="https://www.instagram.com/daynewsglobal/" className="text-gray-400 hover:text-primary transition-colors">
+              <a aria-label="Visit our Instagram page" href="https://www.instagram.com/daynewsglobal/" className="text-gray-400 hover:text-primary transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="https://www.youtube.com/@TheDayNewsGlobal" className="text-gray-400 hover:text-primary transition-colors">
+              <a aria-label="Visit our Youtube page" href="https://www.youtube.com/@TheDayNewsGlobal" className="text-gray-400 hover:text-primary transition-colors">
                 <Youtube size={20} />
               </a>
-              <a href="https://x.com/daynewsglobal" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors">
+              <a aria-label="Visit our X (Twitter) page" href="https://x.com/daynewsglobal" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>

@@ -73,7 +73,7 @@ const Navbar = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button
+              <button aria-label="Submit search"
                 type="submit"
                 className="absolute right-0 top-0 mt-2 mr-3 text-gray-400 hover:text-primary transition-colors"
               >
@@ -84,7 +84,7 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="flex md:hidden items-center">
-            <button
+            <button aria-label="Submit search"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-300 hover:text-white p-2"
             >
@@ -121,7 +121,7 @@ const Navbar = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button
+              <button aria-label="Submit search"
                 type="submit"
                 className="absolute right-6 top-3 text-gray-400 hover:text-primary"
               >
