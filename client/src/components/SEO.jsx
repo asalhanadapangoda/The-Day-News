@@ -10,7 +10,7 @@ const SEO = ({
   keywords = DEFAULT_KEYWORDS,
   ogTitle,
   ogDescription,
-  ogImage = '/logo.png',
+  ogImage = '/logo.webp',
   ogUrl,
   ogType = 'website',
   twitterCard = 'summary_large_image',

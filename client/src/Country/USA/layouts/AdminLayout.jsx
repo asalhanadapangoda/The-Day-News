@@ -2,7 +2,7 @@ import { Outlet, Navigate, Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useRef } from 'react';
 import AuthContext from '../context/AuthContext';
 import { LogOut, LayoutDashboard, FileText, Layers, Monitor } from 'lucide-react';
-import logo from '../../../Global/assets/logo.png';
+import logo from '../../../Global/assets/logo.webp';
 
 const AdminLayout = () => {
   const { admin, loading, logout } = useContext(AuthContext);

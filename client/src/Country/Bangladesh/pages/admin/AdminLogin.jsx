@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthContext from '../../context/AuthContext';
 import { Lock, Mail, ShieldAlert } from 'lucide-react';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.webp';
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),

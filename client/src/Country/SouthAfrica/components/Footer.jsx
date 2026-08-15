@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Facebook, Linkedin, Instagram, Youtube, Mail, MapPin } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../services/api';
-import logo from '../../../Global/assets/logo.png';
+import logo from '../../../Global/assets/logo.webp';
 
 const Footer = () => {
   const { data: settings } = useQuery({
