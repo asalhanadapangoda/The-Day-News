@@ -92,9 +92,9 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-400 text-sm">
             © 2026 The Day News Global. Trusted journalism, 24/7.</p>
-          <div className="text-gray-500 text-xs text-glow-primary">
+          <div className="text-gray-400 text-xs text-glow-primary">
             Designed for truth, built for clarity.
           </div>
         </div>

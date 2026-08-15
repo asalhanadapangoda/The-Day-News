@@ -98,8 +98,7 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="flex md:hidden items-center">
-            <button aria-label="Submit search"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            <button aria-label="Toggle menu" onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-300 hover:text-white p-2"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}

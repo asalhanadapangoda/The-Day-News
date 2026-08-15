@@ -47,7 +47,7 @@ const Home = () => {
     return (
       <div className="w-full">
         {/* Hero Skeleton */}
-        <div className="h-[80vh] min-h-[600px] w-full bg-white/5 animate-pulse relative">
+        <div className="h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full bg-white/5 animate-pulse relative">
           <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] to-transparent"></div>
           <div className="absolute bottom-16 left-8 md:bottom-24 md:left-16 space-y-6 w-full max-w-2xl px-4">
             <div className="h-12 md:h-16 bg-white/10 rounded w-full md:w-3/4"></div>
@@ -149,9 +149,12 @@ const Home = () => {
             {heroes.map((_, idx) => (
               <button
                 key={idx}
+                aria-label={`Go to slide ${idx + 1}`}
                 onClick={() => setCurrentHeroIndex(idx)}
-                className={`w-3 h-3 rounded-full transition-all ${idx === currentHeroIndex ? 'bg-primary scale-125' : 'bg-white/30 hover:bg-white/60'}`}
-              />
+                className="p-3 -m-3"
+              >
+                <div className={`w-3 h-3 rounded-full transition-all ${idx === currentHeroIndex ? 'bg-primary scale-125' : 'bg-white/50 hover:bg-white/80'}`} />
+              </button>
             ))}
           </div>
         )}
@@ -165,7 +168,7 @@ const Home = () => {
             Featured Articles
           </h2>
           <Link to="/Thailand/articles" className="text-primary hover:text-white transition-colors flex items-center gap-1 text-sm uppercase tracking-wider font-semibold">
-            View All <ArrowRight size={16} />
+            View All size={16} />
           </Link>
         </div>
 

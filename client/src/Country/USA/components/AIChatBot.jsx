@@ -120,8 +120,7 @@ const AIChatBot = () => {
   return (
     <div className="fixed bottom-6 right-6 z-[999]">
       {/* Chat Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
+      <button aria-label="Toggle chat window" onClick={() => setIsOpen(!isOpen)}
         className="w-14 h-14 bg-primary hover:bg-primary-hover text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group relative"
       >
         {isOpen ? <X size={28} /> : <MessageSquare size={28} />}
@@ -150,7 +149,7 @@ const AIChatBot = () => {
                 </div>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white p-1">
+            <button aria-label="Close chat window" onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white p-1">
               <X size={20} />
             </button>
           </div>
@@ -202,9 +201,7 @@ const AIChatBot = () => {
                 placeholder="Ask our AI assistant..."
                 className="w-full bg-white/5 border border-white/10 rounded-full py-3 px-5 pr-12 text-sm text-white focus:outline-none focus:border-primary/50 transition-all placeholder:text-gray-600"
               />
-              <button
-                type="submit"
-                disabled={!input.trim() || isLoading}
+              <button aria-label="Send message" type="submit" disabled={!input.trim() || isLoading}
                 className="absolute right-2 p-2 bg-primary hover:bg-primary-hover text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 <Send size={18} />
