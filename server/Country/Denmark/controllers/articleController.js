@@ -1,3 +1,4 @@
+import { pingGoogleIndexing } from '../../../Global/utils/googleIndexing.js';
 import Article from '../models/Article.js';
 import ArticleCategory from '../models/ArticleCategory.js';
 
@@ -88,6 +89,9 @@ const createArticle = async (req, res) => {
     });
 
     const createdArticle = await article.save();
+    if (createdArticle.status === 'published') {
+      pingGoogleIndexing(createdArticle.slug, 'Denmark', 'URL_UPDATED');
+    }
     res.status(201).json(createdArticle);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -104,6 +108,8 @@ const updateArticle = async (req, res) => {
     const article = await Article.findById(req.params.id);
 
     if (article) {
+      const oldStatus = article.status;
+      const oldSlug = article.slug;
       if (title && title !== article.title) {
         article.title = title;
         // Regenerate slug from new title
@@ -129,6 +135,17 @@ const updateArticle = async (req, res) => {
       if (metaImage !== undefined) article.metaImage = metaImage;
 
       const updatedArticle = await article.save();
+
+      // Notify Google Indexing API
+      if (updatedArticle.status === 'published') {
+        pingGoogleIndexing(updatedArticle.slug, 'Denmark', 'URL_UPDATED');
+        if (oldStatus === 'published' && oldSlug !== updatedArticle.slug) {
+          pingGoogleIndexing(oldSlug, 'Denmark', 'URL_DELETED');
+        }
+      } else if (oldStatus === 'published' && updatedArticle.status === 'draft') {
+        pingGoogleIndexing(oldSlug, 'Denmark', 'URL_DELETED');
+      }
+
       res.json(updatedArticle);
     } else {
       res.status(404).json({ message: 'Article not found' });
@@ -146,7 +163,12 @@ const deleteArticle = async (req, res) => {
     const article = await Article.findById(req.params.id);
 
     if (article) {
+      const slug = article.slug;
+      const status = article.status;
       await article.deleteOne();
+      if (status === 'published') {
+        pingGoogleIndexing(slug, 'Denmark', 'URL_DELETED');
+      }
       res.json({ message: 'Article removed' });
     } else {
       res.status(404).json({ message: 'Article not found' });

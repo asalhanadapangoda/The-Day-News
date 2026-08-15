@@ -82,6 +82,7 @@ const buildJsonLd = (meta, url) => {
     datePublished: meta.publishDate || meta.updatedAt,
     dateModified: meta.updatedAt,
     author: { '@type': 'Person', name: meta.author || 'The Day News Team' },
+    articleSection: meta.category || 'News',
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,
@@ -285,11 +286,16 @@ module.exports = async function handler(req, res) {
       : `${BACKEND_URL}/api/meta/${parsed.type}/${parsed.slug}`;
 
     let meta = null;
+    let statusCode = 200;
     try {
       meta = await fetchJson(metaPath);
-    } catch {
-      // Graceful degradation — serve plain index.html, SPA still works
+      if (!meta || Object.keys(meta).length === 0) {
+        meta = null;
+        statusCode = 404;
+      }
+    } catch (err) {
       meta = null;
+      statusCode = err.message.includes('404') ? 404 : 200;
     }
 
     const finalHtml = meta ? injectMeta(html, meta, pageUrl) : html;
@@ -297,7 +303,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     // Serve from CDN cache for 1 hour, then revalidate silently in background
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
-    return res.status(200).send(finalHtml);
+    return res.status(statusCode).send(finalHtml);
   } catch (err) {
     console.error('[render] Unhandled error:', err);
     // Never crash the site — always return something the React SPA can boot from

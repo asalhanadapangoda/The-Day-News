@@ -6,6 +6,7 @@
     "build": "npm --prefix client run build"
   },
   "dependencies": {
-    "@vercel/analytics": "^2.0.1"
+    "@vercel/analytics": "^2.0.1",
+    "jsonwebtoken": "^9.0.3"
   }
 }

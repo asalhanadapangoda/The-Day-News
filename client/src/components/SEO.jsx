@@ -25,7 +25,14 @@ const SEO = ({
 
   const metaDescription = description || DEFAULT_DESCRIPTION;
   const metaKeywords = Array.isArray(keywords) ? keywords.join(', ') : keywords;
-  const currentUrl = ogUrl || (typeof window !== 'undefined' ? window.location.href : '');
+
+  const getCleanUrl = () => {
+    if (typeof window === 'undefined') return '';
+    const { origin, pathname } = window.location;
+    const cleanPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
+    return origin + cleanPath;
+  };
+  const currentUrl = ogUrl || getCleanUrl();
 
   return (
     <Helmet>
