@@ -35,14 +35,14 @@ router.post('/', protect, upload.single('file'), async (req, res) => {
   }
 });
 
-router.post('/video', protect, uploadVideo.single('file'), async (req, res) => {
+router.post('/video', uploadVideo.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No video provided' });
     }
 
-    // Upload from disk directly to Cloudinary using upload_large for better performance on large files
-    const result = await cloudinary.uploader.upload_large(req.file.path, {
+    // Upload from disk directly to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
       folder: 'thedaynewsglobal_videos',
       resource_type: 'video'
     });
