@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthContext from '../../context/AuthContext';
-import { Lock, Mail, ShieldAlert } from 'lucide-react';
+import { Lock, Mail } from 'lucide-react';
 import logo from '../../assets/logo.webp';
 
 const loginSchema = z.object({

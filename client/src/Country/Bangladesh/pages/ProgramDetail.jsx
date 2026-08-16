@@ -89,7 +89,7 @@ const ProgramDetail = () => {
           className="absolute inset-0 w-full h-full object-cover object-top" 
           alt={program.title} 
           loading="eager" 
-          fetchpriority="high" 
+          fetchPriority="high" 
           width={1920}
           height={600}
           sizes="100vw"

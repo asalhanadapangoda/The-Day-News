@@ -403,7 +403,7 @@ const ManageArticles = () => {
         </div>
       )}
 
-      <style jsx="true">{`
+      <style>{`
         .editor-container .ql-container {
           flex-grow: 1;
           font-family: inherit;

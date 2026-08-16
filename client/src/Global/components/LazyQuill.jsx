@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css';
 

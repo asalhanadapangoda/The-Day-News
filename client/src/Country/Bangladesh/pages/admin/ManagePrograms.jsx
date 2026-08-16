@@ -298,7 +298,7 @@ const ManagePrograms = () => {
         </div>
       )}
 
-      <style jsx="true">{`
+      <style>{`
         input:checked ~ .checkbox-bg {
           background-color: var(--color-primary);
         }

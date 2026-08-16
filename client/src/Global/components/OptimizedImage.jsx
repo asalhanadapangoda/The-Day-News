@@ -1,4 +1,3 @@
-import React from 'react';
 import { cloudinaryOptimize, cloudinarySrcSet } from '../../utils/cloudinary';
 
 /**
@@ -45,7 +44,7 @@ const OptimizedImage = ({
         alt={alt}
         className={className}
         loading={loading}
-        fetchpriority={fetchpriority}
+        fetchPriority={fetchpriority}
         decoding={decoding}
         width={width}
         height={height}
@@ -78,7 +77,7 @@ const OptimizedImage = ({
         alt={alt}
         className={className}
         loading={loading}
-        fetchpriority={fetchpriority}
+        fetchPriority={fetchpriority}
         decoding={decoding}
         width={width}
         height={height}

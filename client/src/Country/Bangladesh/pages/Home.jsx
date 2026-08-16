@@ -100,7 +100,7 @@ const Home = () => {
                 alt={hero.title}
                 className="w-full h-full"
                 loading={index === 0 ? "eager" : "lazy"}
-                fetchpriority={index === 0 ? "high" : "auto"}
+                fetchPriority={index === 0 ? "high" : "auto"}
                 sizes="100vw"
                 width={1920}
                 height={1080}
@@ -225,7 +225,7 @@ const Home = () => {
           <div className={`grid grid-cols-1 ${homeTopAds.length > 1 ? 'md:grid-cols-2' : ''} gap-8`}>
             {homeTopAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
-                <div className="relative overflow-hidden rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm shadow-2xl transition-all group-hover:border-primary/30">
+                <div className="relative overflow-hidden rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm shadow-2xl transition-all group-hover:border-primary/30" style={{ aspectRatio: '3/1' }}>
                   <OptimizedImage 
                     src={ad.imageUrl} 
                     alt={ad.title} 

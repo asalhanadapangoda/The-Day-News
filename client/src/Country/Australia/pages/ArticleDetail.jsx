@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
-import { Calendar, User, Facebook, Linkedin, LinkIcon, Share2 } from 'lucide-react';
+import { Calendar, User, Facebook, Linkedin, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 import OptimizedImage from '../../../Global/components/OptimizedImage';
@@ -79,7 +78,7 @@ const ArticleDetail = () => {
             alt={article.title} 
             className="w-full h-full" 
             loading="eager" 
-            fetchpriority="high" 
+            fetchPriority="high" 
             width={1200}
             height={600}
             sizes="100vw"

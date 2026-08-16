@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { cloudinaryOptimize } from '../../utils/cloudinary';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { Calendar, MapPin, PlayCircle, X, ChevronLeft, ChevronRight, Image as ImageIcon, ArrowRight } from 'lucide-react';
@@ -139,7 +140,7 @@ const EventDetail = () => {
               className="w-full h-full" 
               alt={`${event.title} - Hero ${index + 1}`} 
               loading={index === 0 ? "eager" : "lazy"} 
-              fetchpriority={index === 0 ? "high" : "low"} 
+              fetchPriority={index === 0 ? "high" : "low"} 
               width={1920}
               height={1080}
               sizes="100vw"

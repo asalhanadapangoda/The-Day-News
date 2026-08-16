@@ -40,7 +40,7 @@ const Navbar = () => {
                 width={180}
                 height={75}
                               loading="eager"
-                fetchpriority="high"
+                fetchPriority="high"
                 decoding="sync"
               />
             </Link>

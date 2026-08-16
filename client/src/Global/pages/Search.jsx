@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { format } from 'date-fns';

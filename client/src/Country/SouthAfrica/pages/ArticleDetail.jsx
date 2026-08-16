@@ -78,7 +78,7 @@ const ArticleDetail = () => {
             alt={article.title} 
             className="w-full h-full" 
             loading="eager" 
-            fetchpriority="high" 
+            fetchPriority="high" 
             width={1200}
             height={600}
             sizes="100vw"

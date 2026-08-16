@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Globe } from 'lucide-react';
 import WorldMap from '../components/WorldMap';
 import SEO from '../../../components/SEO';

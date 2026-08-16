@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "react-quill/dist/quill.snow.css"; /* For rich text editor */
 
 @theme {
   --color-primary: #4f46e5;
@@ -40,6 +39,8 @@
 @layer base {
   body {
     @apply bg-gradient-to-br from-[#0c0014] to-[#121212] text-text-primary font-sans antialiased min-h-screen selection:bg-primary selection:text-white;
+    /* Reduce CLS from font swap: match Inter's metrics with system fallback */
+    font-size-adjust: 0.507;
   }
 }
 
@@ -70,59 +71,4 @@
   .text-gradient-primary {
     @apply text-transparent bg-clip-text bg-gradient-to-r from-primary via-indigo-400 to-primary bg-[length:200%_auto] animate-[shimmer_4s_linear_infinite];
   }
-}
-
-/* Overriding React Quill styles to match dark theme */
-.ql-toolbar {
-  @apply !bg-dark-card !border-border-subtle !rounded-t-lg;
-}
-.ql-container {
-  @apply !bg-dark-surface !border-border-subtle !rounded-b-lg !text-white !font-sans !text-base;
-  min-height: 200px;
-}
-.ql-stroke {
-  @apply !stroke-white;
-}
-.ql-fill {
-  @apply !fill-white;
-}
-.ql-picker-label {
-  @apply !text-white;
-}
-.ql-picker-options {
-  @apply !bg-dark-card !border-border-subtle;
-}
-
-/* ── Leaflet World Map Dark Theme ───────────────────────── */
-
-/* Satellite tiles — no filter, display in natural color */
-.leaflet-tile {
-  filter: none;
-}
-
-/* Custom tooltip styling */
-.leaflet-tooltip.leaflet-world-tooltip {
-  background: rgba(24, 16, 40, 0.92) !important;
-  border: 1px solid rgba(79, 70, 229, 0.4) !important;
-  border-radius: 8px !important;
-  color: #fff !important;
-  font-family: inherit !important;
-  font-size: 12px !important;
-  padding: 5px 10px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
-  white-space: nowrap;
-}
-
-.leaflet-tooltip.leaflet-world-tooltip::before {
-  border-top-color: rgba(79, 70, 229, 0.4) !important;
-}
-
-/* Hide Leaflet attribution (already set in component) */
-.leaflet-control-attribution {
-  display: none !important;
-}
-
-.leaflet-container {
-  background: #08000F !important;
-  outline: none;
 }

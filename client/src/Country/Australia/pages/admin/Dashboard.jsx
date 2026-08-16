@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
-import { Video, Image, FileText, Layers, Image as ImageIcon, MessageSquare, Plus } from 'lucide-react';
+import { Video, Image, FileText, Layers, Image as ImageIcon, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const StatCard = ({ title, value, icon: Icon, colorClass, link }) => (

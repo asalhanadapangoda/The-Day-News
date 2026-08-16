@@ -93,7 +93,7 @@ const Home = () => {
                 alt={hero.title}
                 className="w-full h-full"
                 loading={index === 0 ? "eager" : "lazy"}
-                fetchpriority={index === 0 ? "high" : "auto"}
+                fetchPriority={index === 0 ? "high" : "auto"}
                 sizes="100vw"
                 width={1920}
                 height={1080}

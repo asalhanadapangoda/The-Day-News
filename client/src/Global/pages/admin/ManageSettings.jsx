@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../../services/api';
-import { Save, UploadCloud, Globe, Phone, MapPin, Mail, Hash } from 'lucide-react';
+import { Save, Phone, MapPin, Mail, Hash } from 'lucide-react';
 
 const ManageSettings = () => {
   const [loading, setLoading] = useState(true);

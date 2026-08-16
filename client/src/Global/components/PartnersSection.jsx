@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from 'react';
 import { cloudinaryOptimize } from '../../utils/cloudinary';
 
 const PartnersSection = ({ partners }) => {
@@ -52,7 +51,7 @@ const PartnersSection = ({ partners }) => {
         <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-[#0c0014] via-[#0c0014]/80 to-transparent z-20 pointer-events-none"></div>
       </div>
 
-      <style jsx="true">{`
+      <style>{`
         .perspective-1000 {
           perspective: 1000px;
         }

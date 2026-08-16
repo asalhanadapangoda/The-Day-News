@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../../services/api';
-import { Pencil, Trash2, Plus, X, UploadCloud, Link as LinkIcon, Globe } from 'lucide-react';
+import { Pencil, Trash2, Plus, X, UploadCloud, Globe } from 'lucide-react';
 
 const ManagePartners = () => {
   const [partners, setPartners] = useState([]);
@@ -263,7 +263,7 @@ const ManagePartners = () => {
         </div>
       )}
 
-      <style jsx="true">{`
+      <style>{`
         input:checked ~ .checkbox-bg {
           background-color: #ff0055;
         }

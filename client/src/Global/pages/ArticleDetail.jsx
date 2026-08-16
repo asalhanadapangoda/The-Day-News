@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import api from '../services/api';
-import { Calendar, User, Facebook, Linkedin, Share2, Globe } from 'lucide-react';
+import { Calendar, User, Facebook, Linkedin, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
 import OptimizedImage from '../components/OptimizedImage';
 import SEO from '../../components/SEO';
@@ -88,7 +88,7 @@ const ArticleDetail = () => {
             alt={article.title} 
             className="w-full h-full" 
             loading="eager" 
-            fetchpriority="high"
+            fetchPriority="high"
             width={1920}
             height={1080}
             sizes="100vw"

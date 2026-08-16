@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import localApi from '../services/api';
 import globalApi from '../../../Global/services/api';
-import { Mail, MapPin, Send } from 'lucide-react';
+import { Mail, Send } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import SEO from '../../../components/SEO';
 

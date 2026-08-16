@@ -251,7 +251,7 @@ const ManageHero = () => {
         </div>
       )}
 
-      <style jsx="true">{`
+      <style>{`
         input:checked ~ .checkbox-bg {
           background-color: #22c55e;
         }

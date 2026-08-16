@@ -405,7 +405,7 @@ const ManageArticles = () => {
       )}
 
       {/* Global CSS override for Quill to look somewhat better in our modal bounds */}
-      <style jsx="true">{`
+      <style>{`
         .editor-container .ql-container {
           flex-grow: 1;
           font-family: inherit;
