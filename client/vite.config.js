@@ -16,7 +16,7 @@ export default defineConfig({
       manifest: {
         name: 'The Day News Global',
         short_name: 'Day News',
-        description: 'Stay updated with breaking news, in-depth reports, video programs, and stories from around the world.',
+        description: 'Stay updated with articles, videos, programs, and stories from around the world.',
         theme_color: '#0a0a0a',
         background_color: '#0c0014',
         display: 'standalone',
