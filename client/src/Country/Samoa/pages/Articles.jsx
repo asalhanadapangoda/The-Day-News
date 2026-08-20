@@ -40,7 +40,7 @@ const Articles = () => {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-4 text-glow transition-all duration-300">Latest Articles</h1>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          In-depth analysis, breaking news, and featured stories from our global correspondents.
+          In-depth analysis, and featured stories from our global correspondents.
         </p>
       </div>
 

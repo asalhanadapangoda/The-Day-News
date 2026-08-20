@@ -10,30 +10,30 @@ const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
 
-  const { data: articles = [] } = useQuery({ 
-    queryKey: ['articles'], 
-    queryFn: () => api.get('/articles').then(res => res.data) 
+  const { data: articles = [] } = useQuery({
+    queryKey: ['articles'],
+    queryFn: () => api.get('/articles').then(res => res.data)
   });
-  const { data: episodes = [] } = useQuery({ 
-    queryKey: ['episodes'], 
-    queryFn: () => api.get('/episodes').then(res => res.data) 
+  const { data: episodes = [] } = useQuery({
+    queryKey: ['episodes'],
+    queryFn: () => api.get('/episodes').then(res => res.data)
   });
-  const { data: programs = [] } = useQuery({ 
-    queryKey: ['programs'], 
-    queryFn: () => api.get('/programs').then(res => res.data) 
+  const { data: programs = [] } = useQuery({
+    queryKey: ['programs'],
+    queryFn: () => api.get('/programs').then(res => res.data)
   });
 
   const queryLower = query.toLowerCase();
-  
-  const filteredArticles = query ? articles.filter(a => 
+
+  const filteredArticles = query ? articles.filter(a =>
     a.title.toLowerCase().includes(queryLower) || a.excerpt?.toLowerCase().includes(queryLower)
   ) : [];
-  
-  const filteredEpisodes = query ? episodes.filter(e => 
+
+  const filteredEpisodes = query ? episodes.filter(e =>
     e.title.toLowerCase().includes(queryLower) || e.description?.toLowerCase().includes(queryLower)
   ) : [];
-  
-  const filteredPrograms = query ? programs.filter(p => 
+
+  const filteredPrograms = query ? programs.filter(p =>
     p.title.toLowerCase().includes(queryLower) || p.description?.toLowerCase().includes(queryLower)
   ) : [];
 
@@ -51,10 +51,10 @@ const Search = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
-      <SEO 
+      <SEO
         title={query ? `Search: "${query}" | THE DAY NEWS` : 'Search News & Programs | THE DAY NEWS'}
-        description={query ? `Search results for "${query}" on The Day News.` : 'Search for breaking news articles, video programs, and media coverage across The Day News.'}
-        keywords={`search, ${query ? query + ', ' : ''}news search, articles, video programs, the day news`}
+        description={query ? `Search results for "${query}" on The Day News.` : 'Search for news articles, programs, and media coverage across The Day News.'}
+        keywords={`search, ${query ? query + ', ' : ''}news search, articles, programs, the day news`}
       />
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-6">Search Results</h1>
@@ -85,7 +85,7 @@ const Search = () => {
       {/* Results grid */}
       {!loading && query && totalResults > 0 && (
         <div className="space-y-16">
-          
+
           {/* Programs */}
           {results.programs.length > 0 && (
             <div>
@@ -96,9 +96,9 @@ const Search = () => {
                 {results.programs.map((program) => (
                   <Link key={program._id} to={`/programs/${program.slug}`} className="group glass-card overflow-hidden block">
                     <div className="h-40 overflow-hidden relative">
-                      <OptimizedImage 
-                        src={program.coverImage} 
-                        className="w-full h-full" 
+                      <OptimizedImage
+                        src={program.coverImage}
+                        className="w-full h-full"
                         alt={program.title}
                         width={400}
                         height={225}
@@ -124,9 +124,9 @@ const Search = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {results.episodes.map(episode => (
                   <Link key={episode._id} to={`/programs/${episode.program?.slug || ''}`} className="glass-card flex p-4 gap-4 hover-glow transition-all">
-                    <OptimizedImage 
-                      src={episode.thumbnailImage} 
-                      className="w-32 h-24 object-cover rounded" 
+                    <OptimizedImage
+                      src={episode.thumbnailImage}
+                      className="w-32 h-24 object-cover rounded"
                       width={128}
                       height={96}
                       sizes="128px"
@@ -152,9 +152,9 @@ const Search = () => {
                 {results.articles.map((article) => (
                   <Link key={article._id} to={`/articles/${article.slug}`} className="glass-card block h-full hover-glow transition-all overflow-hidden flex flex-col">
                     <div className="h-48 overflow-hidden">
-                      <OptimizedImage 
-                        src={article.featuredImage} 
-                        className="w-full h-full" 
+                      <OptimizedImage
+                        src={article.featuredImage}
+                        className="w-full h-full"
                         alt={article.title}
                         width={400}
                         height={225}

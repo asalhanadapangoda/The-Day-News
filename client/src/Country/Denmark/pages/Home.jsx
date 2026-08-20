@@ -75,9 +75,9 @@ const Home = () => {
   return (
     <div className="w-full">
       <SEO 
-        title="Denmark News & Breaking Stories | THE DAY NEWS DENMARK" 
+        title="Denmark News & stories | THE DAY NEWS DENMARK" 
         description="Latest news, politics, technology, culture, and current affairs from Denmark."
-        keywords="denmark news, copenhagen news, danish news, breaking news denmark, the day news denmark"
+        keywords="denmark news, copenhagen news, danish news denmark, the day news denmark"
       />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">

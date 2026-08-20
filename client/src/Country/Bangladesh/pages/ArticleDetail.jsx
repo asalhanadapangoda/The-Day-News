@@ -64,7 +64,7 @@ const ArticleDetail = () => {
       <SEO 
         title={article.metaTitle ? article.metaTitle : `${article.title} | THE DAY NEWS BANGLADESH`}
         description={article.metaDescription || article.excerpt || (article.content ? article.content.replace(/<[^>]+>/g, '').slice(0, 160) : '')}
-        keywords={article.metaKeywords || `bangladesh news, ${article.category?.name || 'article'}, dhaka news, breaking news`}
+        keywords={article.metaKeywords || `bangladesh news, ${article.category?.name || 'article'}, dhaka news`}
         ogTitle={article.metaTitle || article.title}
         ogDescription={article.metaDescription || article.excerpt}
         ogImage={article.metaImage || article.featuredImage}

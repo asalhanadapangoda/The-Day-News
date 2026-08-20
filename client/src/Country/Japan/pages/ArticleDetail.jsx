@@ -64,7 +64,7 @@ const ArticleDetail = () => {
       <SEO 
         title={article.metaTitle ? article.metaTitle : `${article.title} | THE DAY NEWS JAPAN`}
         description={article.metaDescription || article.excerpt || (article.content ? article.content.replace(/<[^>]+>/g, '').slice(0, 160) : '')}
-        keywords={article.metaKeywords || `japan news, ${article.category?.name || 'article'}, breaking news`}
+        keywords={article.metaKeywords || `japan news, ${article.category?.name || 'article'}`}
         ogTitle={article.metaTitle || article.title}
         ogDescription={article.metaDescription || article.excerpt}
         ogImage={article.metaImage || article.featuredImage}

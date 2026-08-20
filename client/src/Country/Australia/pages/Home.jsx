@@ -66,9 +66,9 @@ const Home = () => {
   return (
     <div className="w-full">
       <SEO 
-        title="Australia Breaking News & Reports | THE DAY NEWS AUSTRALIA" 
+        title="Australia News & Reports | THE DAY NEWS AUSTRALIA" 
         description="Stay updated with the latest news, business, politics, and video stories from Australia."
-        keywords="australia news, sydney news, melbourne news, australian breaking news, the day news australia"
+        keywords="australia news, sydney news, melbourne news, australian the day news australia"
       />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
@@ -127,7 +127,7 @@ const Home = () => {
                   Welcome to The Day News Global
                 </h1>
                 <p className="text-sm md:text-xl text-gray-300 line-clamp-3 md:line-clamp-none">
-                  Watch the latest programs and read breaking media features from around the entire world.
+                  Watch the latest programs and read media features from around the entire world.
                 </p>
                 <div className="pt-2 md:pt-0">
                   <Link to={'/Australia/programs'}

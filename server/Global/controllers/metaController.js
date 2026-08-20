@@ -82,7 +82,7 @@ const getArticleMeta = async (req, res) => {
     const title = article.metaTitle || article.title;
     const description = article.metaDescription || article.excerpt || '';
     const image = article.metaImage || article.featuredImage || LOGO_URL;
-    const keywords = article.metaKeywords || `news, ${article.category?.name || 'article'}, global, breaking news`;
+    const keywords = article.metaKeywords || `news, ${article.category?.name || 'article'}, global`;
     const url = `${BASE_URL}/articles/${slug}`;
     // Strip HTML tags to give crawlers plain text body content
     const bodyText = (article.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();

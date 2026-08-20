@@ -76,8 +76,8 @@ const Home = () => {
     <div className="w-full">
       <SEO 
         title="Japan News & Current Affairs | THE DAY NEWS JAPAN" 
-        description="Breaking news, technology, culture, and business coverage from Japan."
-        keywords="japan news, tokyo news, japanese news, breaking news japan, the day news japan"
+        description="technology, culture, and business coverage from Japan."
+        keywords="japan news, tokyo news, japanese news japan, the day news japan"
       />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">

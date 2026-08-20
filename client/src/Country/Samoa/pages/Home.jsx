@@ -76,8 +76,8 @@ const Home = () => {
     <div className="w-full">
       <SEO 
         title="Samoa News & Updates | THE DAY NEWS SAMOA" 
-        description="Breaking news, Pacific affairs, culture, and community stories from Samoa."
-        keywords="samoa news, apia news, pacific news, samoa breaking news, the day news samoa"
+        description="Pacific affairs, culture, and community stories from Samoa."
+        keywords="samoa news, apia news, pacific news, samoa the day news samoa"
       />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">

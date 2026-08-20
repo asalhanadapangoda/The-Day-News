@@ -75,9 +75,9 @@ const Home = () => {
   return (
     <div className="w-full">
       <SEO 
-        title="New Zealand Breaking News & Stories | THE DAY NEWS NEW ZEALAND" 
-        description="Stay updated with breaking news, current events, and media stories from New Zealand."
-        keywords="new zealand news, auckland news, wellington news, nz breaking news, the day news new zealand"
+        title="New Zealand News & Stories | THE DAY NEWS NEW ZEALAND" 
+        description="Stay updated with current events, and media stories from New Zealand."
+        keywords="new zealand news, auckland news, wellington news, nz the day news new zealand"
       />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">

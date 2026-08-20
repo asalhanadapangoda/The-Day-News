@@ -76,8 +76,8 @@ const Home = () => {
     <div className="w-full">
       <SEO 
         title="USA News & US Politics | THE DAY NEWS USA" 
-        description="Breaking news, US politics, business, tech, and world coverage from the United States."
-        keywords="us news, american news, washington news, new york news, breaking news usa, the day news usa"
+        description="US politics, business, tech, and world coverage from the United States."
+        keywords="us news, american news, washington news, new york news usa, the day news usa"
       />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">

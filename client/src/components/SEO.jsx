@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 
 const DEFAULT_TITLE = 'THE DAY NEWS | Global & Local Stories';
-const DEFAULT_DESCRIPTION = 'The Day News - Stay updated with breaking stories, in-depth reports, video programs, and local updates from around the globe.';
-const DEFAULT_KEYWORDS = 'news, breaking news, world news, current affairs, programs, media features, articles, local news';
+const DEFAULT_DESCRIPTION = 'The Day News - Stay updated with stories, articles, video programs, and local updates from around the globe.';
+const DEFAULT_KEYWORDS = 'news, world news, current affairs, programs, media features, articles, local news';
 
 const SEO = ({
   title,

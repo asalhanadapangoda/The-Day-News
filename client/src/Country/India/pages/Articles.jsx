@@ -34,13 +34,13 @@ const Articles = () => {
     <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
       <SEO 
         title="Indian News Articles & Features | THE DAY NEWS INDIA" 
-        description="Explore in-depth articles, reports, and breaking stories from India."
+        description="Explore in-depth articles, reports, and stories from India."
         keywords="india articles, indian reporting, delhi news, the day news india"
       />
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-4 text-glow transition-all duration-300">Latest Articles</h1>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          In-depth analysis, breaking news, and featured stories from our global correspondents.
+          In-depth analysis, and featured stories from our global correspondents.
         </p>
       </div>
 

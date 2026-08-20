@@ -94,9 +94,9 @@ const Home = () => {
   return (
     <div className="w-full">
       <SEO
-        title="THE DAY NEWS | Global & Local Breaking Stories"
-        description="The Day News Global - Stay updated with breaking stories, in-depth reports, featured video programs, and local news from around the world."
-        keywords="news, breaking news, world news, global stories, video programs, articles, current affairs, local news"
+        title="THE DAY NEWS | Global & Local stories"
+        description="The Day News Global - Stay updated with stories, articles, programs, and local news from around the world."
+        keywords="news, world news, global stories, programs, articles, current affairs, local news"
       />
       {/* 1. Hero Section (Dynamic Slider) */}
       <section className="relative h-[45vh] md:h-[80vh] min-h-[250px] md:min-h-[600px] w-full overflow-hidden bg-black">
@@ -155,7 +155,7 @@ const Home = () => {
                   Welcome to The Day News Global
                 </h1>
                 <p className="text-sm md:text-xl text-gray-300 line-clamp-3 md:line-clamp-none">
-                  Watch the latest programs and read breaking media features from around the entire world.
+                  Watch the latest programs and read media features from around the entire world.
                 </p>
                 <div className="pt-2 md:pt-0">
                   <Link to={'/programs'}

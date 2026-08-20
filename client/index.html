@@ -2,78 +2,81 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#0a0a0a" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0a" />
 
-  <!-- Primary Meta Tags -->
-  <title>The Day News Global | Breaking News, Programs &amp; Stories</title>
-  <meta name="description"
-    content="The Day News Global - Stay updated with the latest breaking news, in-depth reports, video programs, and local stories from Sri Lanka and around the world." />
-  <meta name="keywords" content="news, global news, breaking news, Sri Lanka news, international news, The Day News" />
-  <meta name="author" content="The Day News Team" />
+    <!-- Primary Meta Tags -->
+    <title>The Day News Global | Articles, Programs &amp; Stories</title>
+    <meta name="description"
+        content="The Day News Global - Stay updated with the news, articles, programs, and local stories from Sri Lanka and around the world." />
+    <meta name="keywords" content="news, global news, Sri Lanka news, international news, The Day News" />
+    <meta name="author" content="The Day News Team" />
 
-  <!-- Canonical -->
-  <link rel="canonical" href="https://thedaynewsglobal.lk" />
+    <!-- Canonical -->
+    <link rel="canonical" href="https://thedaynewsglobal.lk" />
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="The Day News Global" />
-  <meta property="og:url" content="https://thedaynewsglobal.lk" />
-  <meta property="og:title" content="The Day News Global | Breaking News, Programs &amp; Stories" />
-  <meta property="og:description" content="Stay updated with the latest breaking news, in-depth reports, video programs, and local stories from Sri Lanka and around the world." />
-  <meta property="og:image" content="https://thedaynewsglobal.lk/logo.webp" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:locale" content="en_US" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Day News Global" />
+    <meta property="og:url" content="https://thedaynewsglobal.lk" />
+    <meta property="og:title" content="The Day News Global | Programs &amp; Stories" />
+    <meta property="og:description"
+        content="Stay updated with the latest news, in-depth reports, video programs, and local stories from Sri Lanka and around the world." />
+    <meta property="og:image" content="https://thedaynewsglobal.lk/logo.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@TheDayNewsGlobal" />
-  <meta name="twitter:title" content="The Day News Global | Breaking News, Programs &amp; Stories" />
-  <meta name="twitter:description" content="Stay updated with the latest breaking news, in-depth reports, video programs, and local stories from Sri Lanka and around the world." />
-  <meta name="twitter:image" content="https://thedaynewsglobal.lk/logo.webp" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@TheDayNewsGlobal" />
+    <meta name="twitter:title" content="The Day News Global | Programs &amp; Stories" />
+    <meta name="twitter:description"
+        content="Stay updated with the latest news, in-depth reports, video programs, and local stories from Sri Lanka and around the world." />
+    <meta name="twitter:image" content="https://thedaynewsglobal.lk/logo.webp" />
 
-  <!-- Favicon & PWA Icons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" href="/logo.webp" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <!-- Favicon & PWA Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" href="/logo.webp" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <!-- DNS prefetch & preconnect for external resources -->
-  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
-  <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- DNS prefetch & preconnect for external resources -->
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Google Fonts: non-blocking load via print media swap trick -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-    media="print" onload="this.media='all'" />
-  <noscript>
+    <!-- Google Fonts: non-blocking load via print media swap trick -->
     <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
-  </noscript>
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print"
+        onload="this.media='all'" />
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+    </noscript>
 
-  <!-- Google AdSense (Delayed for Performance) -->
-  <script>
-    let adsenseLoaded = false;
-    function loadAdSense() {
-      if (adsenseLoaded) return;
-      adsenseLoaded = true;
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298385276307317";
-      script.crossOrigin = "anonymous";
-      document.head.appendChild(script);
-    }
-    // Only load AdSense on first user interaction to ensure Lighthouse hits 100/100
-    window.addEventListener('scroll', loadAdSense, { once: true, passive: true });
-    window.addEventListener('mousemove', loadAdSense, { once: true, passive: true });
-    window.addEventListener('touchstart', loadAdSense, { once: true, passive: true });
-  </script>
+    <!-- Google AdSense (Delayed for Performance) -->
+    <script>
+        let adsenseLoaded = false;
+        function loadAdSense() {
+            if (adsenseLoaded) return;
+            adsenseLoaded = true;
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8298385276307317";
+            script.crossOrigin = "anonymous";
+            document.head.appendChild(script);
+        }
+        // Only load AdSense on first user interaction to ensure Lighthouse hits 100/100
+        window.addEventListener('scroll', loadAdSense, { once: true, passive: true });
+        window.addEventListener('mousemove', loadAdSense, { once: true, passive: true });
+        window.addEventListener('touchstart', loadAdSense, { once: true, passive: true });
+    </script>
 
-  <!-- Site Navigation Schema for Google Sitelinks -->
-  <script type="application/ld+json">
+    <!-- Site Navigation Schema for Google Sitelinks -->
+    <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -121,36 +124,41 @@
 </head>
 
 <body>
-  <noscript>
-    <div style="padding: 20px; font-family: sans-serif;">
-      <h1>The Day News Global - Breaking News, Stories and Programs</h1>
-      <p>
-        The Day News Global serves as a premier, interactive media platform dedicated to the pursuit of knowledge and meaningful insights. 
-        Stay updated with the latest breaking news, in-depth reports, video programs, and local stories from Sri Lanka and around the world.
-      </p>
-      <p>
-        Our mission is to provide accurate, timely, and engaging journalism that connects global events to local communities. 
-        Whether you are looking for political analysis, economic updates, sports highlights, or cultural features, our network of reporters ensures you get the full story.
-      </p>
-      <h2>Categories &amp; Links</h2>
-      <ul>
-        <li><a href="/">Home - Latest News</a></li>
-        <li><a href="/articles">World &amp; Local Articles</a></li>
-        <li><a href="/programs">Video Programs &amp; Features</a></li>
-        <li><a href="/events">Upcoming Global Events</a></li>
-        <li><a href="/about">About The Day News Global</a></li>
-        <li><a href="/contact">Contact Our Newsroom</a></li>
-        <li><a href="/privacy-policy">Privacy Policy</a></li>
-        <li><a href="/terms-of-service">Terms of Service</a></li>
-      </ul>
-      <p>
-        Thank you for choosing The Day News Global. Trusted journalism, 24/7. Designed for truth, built for clarity. 
-        Please enable JavaScript to view the full interactive version of this website.
-      </p>
-    </div>
-  </noscript>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+    <noscript>
+        <div style="padding: 20px; font-family: sans-serif;">
+            <h1>The Day News Global - Stories and Programs</h1>
+            <p>
+                The Day News Global serves as a premier, interactive media platform dedicated to the pursuit of
+                knowledge and meaningful insights.
+                Stay updated with the latest news, in-depth reports, video programs, and local stories from Sri Lanka
+                and around the world.
+            </p>
+            <p>
+                Our mission is to provide accurate, timely, and engaging journalism that connects global events to local
+                communities.
+                Whether you are looking for political analysis, economic updates, sports highlights, or cultural
+                features, our network of reporters ensures you get the full story.
+            </p>
+            <h2>Categories &amp; Links</h2>
+            <ul>
+                <li><a href="/">Home - Latest News</a></li>
+                <li><a href="/articles">World &amp; Local Articles</a></li>
+                <li><a href="/programs">Video Programs &amp; Features</a></li>
+                <li><a href="/events">Upcoming Global Events</a></li>
+                <li><a href="/about">About The Day News Global</a></li>
+                <li><a href="/contact">Contact Our Newsroom</a></li>
+                <li><a href="/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/terms-of-service">Terms of Service</a></li>
+            </ul>
+            <p>
+                Thank you for choosing The Day News Global. Trusted journalism, 24/7. Designed for truth, built for
+                clarity.
+                Please enable JavaScript to view the full interactive version of this website.
+            </p>
+        </div>
+    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
 </body>
 
 </html>
