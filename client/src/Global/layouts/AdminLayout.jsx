@@ -1,13 +1,15 @@
 import { Outlet, Navigate, Link, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import AuthContext from '../context/AuthContext';
 import { LogOut, LayoutDashboard, Video, FileText, Settings, MessageSquare, Layers, Image, Monitor, Handshake, Calendar } from 'lucide-react';
 import logo from '../assets/logo.webp';
+import api from '../services/api';
 
 const AdminLayout = () => {
   const { admin, loading, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
+  const [unreadMessages, setUnreadMessages] = useState(0);
 
   const INACTIVITY_LIMIT = 5 * 60 * 1000; // 5 minutes in milliseconds
 
@@ -52,6 +54,25 @@ const AdminLayout = () => {
     }
   }, [admin]);
 
+  useEffect(() => {
+    if (admin) {
+      const fetchUnreadMessages = async () => {
+        try {
+          const { data } = await api.get('/messages');
+          const unreadCount = data.filter(msg => !msg.isRead).length;
+          setUnreadMessages(unreadCount);
+        } catch (error) {
+          console.error('Failed to fetch unread messages', error);
+        }
+      };
+
+      fetchUnreadMessages();
+      const interval = setInterval(fetchUnreadMessages, 60000); // Check every minute
+      
+      return () => clearInterval(interval);
+    }
+  }, [admin]);
+
   if (loading) return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
 
   if (!admin) {
@@ -90,10 +111,17 @@ const AdminLayout = () => {
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="flex items-center gap-3 px-6 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
+                    className="flex items-center justify-between px-6 py-3 text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
                   >
-                    <Icon size={20} />
-                    {link.name}
+                    <div className="flex items-center gap-3">
+                      <Icon size={20} />
+                      {link.name}
+                    </div>
+                    {link.name === 'Messages' && unreadMessages > 0 && (
+                      <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full min-w-[20px] text-center">
+                        {unreadMessages}
+                      </span>
+                    )}
                   </Link>
                 </li>
               );
