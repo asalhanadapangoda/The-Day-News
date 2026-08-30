@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../../services/api';
-import { Pencil, Trash2, Plus, X, UploadCloud, Search } from 'lucide-react';
+import { Pencil, Trash2, Plus, X, UploadCloud, Search, Sparkles, Loader2, CheckCircle2 } from 'lucide-react';
 import { format } from 'date-fns';
 import ReactQuill from '../../components/LazyQuill';
 
@@ -19,6 +19,31 @@ const COUNTRIES = [
   'Samoa',
 ];
 
+/**
+ * Reusable Character Count Badge (shows only character count)
+ */
+const CharBadge = ({ count, min, max }) => {
+  const isOptimal = min && max ? count >= min && count <= max : true;
+  const isOver = max ? count > max : false;
+  const isUnder = min ? count > 0 && count < min : false;
+
+  let colorClasses = "text-gray-400 bg-white/5 border-white/10";
+
+  if (isOptimal && count > 0) {
+    colorClasses = "text-emerald-400 bg-emerald-500/10 border-emerald-500/30";
+  } else if (isOver) {
+    colorClasses = "text-rose-400 bg-rose-500/10 border-rose-500/30";
+  } else if (isUnder) {
+    colorClasses = "text-amber-400 bg-amber-500/10 border-amber-500/30";
+  }
+
+  return (
+    <span className={`inline-flex items-center text-[11px] font-mono font-medium px-2 py-0.5 rounded-md border transition-all ${colorClasses}`}>
+      {count} characters
+    </span>
+  );
+};
+
 const ManageArticles = () => {
   const [articles, setArticles] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -26,6 +51,8 @@ const ManageArticles = () => {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
+  const [isGeneratingMeta, setIsGeneratingMeta] = useState(false);
+  const [aiStatusMessage, setAiStatusMessage] = useState(null);
 
   // React Quill Content State
   const [editorContent, setEditorContent] = useState('');
@@ -39,6 +66,10 @@ const ManageArticles = () => {
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
 
   const featuredImageUrl = watch('featuredImage');
+  const watchedTitle = watch('title') || '';
+  const watchedExcerpt = watch('excerpt') || '';
+  const watchedMetaTitle = watch('metaTitle') || '';
+  const watchedMetaDescription = watch('metaDescription') || '';
 
   const fetchData = async () => {
     try {
@@ -84,6 +115,7 @@ const ManageArticles = () => {
       metaImage: ''
     });
     setEditorContent('');
+    setAiStatusMessage(null);
     setIsModalOpen(true);
   };
 
@@ -103,6 +135,7 @@ const ManageArticles = () => {
       metaImage: art.metaImage || ''
     });
     setEditorContent(art.content);
+    setAiStatusMessage(null);
     setIsModalOpen(true);
   };
 
@@ -111,6 +144,7 @@ const ManageArticles = () => {
     setEditingId(null);
     reset();
     setEditorContent('');
+    setAiStatusMessage(null);
   };
 
   const handleFileUpload = async (e) => {
@@ -130,6 +164,56 @@ const ManageArticles = () => {
       alert('Upload failed');
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  /**
+   * Gemini AI Auto-Generation for Title, Excerpt, Custom Meta Title, Meta Description, Meta Keywords & Tags
+   */
+  const handleAiGenerateMeta = async () => {
+    // Strip HTML from editor content to check text presence
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = editorContent || '';
+    const text = tempDiv.textContent || tempDiv.innerText || '';
+
+    if (!text.trim() || text.trim().length < 30) {
+      alert('Please write or paste the Article Body Content first before generating titles and SEO metadata.');
+      return;
+    }
+
+    setIsGeneratingMeta(true);
+    setAiStatusMessage(null);
+
+    try {
+      const selectedCategoryId = watch('category');
+      const categoryObj = categories.find((c) => c._id === selectedCategoryId);
+      const categoryName = categoryObj ? categoryObj.name : '';
+      const currentTitle = watch('title') || '';
+
+      const { data } = await api.post('/ai/generate-article-meta', {
+        content: editorContent,
+        category: categoryName,
+        existingTitle: currentTitle,
+      });
+
+      if (data?.success && data?.data) {
+        const { title, excerpt, metaTitle, metaDescription, metaKeywords, tags } = data.data;
+
+        if (title) setValue('title', title, { shouldValidate: true, shouldDirty: true });
+        if (excerpt) setValue('excerpt', excerpt, { shouldValidate: true, shouldDirty: true });
+        if (metaTitle) setValue('metaTitle', metaTitle, { shouldValidate: true, shouldDirty: true });
+        if (metaDescription) setValue('metaDescription', metaDescription, { shouldValidate: true, shouldDirty: true });
+        if (metaKeywords) setValue('metaKeywords', metaKeywords, { shouldValidate: true, shouldDirty: true });
+        if (tags) setValue('tags', tags, { shouldValidate: true, shouldDirty: true });
+
+        setAiStatusMessage('✨ Headline, Excerpt & SEO Metadata generated successfully!');
+        setTimeout(() => setAiStatusMessage(null), 5000);
+      }
+    } catch (error) {
+      console.error('AI Generation Error:', error);
+      alert(error.response?.data?.message || 'Failed to auto-generate metadata.');
+    } finally {
+      setIsGeneratingMeta(false);
     }
   };
 
@@ -168,8 +252,6 @@ const ManageArticles = () => {
       }
     }
   };
-
-  // Search and filter is now handled by the backend
 
   const modules = {
     toolbar: [
@@ -299,12 +381,23 @@ const ManageArticles = () => {
       {/* Editor Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
-          {/* Custom width for rich text editor to have space */}
           <div className="bg-[#1a1a1a] border border-white/10 w-full max-w-5xl rounded-2xl shadow-2xl relative overflow-hidden flex flex-col h-[90vh]">
             <div className="flex justify-between items-center p-6 border-b border-white/10 bg-[#121212] flex-shrink-0">
               <h2 className="text-xl font-bold text-white">{editingId ? 'Edit Article' : 'Write Article'}</h2>
               <button onClick={closeModal} className="text-gray-400 hover:text-white transition-colors"><X size={24} /></button>
             </div>
+
+            {aiStatusMessage && (
+              <div className="bg-emerald-950/80 border-b border-emerald-500/30 text-emerald-300 px-6 py-2.5 text-xs flex items-center justify-between animate-fadeIn">
+                <span className="flex items-center gap-2 font-medium">
+                  <CheckCircle2 size={15} className="text-emerald-400" />
+                  {aiStatusMessage}
+                </span>
+                <button type="button" onClick={() => setAiStatusMessage(null)} className="text-emerald-400 hover:text-white">
+                  <X size={14} />
+                </button>
+              </div>
+            )}
 
             <form onSubmit={handleSubmit(onSubmit)} className="overflow-y-auto flex-grow flex flex-col">
               <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -365,42 +458,57 @@ const ManageArticles = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Tags (Comma separated)</label>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="block text-sm font-medium text-gray-400">Tags (Comma separated)</label>
+                    </div>
                     <input
                       {...register("tags")}
                       placeholder="news, global, politics"
-                      className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
+                      className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none text-sm"
                     />
                   </div>
 
-                  {/* SEO Custom Meta Overrides (Optional) */}
+                  {/* SEO Custom Meta Overrides */}
                   <div className="border-t border-white/10 pt-4 mt-4 space-y-4">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-primary">SEO & Social Meta (Optional Overrides)</h3>
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-primary">SEO & Social Meta</h3>
+                      <span className="text-[10px] text-gray-500 font-mono">SERP Optimized</span>
+                    </div>
+
                     <div>
-                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Title</label>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs text-gray-400">Custom Meta Title</label>
+                        <CharBadge count={watchedMetaTitle.length} min={50} max={60} />
+                      </div>
                       <input
                         {...register("metaTitle")}
-                        placeholder="Default: Uses Article Title"
-                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none"
+                        placeholder="50-60 characters SERP title"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none font-mono"
                       />
                     </div>
+
                     <div>
-                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Description</label>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs text-gray-400">Custom Meta Description</label>
+                        <CharBadge count={watchedMetaDescription.length} min={100} max={150} />
+                      </div>
                       <textarea
                         {...register("metaDescription")}
-                        placeholder="Default: Uses Excerpt summary"
-                        rows="2"
-                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none resize-none"
+                        placeholder="100-150 characters search snippet..."
+                        rows="3"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none resize-none font-mono leading-relaxed"
                       ></textarea>
                     </div>
+
                     <div>
-                      <label className="block text-xs text-gray-400 mb-1">Custom Meta Keywords</label>
+                      <label className="block text-xs text-gray-400 mb-1.5">Custom Meta Keywords</label>
                       <input
                         {...register("metaKeywords")}
-                        placeholder="news, politics, world"
-                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none"
+                        placeholder="trending, matching, keywords, comma, separated"
+                        className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-xs focus:border-primary focus:outline-none font-mono"
                       />
                     </div>
+
                     <div>
                       <label className="block text-xs text-gray-400 mb-1">Custom Social Meta Image URL</label>
                       <input
@@ -415,28 +523,58 @@ const ManageArticles = () => {
                 {/* Right Side: Main Content */}
                 <div className="lg:col-span-2 space-y-6 flex flex-col h-full">
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Article Title *</label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-medium text-gray-400">Article Title *</label>
+                      <CharBadge count={watchedTitle.length} min={50} max={80} />
+                    </div>
                     <input
                       {...register("title", { required: "Title is required" })}
-                      className="w-full bg-white/5 text-xl font-bold border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
-                      placeholder="Enter a compelling headline"
+                      className="w-full bg-white/5 text-lg md:text-xl font-bold border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none font-sans"
+                      placeholder="Enter a compelling headline (50-80 characters)"
                     />
                     {errors.title && <p className="text-red-400 text-xs mt-1">{errors.title.message}</p>}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Excerpt summary</label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-medium text-gray-400">Excerpt summary</label>
+                      <CharBadge count={watchedExcerpt.length} min={140} max={155} />
+                    </div>
                     <textarea
                       {...register("excerpt")}
-                      className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none resize-none"
+                      className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none resize-none text-sm leading-relaxed"
                       rows="2"
-                      placeholder="A short description for the article card..."
+                      placeholder="A short engaging teaser for article cards (140-155 characters)..."
                     ></textarea>
                   </div>
 
-                  {/* React Quill Editor Container */}
-                  <div className="flex-grow flex flex-col pb-4 h-[400px]">
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Article Body Content *</label>
+                  {/* React Quill Editor Container with Gemini AI Generator Button */}
+                  <div className="flex-grow flex flex-col pb-4 h-[440px]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                      <label className="block text-sm font-medium text-gray-400">Article Body Content *</label>
+                      
+                      {/* AI Auto-Generate Button */}
+                      <button
+                        type="button"
+                        onClick={handleAiGenerateMeta}
+                        disabled={isGeneratingMeta}
+                        title="Analyze article content and auto-generate Title, Excerpt, and SEO metadata"
+                        className="group relative inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg shadow-md hover:shadow-indigo-500/20 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        {isGeneratingMeta ? (
+                          <>
+                            <Loader2 size={14} className="animate-spin text-white" />
+                            <span>Generating metadata...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles size={14} className="text-yellow-300 group-hover:rotate-12 transition-transform duration-300" />
+                            <span>✨ Auto-Generate Titles &amp; SEO</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
                     <div className="bg-white text-black rounded-lg overflow-hidden flex-grow flex flex-col h-full editor-container">
                       <ReactQuill
                         theme="snow"

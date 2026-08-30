@@ -1,2 +1,7 @@
 server/.env
 server/google-key.json
+
+# Environment Variables
+.env
+.env.*
+!.env.example

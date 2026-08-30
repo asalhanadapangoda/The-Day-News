@@ -1,5 +1,7 @@
 import express from 'express';
 import { getFallbackResponse } from '../../utils/aiFallback.js';
+import { generateArticleMeta } from '../controllers/aiArticleController.js';
+import { protect } from '../middleware/authMiddleware.js';
 import Groq from 'groq-sdk';
 import dotenv from 'dotenv';
 
@@ -10,6 +12,18 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
+/**
+ * @route   POST /api/ai/generate-article-meta
+ * @desc    Generate article headline, excerpt, meta title, meta description, and keywords using Gemini AI
+ * @access  Private / Admin
+ */
+router.post('/generate-article-meta', protect, generateArticleMeta);
+
+/**
+ * @route   POST /api/ai/chat
+ * @desc    Chatbot assistant powered by Groq LLaMA
+ * @access  Public
+ */
 router.post('/chat', async (req, res) => {
   const { messages } = req.body;
 
@@ -22,7 +36,7 @@ router.post('/chat', async (req, res) => {
       messages: [
         {
           role: 'system',
-          content: `You are the professional and helpful virtual assistant for "The Day News Global${fileInfo.countryText}".
+          content: `You are the professional and helpful virtual assistant for "The Day News Global".
 
 About The Day News Global:
 The Day News Global is "Your Media Partner in Cyberspace", dedicated to delivering credible, informative, and engaging news coverage on local and international events.
@@ -56,7 +70,7 @@ Response Style and Structure:
 - Ensure the tone is sophisticated yet accessible.
 
 Conversation Handling Rules:
-1. GREETINGS: If the user says hello, hi, hey, or starts the conversation, reply ONLY with: "Welcome to The Day News Global${fileInfo.countryText}, your trusted source for news and information. We are 'Your Media Partner in Cyberspace', dedicated to delivering credible and engaging content to our readers."
+1. GREETINGS: If the user says hello, hi, hey, or starts the conversation, reply ONLY with: "Welcome to The Day News Global, your trusted source for news and information. We are 'Your Media Partner in Cyberspace', dedicated to delivering credible and engaging content to our readers."
 2. SERVICES / PACKAGES: If the user asks about packages, services, pricing, booking, or products, list our packages (Premium, Platinum, Podcast, Photography) and direct them to our Products page (/products).
 3. CONTACT / OFFICE: If the user asks about address, contact, location, phone, or email, provide our office addresses and contact details, and direct them to our Contact page (/contact).
 4. OTHER QUESTIONS: Answer dynamically and professionally based on the core content areas and facts about The Day News Global. If you don't know the answer, politely guide them to the relevant section of the site (News, Programs, Products, or Contact).`
