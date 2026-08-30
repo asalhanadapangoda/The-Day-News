@@ -197,14 +197,13 @@ const ManageArticles = () => {
       });
 
       if (data?.success && data?.data) {
-        const { title, excerpt, metaTitle, metaDescription, metaKeywords, tags } = data.data;
+        const { title, excerpt, metaTitle, metaDescription, metaKeywords } = data.data;
 
         if (title) setValue('title', title, { shouldValidate: true, shouldDirty: true });
         if (excerpt) setValue('excerpt', excerpt, { shouldValidate: true, shouldDirty: true });
         if (metaTitle) setValue('metaTitle', metaTitle, { shouldValidate: true, shouldDirty: true });
         if (metaDescription) setValue('metaDescription', metaDescription, { shouldValidate: true, shouldDirty: true });
         if (metaKeywords) setValue('metaKeywords', metaKeywords, { shouldValidate: true, shouldDirty: true });
-        if (tags) setValue('tags', tags, { shouldValidate: true, shouldDirty: true });
 
         setAiStatusMessage('✨ Headline, Excerpt & SEO Metadata generated successfully!');
         setTimeout(() => setAiStatusMessage(null), 5000);
@@ -457,16 +456,6 @@ const ManageArticles = () => {
                     {errors.featuredImage && <p className="text-red-400 text-xs mt-1">{errors.featuredImage.message}</p>}
                   </div>
 
-                  <div>
-                    <div className="flex justify-between items-center mb-2">
-                      <label className="block text-sm font-medium text-gray-400">Tags (Comma separated)</label>
-                    </div>
-                    <input
-                      {...register("tags")}
-                      placeholder="news, global, politics"
-                      className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none text-sm"
-                    />
-                  </div>
 
                   {/* SEO Custom Meta Overrides */}
                   <div className="border-t border-white/10 pt-4 mt-4 space-y-4">

@@ -175,7 +175,6 @@ TARGET SPECIFICATIONS:
 - "metaTitle": An SEO-optimized title for Google search results. Target 50 to 60 characters in length.
 - "metaDescription": An SEO meta description for search engine snippets. Target 100 to 150 characters in length.
 - "metaKeywords": A comma-separated list of 6 to 10 trending, high-relevance search keywords matching the article topic.
-- "tags": A comma-separated string of 4 to 6 relevant topical category tags.
 
 FORMATTING RULES:
 - Output clean, professional natural language text ONLY.
@@ -188,8 +187,7 @@ JSON OUTPUT STRUCTURE:
   "excerpt": "Clean excerpt summary text",
   "metaTitle": "Clean meta title text",
   "metaDescription": "Clean meta description text",
-  "metaKeywords": "keyword 1, keyword 2, keyword 3, keyword 4",
-  "tags": "Tag1, Tag2, Tag3, Tag4"
+  "metaKeywords": "keyword 1, keyword 2, keyword 3, keyword 4"
 }`;
 
     const aiData = await callGeminiApi(apiKey, prompt);
@@ -216,9 +214,6 @@ JSON OUTPUT STRUCTURE:
     }
 
     let finalKeywords = aiData.metaKeywords ? String(aiData.metaKeywords).trim() : '';
-    let finalTags = Array.isArray(aiData.tags)
-      ? aiData.tags.join(', ')
-      : (aiData.tags ? String(aiData.tags) : '').trim();
 
     return res.status(200).json({
       success: true,
@@ -228,7 +223,6 @@ JSON OUTPUT STRUCTURE:
         metaTitle: finalMetaTitle,
         metaDescription: finalMetaDescription,
         metaKeywords: finalKeywords,
-        tags: finalTags,
         characterCounts: {
           title: finalTitle.length,
           excerpt: finalExcerpt.length,
