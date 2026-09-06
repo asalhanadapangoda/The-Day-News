@@ -120,8 +120,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          const REGIONS = ['Bangladesh', 'Australia', 'NewZealand', 'Japan', 'India', 'USA', 'Thailand', 'Denmark', 'Samoa', 'SouthAfrica'];
-
           // Vendor: React core + its peer deps (react-is, scheduler, prop-types)
           // These MUST be in the same chunk as React — they call React.forwardRef etc.
           // at module init time and will crash if vendor-react hasn't loaded first.
@@ -157,23 +155,13 @@ export default defineConfig({
             return 'vendor-misc';
           }
 
-          // App: Regional admin pages — keyed by region FIRST to avoid circular deps
-          for (const region of REGIONS) {
-            if (id.includes(`/src/${region}/`) && (id.includes('/pages/admin/') || id.includes('/admin/'))) {
-              return `admin-${region.toLowerCase()}`;
-            }
-          }
+
           // App: Global admin pages
           if (id.includes('/pages/admin/') || id.includes('/admin/')) {
             return 'admin-global';
           }
 
-          // App: Regional public pages
-          for (const region of REGIONS) {
-            if (id.includes(`/src/${region}/`)) {
-              return `region-${region.toLowerCase()}`;
-            }
-          }
+
         }
       }
     }

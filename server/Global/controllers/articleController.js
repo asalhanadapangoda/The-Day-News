@@ -53,7 +53,7 @@ const getArticleByIdOrSlug = async (req, res) => {
   try {
     const isObjectId = req.params.idOrSlug.match(/^[0-9a-fA-F]{24}$/);
     const query = isObjectId ? { _id: req.params.idOrSlug } : { slug: req.params.idOrSlug };
-    
+
     // We increment view count
     const article = await Article.findOneAndUpdate(query, { $inc: { viewCount: 1 } }, { new: true })
       .populate('category', 'name slug');

@@ -164,32 +164,7 @@ const parseContentFromPath = (urlPath) => {
   m = urlPath.match(/^\/events\/([^/?#]+)/);
   if (m) return { type: 'events', slug: m[1], country: null };
 
-  // ── Bangladesh (articles + programs + events) ─────────────────────────
-  m = urlPath.match(/^\/bangladesh\/articles\/([^/?#]+)/);
-  if (m) return { type: 'articles', slug: m[1], country: 'bangladesh' };
 
-  m = urlPath.match(/^\/bangladesh\/programs\/([^/?#]+)/);
-  if (m) return { type: 'programs', slug: m[1], country: 'bangladesh' };
-
-  m = urlPath.match(/^\/bangladesh\/events\/([^/?#]+)/);
-  if (m) return { type: 'events', slug: m[1], country: 'bangladesh' };
-
-  // ── Australia (articles + programs) ──────────────────────────────────
-  m = urlPath.match(/^\/australia\/articles\/([^/?#]+)/);
-  if (m) return { type: 'articles', slug: m[1], country: 'australia' };
-
-  m = urlPath.match(/^\/australia\/programs\/([^/?#]+)/);
-  if (m) return { type: 'programs', slug: m[1], country: 'australia' };
-
-  // ── Remaining countries (articles only) ──────────────────────────────
-  const ARTICLE_ONLY_COUNTRIES = [
-    'new-zealand', 'japan', 'india', 'usa',
-    'thailand', 'denmark', 'samoa', 'south-africa',
-  ];
-  for (const country of ARTICLE_ONLY_COUNTRIES) {
-    m = urlPath.match(new RegExp(`^\\/${country}\\/articles\\/([^/?#]+)`));
-    if (m) return { type: 'articles', slug: m[1], country };
-  }
 
   return null;
 };
@@ -280,10 +255,7 @@ module.exports = async function handler(req, res) {
       return res.status(200).send(html);
     }
 
-    // Build the meta API URL
-    const metaPath = parsed.country
-      ? `${BACKEND_URL}/api/meta/${parsed.country}/${parsed.type}/${parsed.slug}`
-      : `${BACKEND_URL}/api/meta/${parsed.type}/${parsed.slug}`;
+    const metaPath = `${BACKEND_URL}/api/meta/${parsed.type}/${parsed.slug}`;
 
     let meta = null;
     let statusCode = 200;

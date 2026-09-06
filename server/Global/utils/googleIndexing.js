@@ -47,23 +47,14 @@ const getAccessToken = (clientEmail, privateKey) => {
   });
 };
 
-const toSeoFriendly = (c) => {
-  if (!c || c.toLowerCase() === 'sri lanka') return null;
-  const cleaned = c.replace(/\s+/g, ''); // 'New Zealand' -> 'NewZealand'
-  const map = { 
-    'NewZealand': 'new-zealand', 
-    'SouthAfrica': 'south-africa' 
-  };
-  return map[cleaned] || cleaned.toLowerCase();
-};
+
 
 /**
  * Send a notification to the Google Indexing API.
  * @param {string} slug - The article slug
- * @param {string|null} country - Country name from database (e.g. 'Bangladesh', 'New Zealand') or null
  * @param {string} type - Either 'URL_UPDATED' (for publish/update) or 'URL_DELETED'
  */
-export const pingGoogleIndexing = async (slug, country, type = 'URL_UPDATED') => {
+export const pingGoogleIndexing = async (slug, type = 'URL_UPDATED') => {
   try {
     const keyPath = path.join(__dirname, '..', '..', 'google-key.json');
     if (!fs.existsSync(keyPath)) {
@@ -82,10 +73,7 @@ export const pingGoogleIndexing = async (slug, country, type = 'URL_UPDATED') =>
     const accessToken = await getAccessToken(client_email, private_key);
 
     // Build the absolute canonical URL
-    const countrySegment = toSeoFriendly(country);
-    const url = countrySegment
-      ? `${BASE_URL}/${countrySegment}/articles/${slug}`
-      : `${BASE_URL}/articles/${slug}`;
+    const url = `${BASE_URL}/articles/${slug}`;
 
     console.log(`[Google Indexing] Sending ${type} request for: ${url}`);
 

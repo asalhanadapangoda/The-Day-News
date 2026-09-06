@@ -359,7 +359,7 @@ const ManageArticles = () => {
 
       {totalPages > 1 && (
         <div className="flex justify-between items-center mt-6 text-sm">
-          <button 
+          <button
             onClick={() => setPage(p => Math.max(1, p - 1))}
             disabled={page === 1}
             className="px-4 py-2 bg-[#1a1a1a] border border-white/10 rounded text-white disabled:opacity-50"
@@ -367,7 +367,7 @@ const ManageArticles = () => {
             Previous
           </button>
           <span className="text-gray-400">Page {page} of {totalPages}</span>
-          <button 
+          <button
             onClick={() => setPage(p => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
             className="px-4 py-2 bg-[#1a1a1a] border border-white/10 rounded text-white disabled:opacity-50"
@@ -541,7 +541,7 @@ const ManageArticles = () => {
                   <div className="flex-grow flex flex-col pb-4 h-[440px]">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                       <label className="block text-sm font-medium text-gray-400">Article Body Content *</label>
-                      
+
                       {/* AI Auto-Generate Button */}
                       <button
                         type="button"
